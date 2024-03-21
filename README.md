@@ -1,6 +1,6 @@
 # Semantic Parsing with Seq2Seq
 
-This repo gives some approaches using sequence to sequence architecture to solve semantic parsing problem. 
+This repo covers some approaches using sequence to sequence architecture to solve semantic parsing problem. 
 
 ## Implementation
 
