@@ -9,5 +9,3 @@ This repo gives some approaches using sequence to sequence architecture to solve
 3. Seq2Seq using RNNs with Attention Mechanism + Copy Mechanism
 4. Seq2Seq using RNNs with Attention Mechanism + Sequential Copy Mechanism
 
-## Data
-
