@@ -5,7 +5,7 @@ import random
 import string
 from utils import tokenize_sequence
 from model import CopySeq2Seq
-from dataset import ParserDataset
+from copynet import ParserDataset
 from logger import HistoryLogger
 from pytorch_lightning.callbacks import ModelCheckpoint
 from torch.utils.data import DataLoader
