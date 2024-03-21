@@ -6,9 +6,8 @@ import json
 class HistoryLogger(Logger):
     def __init__(self):
         super().__init__()
-        self.history = defaultdict(list)  # copy not necessary here
-        # The defaultdict in contrast will simply create any items that you try to access
-
+        self.history = defaultdict(list) 
+        
     @property
     def name(self):
         return "HistoryLogger"
