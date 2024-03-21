@@ -3,6 +3,7 @@ from lightning.pytorch.utilities import rank_zero_only
 from collections import defaultdict
 import json
 
+
 class HistoryLogger(Logger):
     def __init__(self):
         super().__init__()

@@ -1,4 +1,4 @@
-Questions,Entities,Cypher Query,Freq Form
+Questions,Entities,Queries,Freq Form
 Điều ước Tân Sửu được kí kết vào thời gian nào?,"Điều ước Tân Sửu
 hiep_dinh","match (e:KiKet)-[:ten_goi]-(a) where a.name = ""Điều ước Tân Sửu""
 match (e)-[:dien_ra_vao|thoi_gian_bat_dau|thoi_gian_ket_thuc]-(b)
