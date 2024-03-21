@@ -53,6 +53,7 @@ def compact_query(query):
 
     return query
 
+
 def extract_entity_in_query(query):
 
     quoted = re.compile('"[^"]*"')
@@ -104,7 +105,6 @@ def create_vocab(train_questions: list,
                                                   and token not in key_tokens]).difference(set(entity_tokens))),
                                         k=int(0.008 * len(set(question_tokens))))
 
-    # mask_normal_tokens.extend(["em", "ạ"])
     mask = mask_entity_tokens + mask_normal_tokens
     print(set(mask))
     print(f'Mask {len(mask_entity_tokens)} entity tokens and {len(mask_normal_tokens)} normal tokens')
