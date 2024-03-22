@@ -68,11 +68,13 @@ def extract_entity_in_query(query):
 
 def create_vocab(train_questions: list,
                  train_queries: list,
-                 keywords_path: str) -> dict:
+                 keywords_path: str,
+                 entity_mask_ratio=0.3) -> dict:
     """
     :param train_questions: list of questions in train set
     :param train_queries: list of queries in train set
     :param keywords_path: list of keywords which must have in vocabulary
+    :param entity_mask_ratio: ratio of number of entity token will be masked to unknown
     :return: vocab dictionary
     """
 
@@ -99,12 +101,13 @@ def create_vocab(train_questions: list,
 
     mask_entity_tokens = random.choices(list(set([token for token in entity_tokens if token not in string.punctuation
                                                   and token not in key_tokens])),
-                                        k=int(0.4 * len(set(entity_tokens))))
+                                        k=int(entity_mask_ratio * len(set(entity_tokens))))
 
     mask_normal_tokens = random.choices(list(set([token for token in question_tokens if token not in string.punctuation
                                                   and token not in key_tokens]).difference(set(entity_tokens))),
                                         k=int(0.008 * len(set(question_tokens))))
 
+    mask_normal_tokens = ['thức', 'tri', 'trở', 'tả', 'ạ', 'cảm', 'ơn', 'phân', 'tích', 'không', 'nhóm', 'trì']
     mask = mask_entity_tokens + mask_normal_tokens
     print(set(mask))
     print(f'Mask {len(mask_entity_tokens)} entity tokens and {len(mask_normal_tokens)} normal tokens')

@@ -1,0 +1,1927 @@
+STT,Questions,Entities,Grade,Unit,Assign,Check Done,Cypher Query,Query Type,Note,# Single-Single,# Single-Multi,# Multi-Single,# Multi-Multi,label,event_type
+1,Hãy trình bày diễn biến trận chiến trên sông Bạch Đằng năm 938 do Ngô Quyền lãnh đạo,"trận chiến trên sông Bạch Đằng | năm 938 | Ngô Quyền
+tran_chien | thoi_gian | nhan_vat",10,16,NgocLD,TRUE,"match (e:Event)-[:ten_goi]-(a) where a.name = ""trận chiến trên sông Bạch Đằng""
+match (e)-[:dien_ra_vao|thoi_gian_bat_dau|thoi_gian_ket_thuc]-(b) where b.name = ""năm 938""
+match (e)-[:doi_tuong_lanh_dao]-(c) where c.name = ""Ngô Quyền""
+match (e)-[:SubEvent|mo_ta]->(e1)
+match path=(e1)-[:(NextEvent|Causal|Result|SubEvent)*]-()
+with nodes(path) as l
+match path = (x)-[*0..1]-(y:Entity) where x in l
+return path",multi - multi,,244,7,8,77,1,#REF!
+2,Nguyên nhân diễn ra trận chiến Bạch Đằng năm 938 là gì?,"trận chiến Bạch Đằng | năm 938
+tran_chien | thoi_gian",10,16,NgocLD,TRUE,"match (e:Event)-[:ten_goi]-(a) where a.name = ""trận chiến Bạch Đằng""
+match (e)-[:dien_ra_vao|thoi_gian_bat_dau|thoi_gian_ket_thuc]-(b) where b.name =  ""năm 938""
+match (e)-[:Causal|nguyen_nhan|boi_canh]->(e1)
+match path=(e1)-[:(Causal|NextEvent)*0..]-(b) where (b)<-[:Causal*0..]-() and (b)-[:NextEvent*0..]->()
+with nodes(path) as l
+match path=(x)-[*0..1]-(y:Entity) where x in l
+return path",multi - multi,,,,,,4,
+3,Nguyên nhân khiến quân Tống quyết định xâm lược Đại Việt lần thứ hai năm 1075 là?,"quân Tống | Đại Việt | năm 1075
+to_chuc | to_chuc | thoi_gian",10,19,NgocLD,TRUE,"match (e:Event)-[:doi_tuong_tham_gia|doi_tuong_tan_cong]-(a) where a.name = ""quân Tống""
+match (e)-[:doi_tuong_bi_tan_cong]-(b) where b.name = ""Đại Việt"" 
+match (e)-[:dien_ra_vao|thoi_gian_bat_dau|thoi_gian_ket_thuc]-(c) where c.name = ""năm 1075""
+match (e)-[:Causal|nguyen_nhan|boi_canh]->(e1)
+match path=(e1)-[:(Causal|NextEvent)*0..]-(b) where (b)<-[:Causal*0..]-() and (b)-[:NextEvent*0..]->()
+with nodes(path) as l
+match path=(x)-[*0..1]-(y:Entity) where x in l
+return path",multi - multi,,,,,,1,
+4,Việc thành lập nhà nước Vạn Xuân có ý nghĩa:,"nhà nước Vạn Xuân
+to_chuc",10,16,NgocLD,TRUE,"match (e:ThanhLap)-[:doi_tuong_duoc_thanh_lap]-(a) where a.name = ""nhà nước Vạn Xuân""
+match (e)-[:y_nghia]-(b) 
+return b",single - single,,,,,,3,
+5,Liệt kê các cuộc khởi nghĩa tiêu biểu của nhân dân ta từ thế kỉ I đến thế kỉ XX,"thế kỉ I | thế kỉ XX
+thoi_gian | thoi_gian",10,16,NgocLD,FALSE,"match (e:Event)-[:dien_ra_vao|thoi_gian_bat_dau]-(a) where a.name = ""thế kỉ I""
+match (e)-[:dien_ra_vao|thoi_gian_ket_thuc]-(b) where b.name = ""thế kỉ X""
+match (e)-[:bao_gom]-(c:CuocKhoiNghia) return c",single - multi,,,,,,,
+6,Diễn biến cuộc khởi nghĩa Hai Bà Trưng,"cuộc khởi nghĩa Hai Bà Trưng
+tran_chien",10,16,NgocLD,TRUE,"match (e:Event)-[:ten_goi]-(a) where a.name = ""cuộc khởi nghĩa Hai Bà Trưng""
+match (e)-[:SubEvent|mo_ta]->(e1)
+match path=(e1)-[:(NextEvent|Causal|Result|SubEvent)*]-()
+with nodes(path) as l
+match path = (x)-[*0..1]-(y:Entity) where x in l
+return path",multi - multi,,,,,,8,
+7,Đảng Dân chủ Việt Nam được thành lập vào thời gian nào?,"Đảng Dân chủ Việt Nam
+to_chuc",12,74,HungTX,TRUE,"match (e:ThanhLap)-[:doi_tuong_duoc_thanh_lap]-(a) where a.name = ""Đảng Dân chủ Việt Nam""
+match (e)-[:dien_ra_vao|thoi_gian_bat_dau|thoi_gian_ket_thuc]-(b)
+return b",single - single,,,,,,24,
+8,Vào đầu năm 1945 Hồng quân Liên Xô tấn công phát xít Đức tại đâu?,"đầu năm 1945 | Hồng quân Liên Xô | phát xít Đức
+thoi_gian | quan_doi | quan_doi",12,74,HungTX,TRUE,"match (e:Event)-[:dien_ra_vao|thoi_gian_bat_dau|thoi_gian_ket_thuc]-(a) where a.name = ""đầu năm 1945""
+match (e)-[:doi_tuong_tham_gia|doi_tuong_tan_cong]-(b) where b.name = ""Hồng quân Liên Xô""
+match (e)-[:doi_tuong_bi_tan_cong]-(c) where c.name = ""phát xít Đức""
+match (e)-[:(dien_ra_o|thuoc)*]-(d)
+return d",single - single,,,,,,2,
+9,Nguyên nhân khiến Nhật Bản đầu hàng Đồng minh là gì?,"Nhật Bản | Đồng minh
+dia_diem | to_chuc",12,74,HungTX,TRUE,"match (e:Event)-[:doi_tuong_dau_hang]-(a) where a.name = ""Nhật Bản""
+match (e)-[:doi_tuong_chien_thang]-(b) where b.name = ""Đồng minh""
+match (e)-[:Causal|nguyen_nhan|boi_canh]->(e1)
+match path=(e1)-[:(Causal|NextEvent)*0..]-(b) where (b)<-[:Causal*0..]-() and (b)-[:NextEvent*0..]->()
+with nodes(path) as l
+match path=(x)-[*0..1]-(y:Entity) where x in l
+return path",multi - multi,,,,,,1,
+10,Liên minh nhân dân Việt - Miên - Lào được thành lập từ các tổ chức nào?,"Liên minh nhân dân Việt - Miên - Lào
+to_chuc",12,77,HungTX,TRUE,"match (e:ThanhLap)-[:doi_tuong_duoc_thanh_lap]-(a) where a.name = ""Liên minh nhân dân Việt - Miên - Lào""
+match (e)-[:thanh_lap_boi]-(b) 
+return b",single - single,,,,,,14,
+11,Chính phủ Pháp đã cử ai làm Tổng chỉ huy quân đội viễn chinh Pháp ở Đông Dương để thay thế cho tướng Xalăng?,"Chính phủ Pháp | Tổng chỉ huy quân đội viễn chinh Pháp ở Đông Dương | tướng Xalăng
+to_chuc | chuc_vu | nhan_vat",12,78,HungTX,TRUE,"match (e:Event)-[:doi_tuong_bo_nhiem]-(a) where a.name = ""Chính phủ Pháp""
+match (e)-[:vai_tro]-(b) where b.name = ""Tổng chỉ huy quân đội viễn chinh Pháp ở Đông Dương""
+match (e)-[:doi_tuong_bi_thay_the]-(c) where c.name = ""tướng Xalăng""
+match (e)-[:doi_tuong_dam_nhiem]-(d)
+return d",single - single,,,,,,2,
+12,Chính phủ Pháp đã cử tướng Nava làm Tổng chỉ huy quân đội viễn chinh Pháp ở Đông Dương để thay thế cho ai?,"Chính phủ Pháp | tướng Nava | Tổng chỉ huy quân đội viễn chinh Pháp ở Đông Dương
+to_chuc | nhan_vat | chuc_vu",12,78,HungTX,TRUE,"match (e:Event)-[:doi_tuong_bo_nhiem]-(a) where a.name = ""Chính phủ Pháp""
+match (e)-[:doi_tuong_dam_nhiem]-(b) where b.name = ""tướng Nava""
+match (e)-[:vai_tro]-(c) where c.name = ""Tổng chỉ huy quân đội viễn chinh Pháp ở Đông Dương""
+match (e)-[:doi_tuong_bi_thay_the]-(d)
+return d",single - single,,,,,,2,
+13,Khởi nghĩa Lam Sơn do ai lãnh đạo,"Khởi nghĩa Lam Sơn
+tran_chien",10,19,NgocLD,TRUE,"match (e:Event)-[:ten_goi]-(a) where a.name = ""Khởi nghĩa Lam Sơn""
+match (e)-[:doi_tuong_lanh_dao]-(b) 
+return b",single - single,,,,,,9,
+14,Cuộc khởi nghĩa Lam Sơn do Lê Lợi lãnh đạo diễn ra vào quảng thời gian nào?,"Cuộc khởi nghĩa Lam Sơn | Lê Lợi 
+tran_chien | nhan_vat",10,19,NgocLD,TRUE,"match (e:Event)-[:ten_goi]-(a) where a.name = ""Cuộc khởi nghĩa Lam Sơn""
+match (e)-[:doi_tuong_lanh_dao]-(b) where b.name = ""Lê Lợi""
+match (e)-[:dien_ra_vao|thoi_gian_bat_dau|thoi_gian_ket_thuc]-(c)
+return c",single - single,,,,,,3,
+15,Cuộc khởi nghĩa Hai Bà Trưng diễn ra vào thời gian nào?,"Cuộc khởi nghĩa Hai Bà Trưng
+tran_chien",10,16,NgocLD,TRUE,"match (e:Event)-[:ten_goi]-(a) where a.name = ""Cuộc khởi nghĩa Hai Bà Trưng""
+match (e)-[:dien_ra_vao|thoi_gian_bat_dau|thoi_gian_ket_thuc]-(b)
+return b
+",single - single,,,,,,15,
+16,Liên hiệp đấu tranh giải phóng giai cấp công nhân được thành lập vào thời gian nào?,"Liên hiệp đấu tranh giải phóng giai cấp công nhân
+to_chuc",10,37,QuanPV,TRUE,"match (e:ThanhLap)-[:doi_tuong_duoc_thanh_lap]-(a) where a.name = ""Liên hiệp đấu tranh giải phóng giai cấp công nhân""
+match (e)-[:dien_ra_vao|thoi_gian_bat_dau|thoi_gian_ket_thuc]-(b)
+return b",single - single,,,,,,2,
+17,Ai đã sát hại Dương Đình Nghệ?,"Dương Đình Nghệ
+nhan_vat",10,,NgocLD,TRUE,"match (e:Giet)-[:doi_tuong_bi_giet]-(a) where a.name = ""Dương Đình Nghệ""
+match (e)-[:doi_tuong_thuc_hien]-(b) return b",single - single,,,,,,1,
+18,Liên hiệp đấu tranh giải phóng giai cấp công nhân do ai thành lập?,"Liên hiệp đấu tranh giải phóng giai cấp công nhân 
+to_chuc",10,37,QuanPV,TRUE,"match (e:ThanhLap)-[:doi_tuong_duoc_thanh_lap]-(a) where a.name = ""Liên hiệp đấu tranh giải phóng giai cấp công nhân""
+match (e)-[:thanh_lap_boi]-(b)
+return b",single - single,,,,,,3,
+19,Liên hiệp đấu tranh giải phóng giai cấp công nhân được thành lập ở đâu?,"Liên hiệp đấu tranh giải phóng giai cấp công nhân 
+to_chuc",10,37,QuanPV,TRUE,"match (e:ThanhLap)-[:doi_tuong_duoc_thanh_lap]-(a) where a.name = ""Liên hiệp đấu tranh giải phóng giai cấp công nhân""
+match (e)-[:(dien_ra_o|thuoc)*]-(b)
+return b",single - single,,,,,,2,
+20,Đảng Công nhân xã hội dân chủ Nga được thành lập khi nào?,"Đảng Công nhân xã hội dân chủ Nga
+to_chuc",10,37,QuanPV,TRUE,"match (e:ThanhLap)-[:doi_tuong_duoc_thanh_lap]-(a) where a.name = ""Đảng Công nhân xã hội dân chủ Nga""
+match (e)-[:dien_ra_vao|thoi_gian_bat_dau|thoi_gian_ket_thuc]-(b)
+return b",single - single,,,,,,2,
+21,Đảng Công nhân xã hội dân chủ Nga được thành lập ở đâu?,"Đảng Công nhân xã hội dân chủ Nga
+to_chuc",10,37,QuanPV,TRUE,"match (e:ThanhLap)-[:doi_tuong_duoc_thanh_lap]-(a) where a.name = ""Đảng Công nhân xã hội dân chủ Nga""
+match (e)-[:(dien_ra_o|thuoc)*]-(b)
+return b",single - single,,,,,,2,
+22,Nguyên nhân cuộc biểu tình chống lại Nga hoàng năm 1905 là gì?,"Nga hoàng | năm 1905
+to_chuc| thoi_gian",10,37,QuanPV,TRUE,"match (e:Event)-[:doi_tuong_bi_tan_cong]-(a) where a.name = ""Nga hoàng""
+match (e)-[:dien_ra_vao|thoi_gian_bat_dau|thoi_gian_ket_thuc]-(b) where b.name = ""năm 1905""
+match (e)-[:Causal|nguyen_nhan|boi_canh]->(e1)
+match path=(e1)-[:(Causal|NextEvent)*0..]-(b) where (b)<-[:Causal*0..]-() and (b)-[:NextEvent*0..]->()
+with nodes(path) as l
+match path=(x)-[*0..1]-(y:Entity) where x in l
+return path",multi - multi,,,,,,1,
+23,Đối tượng tham gia cuộc biểu tình chống lại Nga hoàng năm 1905 là ai?,"Nga hoàng | năm 1905
+to_chuc| thoi_gian",10,37,QuanPV,TRUE,"match (e:Event)-[:doi_tuong_bi_tan_cong]-(a) where a.name = ""Nga hoàng""
+match (e)-[:dien_ra_vao|thoi_gian_bat_dau|thoi_gian_ket_thuc]-(b) where b.name = ""năm 1905""
+match (e)-[:doi_tuong_tham_gia|doi_tuong_tan_cong]-(c)
+return c",single - single,,,,,,5,
+24,Diễn biến của quá trình chống lại chế độ Nga hoàng năm 1905 ?,"chế độ Nga hoàng  | năm 1905
+to_chuc | thoi_gian",10,37,QuanPV,TRUE,"match (e:Event)-[:doi_tuong_bi_tan_cong]-(a) where a.name = ""chế độ Nga hoàng""
+match (e)-[:dien_ra_vao|thoi_gian_bat_dau|thoi_gian_ket_thuc]-(b) where b.name = ""năm 1905""
+match (e)-[:SubEvent|mo_ta]->(e1)
+match path=(e1)-[:(NextEvent|Causal|Result|SubEvent)*]-()
+with nodes(path) as l
+match path = (x)-[*0..1]-(y:Entity) where x in l
+return path",multi - multi,,,,,,1,
+25,Kết quả của quá trình chống lại chế độ Nga hoàng năm 1905 ?,"chế độ Nga hoàng | năm 1905
+to_chuc | thoi_gian",10,37,QuanPV,TRUE,"match (e:Event)-[:doi_tuong_bi_tan_cong]-(a) where a.name = ""chế độ Nga hoàng""
+match (e)-[:dien_ra_vao|thoi_gian_bat_dau|thoi_gian_ket_thuc]-(b) where b.name = ""năm 1905""
+match (e)-[:Result|ket_qua]->(e1)
+match path=(e1)-[:NextEvent*0..]->()
+with nodes(path) as l
+match path=(x)-[*0..1]-(y:Entity) where x in l
+return path",multi - multi,,,,,,1,
+26,Sự kiện nào đánh dấu việc thiết lập chế độ quân chủ lập hiến ở Nhật Bản?,"chế độ quân chủ lập hiến | Nhật Bản
+che_do | đia_diem",11,38,QuanPV,FALSE,,single - single,,,,,,,
+27,Đảng Xã hội dân chủ Nhật Bản được thành lập khi nào?,"Đảng Xã hội dân chủ Nhật Bản
+to_chuc",11,38,QuanPV,TRUE,"match (e:ThanhLap)-[:doi_tuong_duoc_thanh_lap]-(a) where a.name = ""Đảng Xã hội dân chủ Nhật Bản""
+match (e)-[:dien_ra_vao|thoi_gian_bat_dau|thoi_gian_ket_thuc]-(b)
+return b",single - single,,,,,,24,
+28,Đảng Xã hội dân chủ Nhật Bản được thành lập bởi ai?,"Đảng Xã hội dân chủ Nhật Bản
+to_chuc",11,38,QuanPV,TRUE,"match (e:ThanhLap)-[:doi_tuong_duoc_thanh_lap]-(a) where a.name = ""Đảng Xã hội dân chủ Nhật Bản""
+match (e)-[:thanh_lap_boi]-(b)
+return b",single - single,,,,,,14,
+29,Đảng Xã hội dân chủ Nhật Bản được thành lập ở đâu?,"Đảng Xã hội dân chủ Nhật Bản
+to_chuc",11,38,QuanPV,TRUE,"match (e:ThanhLap)-[:doi_tuong_duoc_thanh_lap]-(a) where a.name = ""Đảng Xã hội dân chủ Nhật Bản""
+match (e)-[:(dien_ra_o|thuoc)*]-(b)
+return b",single - single,,,,,,7,
+30,Quốc dân đại hội Tân Trào được tổ chức vào thời gian nào?,"Quốc dân đại hội Tân Trào
+cuoc_hop",11,39,QuanPV,TRUE,"match (e:DienRaCuocHop)-[:ten_goi]-(a) where a.name = ""Quốc dân đại hội Tân Trào""
+match (e)-[:dien_ra_vao|thoi_gian_bat_dau|thoi_gian_ket_thuc]-(b)
+return b",single - single,,,,,,24,
+31,Quốc dân đại hội Tân Trào được tổ chức ở đâu?,"Quốc dân đại hội Tân Trào 
+cuoc_hop",11,39,QuanPV,TRUE,"match (e:DienRaCuocHop)-[:ten_goi]-(a) where a.name = ""Quốc dân đại hội Tân Trào""
+match (e)-[:(dien_ra_o|thuoc)*]-(b)
+return b",single - single,,,,,,7,
+32,Mục đích Anh ban hành đạo luật chia đôi xứ Ben-gan là gì?,"Anh | đạo luật chia đôi xứ Ben-gan
+dia_diem | chinh_sach",11,39,QuanPV,TRUE,"match (e:Event)-[:doi_tuong_ban_hanh]-(a) where a.name = ""Anh""
+match (e)-[:ban_hanh]-(b) where b.name = ""đạo luật chia đôi xứ Ben-gan""
+match (e)-[:muc_tieu]-(c)
+return c",single - single,,,,,,2,
+33,Đạo luật chia đôi xứ Ben-gan được ban hành vào thời điểm nào?,"Đạo luật chia đôi xứ Ben-gan
+chinh_sach",11,39,QuanPV,TRUE,"match (e:Event)-[:ban_hanh]-(a) where a.name = ""Đạo luật chia đôi xứ Ben-gan""
+match (e)-[:dien_ra_vao|thoi_gian_bat_dau|thoi_gian_ket_thuc]-(b)
+return b",single - single,,,,,,1,
+34,Nguyên nhân của Chiến tranh thuốc phiện là gì?,"Chiến tranh thuốc phiện
+tran_chien",11,40,QuanPV,TRUE,"match (e:Event)-[:ten_goi]-(a) where a.name = ""Chiến tranh thuốc phiện""
+match (e)-[:Causal|nguyen_nhan|boi_canh]->(e1)
+match path=(e1)-[:(Causal|NextEvent)*0..]-(b) where (b)<-[:Causal*0..]-() and (b)-[:NextEvent*0..]->()
+with nodes(path) as l
+match path=(x)-[*0..1]-(y:Entity) where x in l
+return path",multi - multi,,,,,,6,
+35,Chiến tranh thuốc phiện bắt đầu khi nào?,"Chiến tranh thuốc phiện
+tran_chien",11,40,QuanPV,TRUE,"match (e:Event)-[:ten_goi]-(a) where a.name = ""Chiến tranh thuốc phiện""
+match (e)-[:dien_ra_vao|thoi_gian_bat_dau]-(b)
+return b",single - single,,,,,,8,
+36,Chiến tranh thuốc phiện kết thúc khi nào?,"Chiến tranh thuốc phiện
+tran_chien",11,40,QuanPV,TRUE,"match (e:Event)-[:ten_goi]-(a) where a.name = ""Chiến tranh thuốc phiện""
+match (e)-[:dien_ra_vao|thoi_gian_ket_thuc]-(b)
+return b",single - single,,,,,,5,
+37,Anh dùng Chiến tranh thuốc phiện để xâm lước nước nào?,"Anh | Chiến tranh thuốc phiện
+dia_diem | tran_chien",11,40,QuanPV,TRUE,"match (e:Event)-[:doi_tuong_tham_gia|doi_tuong_tan_cong]-(a) where a.name = ""Anh""
+match (e)-[:ten_goi]-(b) where b.name = ""Chiến tranh thuốc phiện""
+match (e)-[:doi_tuong_bi_tan_cong]-(c)
+return c",single - single,,,,,,1,
+38,Những điều khoản của Hiệp ước Nam Kinh là gì?,"Hiệp ước Nam Kinh
+hiep_dinh",11,40,QuanPV,TRUE,"match (e:KiKet)-[:ten_goi]-(a) where a.name = ""Hiệp ước Nam Kinh""
+match (e)-[:mo_ta]-(b)
+return b",single - single,,,,,,3,
+39,Các bên tham gia kí kết Hiệp ước Nam Kinh là ai?,"Hiệp ước Nam Kinh
+hiep_dinh",11,40,QuanPV,TRUE,"match (e:KiKet)-[:ten_goi]-(a) where a.name = ""Hiệp ước Nam Kinh""
+match (e)-[:doi_tuong_tham_gia|doi_tuong_tan_cong]-(b)
+return b",single - single,,,,,,6,
+40,Ý nghĩa của việc kí kết Hiệp ước Nam Kinh?,"Hiệp ước Nam Kinh
+hiep_dinh",11,40,QuanPV,TRUE,"match (e:KiKet)-[:ten_goi]-(a) where a.name = ""Hiệp ước Nam Kinh""
+match (e)-[:y_nghia]-(b)
+return b",single - single,,,,,,12,
+41,Trình bày diễn biến quá trình xâm lược Trung Quốc của các nước đế quốc?,"Trung Quốc | các nước đế quốc
+dia_diem | dia_diem",11,40,QuanPV,TRUE,"match (e:Event)-[:doi_tuong_bi_tan_cong]-(a) where a.name = ""Trung Quốc"" 
+match (e)-[:doi_tuong_tham_gia|doi_tuong_tan_cong]-(b) where b.name = ""các nước đế quốc"" 
+match (e)-[:SubEvent|mo_ta]->(e1)
+match path=(e1)-[:(NextEvent|Causal|Result|SubEvent)*]-()
+with nodes(path) as l
+match path = (x)-[*0..1]-(y:Entity) where x in l
+return path",multi - multi,,,,,,1,
+42,Kết quả của trận đánh do quân chủ lực của ta tấn công thị xã Lai Châu vào 10 - 12 - 1953?,"quân chủ lực của ta | thị xã Lai Châu | 10 - 12 - 1953
+quan_doi | dia_diem | thoi_gian",12,78,HungTX,TRUE,"match (e:Event)-[:doi_tuong_tham_gia|doi_tuong_tan_cong]-(a) where a.name = ""quân chủ lực của ta""
+match (e)-[:doi_tuong_bi_tan_cong]-(b) where b.name = ""thị xã Lai Châu""
+match (e)-[:dien_ra_vao|thoi_gian_bat_dau|thoi_gian_ket_thuc]-(c) where c.name = ""10 - 12 - 1953""
+match (e)-[:Result|ket_qua]->(e1)
+match path=(e1)-[:NextEvent*0..]->()
+with nodes(path) as l
+match path=(x)-[*0..1]-(y:Entity) where x in l
+return path",multi - multi,,,,,,1,
+43,Trình bày ý nghĩa của Hiệp định Giơnevơ được kí vào năm 1954,"Hiệp định Giơnevơ | năm 1954
+hiep_dinh | thoi_gian",12,79,HungTX,TRUE,"match (e:KiKet)-[:ten_goi]-(a) where a.name = ""Hiệp định Giơnevơ""
+match (e)-[:dien_ra_vao|thoi_gian_bat_dau|thoi_gian_ket_thuc]-(b) where b.name = ""năm 1954""
+match (e)-[:y_nghia]-(c)
+return c",single - single,,,,,,5,
+44,Kết quả của việc kí kết Hiệp định Giơnevơ là gì?,"Hiệp định Giơnevơ
+hiep_dinh",12,79,HungTX,TRUE,"match (e:KiKet)-[:ten_goi]-(a) where a.name = ""Hiệp định Giơnevơ""
+match (e)-[:Result|ket_qua]->(e1)
+match path = (e1)-[:NextEvent*0..]->()
+with nodes(path) as l
+match path=(x)-[*0..1]-(y:Entity) where x in l
+return path",multi - multi,,,,,,5,
+45,Mĩ thành lập chính quyền Ngô Đình Diệm ở miền Nam nhằm mục đích gì?,"Mĩ | chính quyền Ngô Đình Diệm | miền Nam
+to_chuc | to_chuc| dia_diem",12,79,HungTX,TRUE,"match (e:ThanhLap)-[:thanh_lap_boi]-(a) where a.name = ""Mĩ""
+match (e)-[:doi_tuong_duoc_thanh_lap]-(b) where b.name = ""chính quyền Ngô Đình Diệm""
+match (e)-[:(dien_ra_o|thuoc)*]-(c) where c.name = ""miền Nam""
+match (e)-[:muc_tieu]-(d)
+return d",single - single,,,,,,1,
+46,Mô tả trận Vạn Tường diễn ra vào 18 - 8 - 1965?,"trận Vạn Tường | 18 - 8 - 1965
+tran_chien| thoi_gian",12,80,HungTX,TRUE,"match (e:Event)-[:ten_goi]-(a) where a.name = ""trận Vạn Tường""
+match (e)-[:dien_ra_vao|thoi_gian_bat_dau|thoi_gian_ket_thuc]-(b) where b.name = ""18 - 8 - 1965""
+match (e)-[:SubEvent|mo_ta]->(e1)
+match path=(e1)-[:(NextEvent|Causal|Result|SubEvent)*]-()
+with nodes(path) as l
+match path = (x)-[*0..1]-(y:Entity) where x in l
+return path",multi - multi,,,,,,4,
+47,Mục tiêu của cuộc hành quân Gianxơn Xiti?,"cuộc hành quân Gianxơn Xiti
+tran_chien",12,80,HungTX,TRUE,"match (e:Event)-[:ten_goi]-(a) where a.name = ""cuộc hành quân Gianxơn Xiti""
+match (e)-[:muc_tieu]-(b)
+return b",single - single,,,,,,3,
+48,Cuộc Tổng tiến công và nổi dậy Xuân Mậu Thân 1968 diễn ra ở đâu?,"Cuộc Tổng tiến công và nổi dậy Xuân Mậu Thân 1968
+tran_chien",12,80,HungTX,TRUE,"match (e:Event)-[:ten_goi]-(a) where a.name = ""Cuộc Tổng tiến công và nổi dậy Xuân Mậu Thân 1968""
+match (e)-[:(dien_ra_o|thuoc)*]-(b)
+return b",single - single,,,,,,11,
+49,Nguyên nhân Mĩ ném bom xuống thị xã Đồng Hới và đảo Cồn Cỏ?,"Mĩ | thị xã Đồng Hới | đảo Cồn Cỏ
+dia_diem | dia_diem | dia_diem",12,80,HungTX,TRUE,"match (e:NemBom)-[:doi_tuong_tham_gia|doi_tuong_tan_cong]-(a) where a.name = ""Mĩ""
+match (e)-[:doi_tuong_bi_tan_cong]-(b) where a.name = ""thị xã Đồng Hới""
+match (e)-[:doi_tuong_bi_tan_cong]-(c) where b.name = ""đảo Cồn Cỏ""
+match (e)-[:SubEvent|mo_ta]->(e1)
+match path=(e1)-[:(NextEvent|Causal|Result|SubEvent)*]-()
+with nodes(path) as l
+match path = (x)-[*0..1]-(y:Entity) where x in l
+return path",multi - multi,,,,,,1,
+50,Mĩ ném bom xuống thị xã Đồng Hới và đảo Cồn Cỏ vào năm nào?,"Mĩ | thị xã Đồng Hới | đảo Cồn Cỏ
+to_chuc | dia_diem | dia_diem",12,80,HungTX,TRUE,"match (e:NemBom)-[:doi_tuong_tham_gia|doi_tuong_tan_cong]-(a) where a.name = ""Mĩ""
+match (e)-[:doi_tuong_bi_tan_cong]-(b) where a.name = ""thị xã Đồng Hới""
+match (e)-[:doi_tuong_bi_tan_cong]-(c) where b.name = ""đảo Cồn Cỏ""
+match (e)-[:dien_ra_vao|thoi_gian_bat_dau|thoi_gian_ket_thuc]-(d)
+return d",single - single,,,,,,1,
+51,Cuộc Tiến công chiến lược năm 1972 đã tấn công vào những địa điểm nào?,"Cuộc Tiến công chiến lược | năm 1972
+tran_chien | thoi_gian",12,80,HungTX,TRUE,"match (e:Event)-[:ten_goi]-(a) where a.name = ""Cuộc Tiến công chiến lược""
+match (e)-[:dien_ra_vao|thoi_gian_bat_dau|thoi_gian_ket_thuc]-(b) where b.name = ""năm 1972""
+match (e)-[:doi_tuong_bi_tan_cong]-(c)
+return c",single - single,,,,,,1,
+52,Đông Dương cộng sản đảng được thành lập bởi ai?,"Đông Dương cộng sản đảng
+to_chuc",12,71,HungTX,TRUE,"match (e:ThanhLap)-[:doi_tuong_duoc_thanh_lap]-(a) where a.name = ""Đông Dương cộng sản đảng""
+match (e)-[:thanh_lap_boi]-(b)
+return b",single - single,,,,,,14,
+53,Đông Dương cộng sản đảng được thành lập vào ngày nào?,"Đông Dương cộng sản đảng
+to_chuc",12,71,HungTX,TRUE,"match (e:ThanhLap)-[:doi_tuong_duoc_thanh_lap]-(a) where a.name = ""Đông Dương cộng sản đảng""
+match (e)-[:dien_ra_vao|thoi_gian_bat_dau|thoi_gian_ket_thuc]-(b)
+return b",single - single,,,,,,24,
+54,Đảng Cộng Sản Việt Nam được thành lập trong bối cảnh nào?,"Đảng Cộng Sản Việt Nam
+to_chuc",12,71,HungTX,TRUE,"match (e:ThanhLap)-[:doi_tuong_duoc_thanh_lap]-(a) where a.name = ""Đảng Cộng Sản Việt Nam""
+match (e)-[:Causal|nguyen_nhan|boi_canh]->(e1)
+match path=(e1)-[:(Causal|NextEvent)*0..]-(b) where (b)<-[:Causal*0..]-() and (b)-[:NextEvent*0..]->()
+with nodes(path) as l
+match path=(x)-[*0..1]-(y:Entity) where x in l
+return path",multi - multi,,,,,,2,
+55,cuộc khởi nghĩa Thái bình Thiên quốc do ai lãnh đạo?,"cuộc khởi nghĩa Thái bình Thiên quốc
+tran_chien",11,40,QuanPV,TRUE,"match (e:Event)-[:ten_goi]-(a) where a.name = ""cuộc khởi nghĩa Thái bình Thiên quốc""
+match (e)-[:doi_tuong_lanh_dao]-(b)
+return b",single - single,,,,,,9,
+56,cuộc khởi nghĩa Thái bình Thiên quốc bắt đầu khi nào?,"cuộc khởi nghĩa Thái bình Thiên quốc
+tran_chien",11,40,QuanPV,TRUE,"match (e:Event)-[:ten_goi]-(a) where a.name = ""cuộc khởi nghĩa Thái bình Thiên quốc""
+match (e)-[:dien_ra_vao|thoi_gian_bat_dau]-(b)
+return b",single - single,,,,,,8,
+57,cuộc khởi nghĩa Thái bình Thiên quốc kết thúc khi nào?,"cuộc khởi nghĩa Thái bình Thiên quốc
+tran_chien",11,40,QuanPV,TRUE,"match (e:Event)-[:ten_goi]-(a) where a.name = ""cuộc khởi nghĩa Thái bình Thiên quốc""
+match (e)-[:dien_ra_vao|thoi_gian_ket_thuc]-(b)
+return b",single - single,,,,,,5,
+58,cuộc khởi nghĩa Thái bình Thiên quốc diễn ra ở đâu?,"cuộc khởi nghĩa Thái bình Thiên quốc
+tran_chien",11,40,QuanPV,TRUE,"match (e:Event)-[:ten_goi]-(a) where a.name = ""cuộc khởi nghĩa Thái bình Thiên quốc""
+match (e)-[:(dien_ra_o|thuoc)*]-(b)
+return b",single - single,,,,,,11,
+59,Ai là người lãnh đạo cuộc vận động Duy Tân?,"cuộc vận động Duy Tân
+tran_chien",11,40,QuanPV,TRUE,"match (e:Event)-[:ten_goi]-(a) where a.name = ""cuộc vận động Duy Tân""
+match (e)-[:doi_tuong_lanh_dao]-(b)
+return b",single - single,,,,,,9,
+60,Kết quả của cuộc vận động Duy Tân,"cuộc vận động Duy Tân
+tran_chien",11,40,QuanPV,TRUE,"match (e:Event)-[:ten_goi]-(a) where a.name = ""cuộc vận động Duy Tân""
+match (e)-[:Result|ket_qua]->(e1)
+match path=(e1)-[:NextEvent*0..]->()
+with nodes(path) as l
+match path=(x)-[*0..1]-(y:Entity) where x in l
+return path",single - single,,,,,,1,
+61,Cuộc vận động Duy Tân diễn ra khi nào?,"Cuộc vận động Duy Tân
+tran_chien",11,40,QuanPV,TRUE,"match (e:Event)-[:ten_goi]-(a) where a.name = ""Cuộc vận động Duy Tân""
+match (e)-[:dien_ra_vao|thoi_gian_bat_dau|thoi_gian_ket_thuc]-(b)
+return b",single - single,,,,,,15,
+62,Phong trào Nghĩa Hòa đoàn chống lại ai?,"Phong trào Nghĩa Hòa đoàn
+tran_chien",11,40,QuanPV,TRUE,"match (e:Event)-[:ten_goi]-(a) where a.name = ""Phong trào Nghĩa Hòa đoàn""
+match (e)-[:doi_tuong_bi_tan_cong]-(b)
+return b",single - single,,,,,,2,
+63,Phong trào Nghĩa Hòa đoàn diễn ra ở đâu?,"Phong trào Nghĩa Hòa đoàn 
+tran_chien",11,40,QuanPV,TRUE,"match (e:Event)-[:ten_goi]-(a) where a.name = ""Phong trào Nghĩa Hòa đoàn""
+match (e)-[:(dien_ra_o|thuoc)*]-(b)
+return b",single - single,,,,,,11,
+64,Điều ước Tân Sửu được kí kết vào thời gian nào?,"Điều ước Tân Sửu
+hiep_dinh",11,40,QuanPV,TRUE,"match (e:KiKet)-[:ten_goi]-(a) where a.name = ""Điều ước Tân Sửu""
+match (e)-[:dien_ra_vao|thoi_gian_bat_dau|thoi_gian_ket_thuc]-(b)
+return b",single - single,,,,,,15,
+65,Trung Quốc Đồng minh hội do ai thành lập?,"Trung Quốc Đồng minh hội 
+to_chuc",11,40,QuanPV,TRUE,"match (e:ThanhLap)-[:doi_tuong_duoc_thanh_lap]-(a) where a.name = ""Trung Quốc Đồng minh hội""
+match (e)-[:thanh_lap_boi]-(b)
+return b",single - single,,,,,,14,
+66,Điều ước Tân Sửu đã được kí kết bởi những quốc gia nào?,"Điều ước Tân Sửu
+hiep_dinh",11,40,QuanPV,TRUE,"match (e:KiKet)-[:ten_goi]-(a) where a.name = ""Điều ước Tân Sửu""
+match (e)-[:doi_tuong_tham_gia|doi_tuong_tan_cong]-(b)
+return b",single - single,,,,,,6,
+67,Việc kí kết Điều ước Tân Sửu có ý nghĩa gì?,"Điều ước Tân Sửu
+hiep_dinh",11,40,QuanPV,TRUE,"match (e:KiKet)-[:ten_goi]-(a) where a.name = ""Điều ước Tân Sửu""
+match (e)-[:y_nghia]-(b)
+return b",single - single,,,,,,12,
+68,Mục tiêu của việc thành lập Trung Quốc Đồng minh hội là gì?,"Trung Quốc Đồng minh hội
+to_chuc",11,40,QuanPV,TRUE,"match (e:ThanhLap)-[:doi_tuong_duoc_thanh_lap]-(a) where a.name = ""Trung Quốc Đồng minh hội""
+match (e)-[:muc_tieu]-(b)
+return b",single - single,,,,,,2,
+69,Trung Quốc Đồng minh hội được thành lập vào thời gian nào?,"Trung Quốc Đồng minh hội
+to_chuc",11,40,QuanPV,TRUE,"match (e:ThanhLap)-[:doi_tuong_duoc_thanh_lap]-(a) where a.name = ""Trung Quốc Đồng minh hội""
+match (e)-[:dien_ra_vao|thoi_gian_bat_dau|thoi_gian_ket_thuc]-(b)
+return b",single - single,,,,,,24,
+70,Trung Quốc Đồng minh hội được thành lập ở đâu?,"Trung Quốc Đồng minh hội
+to_chuc",11,40,QuanPV,TRUE,"match (e:ThanhLap)-[:doi_tuong_duoc_thanh_lap]-(a) where a.name = ""Trung Quốc Đồng minh hội""
+match (e)-[:(dien_ra_o|thuoc)*]-(b)
+return b",single - single,,,,,,7,
+71,Sắc lệnh nào được chính quyền Mãn Thanh ban hành vào năm 1911?,"chính quyền Mãn Thanh | năm 1911
+to_chuc | thoi_gian",11,40,QuanPV,TRUE,"match (e:Event)-[:doi_tuong_ban_hanh]-(a) where a.name = ""chính quyền Mãn Thanh""
+match (e)-[:dien_ra_vao|thoi_gian_bat_dau|thoi_gian_ket_thuc]-(b) where b.name = ""năm 1911""
+match (e)-[:ban_hanh]-(c)
+return c",single - single,,,,,,2,
+72,Mục đích của việc ban hành sắc lệnh Quốc hữu hóa đường sắt của chính quyền Mãn Thanh là gì?,"sắc lệnh Quốc hữu hóa đường sắt | chính quyền Mãn Thanh
+chinh_sach | to_chuc",11,40,QuanPV,TRUE,"match (e:Event)-[:ban_hanh]-(a) where a.name = ""sắc lệnh Quốc hữu hóa đường sắt""
+match (e)-[:doi_tuong_ban_hanh]-(b) where b.name = ""chính quyền Mãn Thanh""
+match (e)-[:muc_tieu]-(c) 
+return c",single - single,,,,,,1,
+73,Cuộc Cách mạng Tân Hơi do ai lãnh đạo?,"Cuộc Cách mạng Tân Hơi
+tran_chien",11,40,QuanPV,TRUE,"match (e:Event)-[:ten_goi]-(a) where a.name = ""Cuộc Cách mạng Tân Hơi""
+match (e)-[:doi_tuong_lanh_dao]-(b) 
+return b",single - single,,,,,,9,
+74,Khởi nghĩa Lam Sơn bùng nổ vào năm bao nhiêu?,"Khởi nghĩa Lam Sơn 
+tran_chien",10,,NgocLD,TRUE,"match (e:Event)-[:ten_goi]-(a) where a.name = ""Khởi nghĩa Lam Sơn""
+match (e)-[:dien_ra_vao|thoi_gian_bat_dau|thoi_gian_ket_thuc]-(b)
+return b",single - single,,,,,,15,
+75,Cách mạng Tân Hợi diễn ra khi nào?,"Cách mạng Tân Hợi
+tran_chien",11,40,QuanPV,TRUE,"match (e:Event)-[:ten_goi]-(a) where a.name = ""Cách mạng Tân Hợi""
+match (e)-[:dien_ra_vao|thoi_gian_bat_dau|thoi_gian_ket_thuc]-(b) 
+return b",single - single,,,,,,15,
+76,Trung Hoa Dân quốc được thành lập vào thời gian nào?,"Trung Hoa Dân quốc
+to_chuc",11,40,QuanPV,TRUE,"match (e:ThanhLap)-[:doi_tuong_duoc_thanh_lap]-(a) where a.name = ""Trung Hoa Dân quốc""
+match (e)-[:dien_ra_vao|thoi_gian_bat_dau|thoi_gian_ket_thuc]-(b) 
+return b",single - single,,,,,,24,
+77,Trung Hoa Dân quốc được thành lập ở đâu?,"Trung Hoa Dân quốc
+to_chuc",11,40,QuanPV,TRUE,"match (e:ThanhLap)-[:doi_tuong_duoc_thanh_lap]-(a) where a.name = ""Trung Hoa Dân quốc""
+match (e)-[:(dien_ra_o|thuoc)*]-(b) 
+return b",single - single,,,,,,7,
+78,Liên minh xã hội dân chủ In-đô-nê-xi-a được thành lập khi nào?,"Liên minh xã hội dân chủ In-đô-nê-xi-a
+to_chuc",11,41,QuanPV,TRUE,"match (e:ThanhLap)-[:doi_tuong_duoc_thanh_lap]-(a) where a.name = ""Liên minh xã hội dân chủ In-đô-nê-xi-a""
+match (e)-[:dien_ra_vao|thoi_gian_bat_dau|thoi_gian_ket_thuc]-(b) 
+return b",single - single,,,,,,24,
+79,Liên hiệp những người con yêu quý của nhân dân được thành lập bởi ai?,"Liên hiệp những người con yêu quý của nhân dân
+to_chuc",11,41,QuanPV,TRUE,"match (e:ThanhLap)-[:doi_tuong_duoc_thanh_lap]-(a) where a.name = ""Liên hiệp những người con yêu quý của nhân dân""
+match (e)-[:thanh_lap_boi]-(b) 
+return b",single - single,,,,,,14,
+80,Liên minh Phi-líp-pin được thành lập khi nào?,"Liên minh Phi-líp-pin
+to_chuc",11,41,QuanPV,TRUE,"match (e:ThanhLap)-[:doi_tuong_duoc_thanh_lap]-(a) where a.name = ""Liên minh Phi-líp-pin""
+match (e)-[:dien_ra_vao|thoi_gian_bat_dau|thoi_gian_ket_thuc]-(b) 
+return b",single - single,,,,,,24,
+81,Liên minh Phi-líp-pin được thành lập bởi ai?,"Liên minh Phi-líp-pin
+to_chuc",11,41,QuanPV,TRUE,"match (e:ThanhLap)-[:doi_tuong_duoc_thanh_lap]-(a) where a.name = ""Liên minh Phi-líp-pin""
+match (e)-[:thanh_lap_boi]-(b) 
+return b",single - single,,,,,,14,
+82,Nguyên nhân diễn ra cuộc khởi nghĩa Lam Sơn là gì?,"cuộc khởi nghĩa Lam Sơn
+tran_chien",10,16,NgocLD,TRUE,"match (e:Event)-[:ten_goi]-(a) where a.name=""cuộc khởi nghĩa Lam Sơn""
+match (e)-[:Causal|nguyen_nhan|boi_canh]->(e1)
+match path=(e1)-[:(Causal|NextEvent)*0..]-(b) where (b)<-[:Causal*0..]-() and (b)-[:NextEvent*0..]->()
+with nodes(path) as l
+match path=(x)-[*0..1]-(y:Entity) where x in l
+return path",multi - multi,,,,,,6,
+83,Nội dung của Hiệp ước 1893 giữa Xiêm và Pháp là gì?,"Hiệp ước 1893 | Xiêm | Pháp
+hiep_dinh | thoi_gian | to_chuc",11,41,QuanPV,TRUE,"match (e:KiKet)-[:ten_goi]-(a) where a.name = ""Hiệp ước 1893""
+match (e)-[:doi_tuong_tham_gia|doi_tuong_tan_cong]-(b) where b.name = ""Xiêm""
+match (e)-[:doi_tuong_tham_gia|doi_tuong_tan_cong]-(c) where c.name = ""Pháp""
+match (e)-[:mo_ta]-(d) 
+return d",single - single,,,,,,2,
+84,"Vào những năm 70, 80 của thế kỉ XIX, Châu Phi bị xâm chiếm bởii quốc gia nào?","những năm 70, 80 của thế kỉ XIX | Châu Phi
+thoi_gian | dia_diem",11,42,QuanPV,TRUE,"match (e:Event)-[:dien_ra_vao|thoi_gian_bat_dau|thoi_gian_ket_thuc]-(a) where a.name = ""những năm 70, 80 của thế kỉ XIX""
+match (e)-[:doi_tuong_bi_chiem]-(b) where b.name = ""Châu Phi""
+match (e)-[:doi_tuong_xam_chiem|doi_tuong_chiem]-(c)
+return c",single - single,,,,,,5,
+85,"Diễn biến của cuộc xâm lược Châu Phi của các nước Châu Âu vào những năm 70, 80 của thế kỉ XIX?","Châu Phi | các nước Châu Âu | những năm 70, 80 của thế kỉ XIX
+dia_diem| dia_diem | thoi_gian",11,42,QuanPV,TRUE,"match (e:Event)-[:doi_tuong_bi_tan_cong]-(a) where a.name = ""Châu Phi""
+match (e)-[:doi_tuong_tham_gia|doi_tuong_tan_cong]-(b) where b.name  = ""các nước Châu Âu""
+match (e)-[:dien_ra_vao|thoi_gian_bat_dau|thoi_gian_ket_thuc]-(c) where c.name = ""những năm 70, 80 của thế kỉ XIX""
+match (e)-[:SubEvent|mo_ta]->(e1)
+match path=(e1)-[:(NextEvent|Causal|Result|SubEvent)*]-()
+with nodes(path) as l
+match path = (x)-[*0..1]-(y:Entity) where x in l
+return path",multi - multi,,,,,,1,
+86,Mục đích của học thuyết Mơn-rô do Mĩ ban hành?,"học thuyết Mơn-rô | Mĩ
+chinh_sach | to_chuc",11,42,QuanPV,TRUE,"match (e:Event)-[:ban_hanh]-(a) where a.name = ""học thuyết Mơn-rô""
+match (e)-[:doi_tuong_ban_hanh]-(b) where b.name = ""Mĩ""
+match (e)-[:muc_tieu]-(c)
+return c",single - single,,,,,,2,
+87,Liên minh dân tộc các nước cộng hòa châu Mĩ được thành lập vào năm nào?,"Liên minh dân tộc các nước cộng hòa châu Mĩ
+to_chuc",11,42,QuanPV,TRUE,"match (e:ThanhLap)-[:doi_tuong_duoc_thanh_lap]-(a) where a.name = ""Liên minh dân tộc các nước cộng hòa châu Mĩ""
+match (e)-[:dien_ra_vao|thoi_gian_bat_dau|thoi_gian_ket_thuc]-(b)
+return b",single - single,,,,,,24,
+88,Phe Liên Minh bao gồm những nước nào?,"Phe Liên Minh
+to_chuc",11,43,QuanPV,TRUE,"match (e:ThanhLap)-[:doi_tuong_duoc_thanh_lap]-(a) where a.name = ""Phe Liên Minh""
+match (e)-[:thanh_lap_boi]-(b)
+return b",single - single,,,,,,14,
+89,Phe Hiệp Ước bao gồm những nước nào?,"Phe Hiệp Ước
+to_chuc",11,43,QuanPV,TRUE,"match (e:ThanhLap)-[:doi_tuong_duoc_thanh_lap]-(a) where a.name = ""Phe Hiệp Ước""
+match (e)-[:thanh_lap_boi]-(b)
+return b",single - single,,,,,,1,
+90,Phe Liên Minh được thành lập vào năm nào?,"Phe Liên Minh
+to_chuc",11,43,QuanPV,TRUE,"match (e:ThanhLap)-[:doi_tuong_duoc_thanh_lap]-(a) where a.name = ""Phe Liên Minh""
+match (e)-[:dien_ra_vao|thoi_gian_bat_dau|thoi_gian_ket_thuc]-(b)
+return b",single - single,,,,,,24,
+91,Hòa ước Bret Litốp được kí kết vào thời gian nào?,"Hòa ước Bret Litốp
+hiep_dinh",11,43,QuanPV,TRUE,"match (e:KiKet)-[:ten_goi]-(a) where a.name = ""Hòa ước Bret Litốp""
+match (e)-[:dien_ra_vao|thoi_gian_bat_dau|thoi_gian_ket_thuc]-(b)
+return b",single - single,,,,,,15,
+92,Các bên tham gia kí kết Hòa ước Bret Litốp là ai?,"Hòa ước Bret Litốp
+hiep_dinh",11,43,QuanPV,TRUE,"match (e:KiKet)-[:ten_goi]-(a) where a.name = ""Hòa ước Bret Litốp""
+match (e)-[:doi_tuong_tham_gia|doi_tuong_tan_cong]-(b)
+return b",single - single,,,,,,6,
+93,Nguyên nhân của việc kí kết Hòa ước Bret Litốp?,"Hòa ước Bret Litốp
+hiep_dinh",11,43,QuanPV,TRUE,"match (e:KiKet)-[:ten_goi]-(a) where a.name = ""Hòa ước Bret Litốp""
+match (e)-[:Causal|nguyen_nhan|boi_canh]->(e1)
+match path=(e1)-[:(Causal|NextEvent)*0..]-(b) where (b)<-[:Causal*0..]-() and (b)-[:NextEvent*0..]->()
+with nodes(path) as l
+match path=(x)-[*0..1]-(y:Entity) where x in l
+return path",multi - multi,,,,,,6,
+94,Ý nghĩa của việc kí kết Hòa ước Bret Litốp?,"Hòa ước Bret Litốp
+hiep_dinh",11,43,QuanPV,TRUE,"match (e:KiKet)-[:ten_goi]-(a) where a.name = ""Hòa ước Bret Litốp""
+match (e)-[:y_nghia]-(b)
+return b",single - single,,,,,,12,
+95,Kết quả của chiến dịch đánh nhanh thắng nhanh của Đức đối với Pháp?,"chiến dịch đánh nhanh thắng nhanh | Đức | Pháp
+chien_dich | to_chuc | to_chuc",11,43,QuanPV,TRUE,"match (e:Event)-[:ten_goi]-(a) where a.name = ""chiến dịch đánh nhanh thắng nhanh""
+match (e)-[:doi_tuong_thuc_hien]-(b) where b.name = ""Đức""
+match (e)-[:doi_tuong_bi_tan_cong]-(c) where c.name = ""Pháp""
+match (e)-[:Result|ket_qua]->(e1)
+match path=(e1)-[:NextEvent*0..]->()
+with nodes(path) as l
+match path=(x)-[*0..1]-(y:Entity) where x in l
+return path",multi - multi,,,,,,1,
+96,Liên minh phát xít đầu tiên được thành lập bởi những nước nào?,"Liên minh phát xít
+to_chuc",11,53,LongLPH,TRUE,"match (e:ThanhLap)-[:doi_tuong_duoc_thanh_lap]-(a) where a.name = ""Liên minh phát xít""
+match (e)-[:thanh_lap_boi]-(b)
+return b",single - single,,,,,,14,
+97,Anh và Pháp thực hiện chính sách nhượng bộ phát xít nhằm mục đích gì?,"Anh | Pháp | chính sách nhượng bộ phát xít
+to_chuc | to_chuc | chinh_sach",11,53,LongLPH,TRUE,"match (e:Event)-[:doi_tuong_thuc_hien]-(a) where a.name = ""Anh""
+match (e)-[:doi_tuong_thuc_hien]-(b) where b.name = ""Pháp""
+match (e)-[:ten_goi]-(c) where c.name = ""chính sách nhượng bộ phát xít""
+match (e)-[:muc_tieu]-(d)
+return d",single - single,,,,,,1,
+98,Đại hội lần thứ nhất các xô viết toàn Liên bang diễn ra vào khi nào?,"Đại hội lần thứ nhất các xô viết toàn Liên bang
+cuoc_hop",11,46,QuanPV,TRUE,"match (e:DienRaCuocHop)-[:ten_goi]-(a) where a.name = ""Đại hội lần thứ nhất các xô viết toàn Liên bang""
+match (e)-[:dien_ra_vao|thoi_gian_bat_dau|thoi_gian_ket_thuc]-(b)
+return b",single - single,,,,,,15,
+99,Diễn biến của chiến dịch đánh nhanh thắng nhanh của Đức đối với Pháp?,"chiến dịch đánh nhanh thắng nhanh | Đức | Pháp
+chien_dich | to_chuc | to_chuc",11,43,QuanPV,TRUE,"match (e:Event)-[:ten_goi]-(a) where a.name = ""chiến dịch đánh nhanh thắng nhanh""
+match (e)-[:doi_tuong_thuc_hien]-(b) where b.name = ""Đức""
+match (e)-[:doi_tuong_bi_tan_cong]-(c) where c.name = ""Pháp""
+match (e)-[:SubEvent|mo_ta]->(e1)
+match path=(e1)-[:(NextEvent|Causal|Result|SubEvent)*]-()
+with nodes(path) as l
+match path = (x)-[*0..1]-(y:Entity) where x in l
+return path",multi - multi,,,,,,1,
+100,Diễn biến của cuộc biểu tình ngày 12 - 9 - 1930 tại huyện Hưng Nguyên,"ngày 12 - 9 - 1930 | huyện Hưng Nguyên
+thoi_gian | dia_diem",12,72,HungTX,TRUE,"match (e:Event)-[:dien_ra_vao|thoi_gian_bat_dau|thoi_gian_ket_thuc]-(a) where a.name = ""ngày 12 - 9 - 1930""
+match (e)-[:(dien_ra_o|thuoc)*]-(b) where b.name = ""huyện Hưng Nguyên""
+match (e)-[:SubEvent|mo_ta]->(e1)
+match path=(e1)-[:(NextEvent|Causal|Result|SubEvent)*]-()
+with nodes(path) as l
+match path = (x)-[*0..1]-(y:Entity) where x in l
+return path",multi - multi,,,,,,3,
+101,Thực dân Pháp đã có hành động gì để chống lại cuộc biểu tình ngày 12 - 9 - 1930 tại huyện Hưng Nguyên,"Thực dân Pháp | 12 - 9 - 1930 | huyện Hưng Nguyên
+dia_diem | thoi_gian | dia_diem",12,72,HungTX,FALSE,"match (e:Event)-[:ten_goi]-(a) where a.name =  ""chiến dịch Biên giới""
+match (e)-[:SubEvent]-(e1:TranChien|ChienDich) where NOT ()<-[:Causal]-(e1) and NOT ()-[:NextEvent]->(e1) 
+match (e1)-[:(dien_ra_o|thuoc)*]-(b) 
+return b",multi - single,,,,,,,
+102,Đại hội lần thứ nhất các xô viết toàn Liên bang do ai chủ trì?,"Đại hội lần thứ nhất các xô viết toàn Liên bang
+
+cuoc_hop",11,46,QuanPV,TRUE,"match (e:DienRaCuocHop)-[:ten_goi]-(a) where a.name = ""Đại hội lần thứ nhất các xô viết toàn Liên bang""
+match (e)-[:doi_tuong_chu_tri]-(b)
+return b",single - single,,,,,,1,
+103,Đại hội lần thứ nhất các xô viết toàn Liên bang được tổ chức ở đâu?,"Đại hội lần thứ nhất các xô viết toàn Liên bang
+cuoc_hop",11,46,QuanPV,TRUE,"match (e:DienRaCuocHop)-[:ten_goi]-(a) where a.name = ""Đại hội lần thứ nhất các xô viết toàn Liên bang""
+match (e)-[:(dien_ra_o|thuoc)*]-(b)
+return b",single - single,,,,,,11,
+104,Hiệp ước Tam cường đã được kí kết ở đâu?,"Hiệp ước Tam cường
+hiep_dinh",11,53,LongLPH,TRUE,"match (e:KiKet)-[:ten_goi]-(a) where a.name = ""Hiệp ước Tam cường""
+match (e)-[:(dien_ra_o|thuoc)*]-(b)
+return b",single - single,,,,,,11,
+105,Lê-nin qua đời vào ngày nào?,"Lê-nin
+nhan_vat",11,46,QuanPV,TRUE,"match (e:Event)-[:doi_tuong_mat]-(a) where a.name = ""Lê-nin""
+match (e)-[:dien_ra_vao|thoi_gian_bat_dau|thoi_gian_ket_thuc]-(b)
+return b",single - single,,,,,,1,
+106,Hội nghị hòa bình được tổ chức ở đâu?,"Hội nghị hòa bình
+cuoc_hop",11,47,QuanPV,TRUE,"match (e:DienRaCuocHop)-[:ten_goi]-(a) where a.name = ""Hội nghị hòa bình""
+match (e)-[:(dien_ra_o|thuoc)*]-(b)
+return b",single - single,,,,,,11,
+107,Mục tiêu của việc tổ chức hội nghị hòa bình là gì?,"hội nghị hòa bình
+cuoc_hop",11,47,QuanPV,TRUE,"match (e:DienRaCuocHop)-[:ten_goi]-(a) where a.name = ""hội nghị hòa bình""
+match (e)-[:muc_tieu]-(b)
+return b",single - single,,,,,,3,
+108,Hội Quốc liên được thành lập bởi ai?,"Hội Quốc liên
+to_chuc",11,47,QuanPV,TRUE,"match (e:ThanhLap)-[:doi_tuong_duoc_thanh_lap]-(a) where a.name = ""Hội Quốc liên""
+match (e)-[:thanh_lap_boi]-(b)
+return b",single - single,,,,,,3,
+109,Ý nghĩa của việc thành lập Hội Quốc liên?,"Hội Quốc liên
+to_chuc",11,47,QuanPV,TRUE,"match (e:ThanhLap)-[:doi_tuong_duoc_thanh_lap]-(a) where a.name = ""Hội Quốc liên""
+match (e)-[:y_nghia]-(b)
+return b",single - single,,,,,,1,
+110,Mục đích của việc thành lập Hội Quốc liên?,"Hội Quốc liên
+to_chuc",11,47,QuanPV,TRUE,"match (e:ThanhLap)-[:doi_tuong_duoc_thanh_lap]-(a) where a.name = ""Hội Quốc liên""
+match (e)-[:muc_tieu]-(b)
+return b",single - single,,,,,,1,
+111,Diễn biến của cao trào cách mạng của các nước tư bản Châu Âu trong những năm 1918 - 1923?,"cao trào cách mạng của các nước tư bản Châu Âu | những năm 1918 | 1923
+tran_chien | thoi_gian | thoi_gian",11,47,QuanPV,TRUE,"match (e:Event)-[:ten_goi]-(a) where a.name = ""cao trào cách mạng của các nước tư bản Châu Âu""
+match (e)-[:dien_ra_vao|thoi_gian_bat_dau]-(b) where b.name = ""những năm 1918""
+match (e)-[:dien_ra_vao|thoi_gian_ket_thuc]-(c) where c.name = ""1923""
+match (e)-[:SubEvent|mo_ta]->(e1)
+match path=(e1)-[:(NextEvent|Causal|Result|SubEvent)*]-()
+with nodes(path) as l
+match path = (x)-[*0..1]-(y:Entity) where x in l
+return path",multi - multi,,,,,,1,
+112,Cộng hòa Xô viết ở Hung-ga-ri được thành lập vào thời gian nào?,"Cộng hòa Xô viết | Hung-ga-ri
+to_chuc | dia_diem",11,47,QuanPV,TRUE,"match (e:ThanhLap)-[:doi_tuong_duoc_thanh_lap]-(a) where a.name = ""Cộng hòa Xô viết""
+match (e)-[:(dien_ra_o|thuoc)*]-(b) where b.name = ""Hung-ga-ri""
+match (e)-[:dien_ra_vao|thoi_gian_bat_dau|thoi_gian_ket_thuc]-(c)
+return c",single - single,,,,,,3,
+113,Cộng hòa Xô viết ở Ba-vi-e được thành lập vào thời gian nào?,"Cộng hòa Xô viết | Ba-vi-e
+to_chuc | dia_diem",11,47,QuanPV,TRUE,"match (e:ThanhLap)-[:doi_tuong_duoc_thanh_lap]-(a) where a.name = ""Cộng hòa Xô viết""
+match (e)-[:(dien_ra_o|thuoc)*]-(b) where b.name = ""Ba-vi-e""
+match (e)-[:dien_ra_vao|thoi_gian_bat_dau|thoi_gian_ket_thuc]-(c)
+return c",single - single,,,,,,3,
+114,"Vào tháng 10 - 1942, Đức đã tiến hành xâm chiếm các nước nào?","tháng 10 - 1942 | Đức
+thoi_gian | dia_diem",11,53,LongLPH,TRUE,"match (e:Event)-[:dien_ra_vao|thoi_gian_bat_dau|thoi_gian_ket_thuc]-(a) where a.name = ""tháng 10 - 1942""
+match (e)-[:doi_tuong_xam_chiem|doi_tuong_chiem]-(b) where b.name = ""Đức""
+match (e)-[:doi_tuong_bi_chiem]-(c)
+return c",single - single,,,,,,2,
+115,Chiến thắng của trận Mát-xcơ-va (12 - 1941) mang ý nghĩa gì?,"trận Mát-xcơ-va | 12 - 1941
+dia_diem | thoi_gian",11,53,LongLPH,TRUE,"match (e:Event)-[:ten_goi]-(a) where a.name = ""trận Mát-xcơ-va""
+match (e)-[:dien_ra_vao|thoi_gian_bat_dau|thoi_gian_ket_thuc]-(b) where b.name = ""12 - 1941""
+match (e)-[:y_nghia]-(c)
+return c",single - single,,,,,,5,
+116,Quốc tế Cộng sản do ai sáng lập?,"Quốc tế Cộng sản
+to_chuc",11,47,QuanPV,TRUE,"match (e:ThanhLap)-[:doi_tuong_duoc_thanh_lap]-(a) where a.name = ""Quốc tế Cộng sản""
+match (e)-[:thanh_lap_boi]-(b)
+return b",single - single,,,,,,14,
+117,Quốc tế Cộng sản được thành lập vào thời gian nào?,"Quốc tế Cộng sản
+to_chuc",11,47,QuanPV,TRUE,"match (e:ThanhLap)-[:doi_tuong_duoc_thanh_lap]-(a) where a.name = ""Quốc tế Cộng sản""
+match (e)-[:dien_ra_vao|thoi_gian_bat_dau|thoi_gian_ket_thuc]-(b)
+return b",single - single,,,,,,24,
+118,Quốc tế Cộng sản được thành lập ở đâu?,"Quốc tế Cộng sản
+to_chuc",11,47,QuanPV,TRUE,"match (e:ThanhLap)-[:doi_tuong_duoc_thanh_lap]-(a) where a.name = ""Quốc tế Cộng sản""
+match (e)-[:(dien_ra_o|thuoc)*]-(b)
+return b",single - single,,,,,,7,
+119,Sự thành lập Mặt trận Nhân dân chống chủ nghĩa phát xít diễn ra ở các nước nào?,"Mặt trận Nhân dân chống chủ nghĩa phát xít
+to_chuc",11,47,QuanPV,TRUE,"match (e:ThanhLap)-[:doi_tuong_duoc_thanh_lap]-(a) where a.name = ""Mặt trận Nhân dân chống chủ nghĩa phát xít""
+match (e)-[:(dien_ra_o|thuoc)*]-(b)
+return b",single - single,,,,,,7,
+120,Kết quả của phong trào đầu tranh chống chủ nghĩa phát xít ở Pháp năm 1936 - 1939?,"chủ nghĩa phát xít | Pháp | năm 1936 | 1939
+to_chuc | dia_diem | thoi_gian | thoi_gian",11,47,QuanPV,TRUE,"match (e:Event)-[:doi_tuong_bi_tan_cong]-(a) where a.name = ""chủ nghĩa phát xít""
+match (e)-[:(dien_ra_o|thuoc)*]-(b) where b.name = ""Pháp""
+match (e)-[:dien_ra_vao|thoi_gian_bat_dau]-(c) where c.name = ""năm 1936""
+match (e)-[:dien_ra_vao|thoi_gian_ket_thuc]-(d) where d.name = ""1939""
+match (e)-[:Result|ket_qua]->(e1)
+match path=(e1)-[:NextEvent*0..]->()
+with nodes(path) as l
+match path=(x)-[*0..1]-(y:Entity) where x in l
+return path",multi - multi,,,,,,1,
+121,Hội nghị I-an-ta có sự tham dự của 3 cường quốc nào?,"Hội nghị I-an-ta
+cuoc_hop",12,53,HungTX,TRUE,"match (e:DienRaCuocHop)-[:ten_goi]-(a) where a.name = ""Hội nghị I-an-ta""
+match (e)-[:doi_tuong_tham_gia|doi_tuong_tan_cong]-(b)
+return b",single - single,,,,,,6,
+122,quân Đồng Minh bắt đầu tấn công quân Đức ở Mặt trận phía Tây vào thời gian nào?,"quân Đồng Minh | quân Đức | Mặt trận phía Tây
+quan_doi | quan_doi | dia_diem",12,53,HungTX,TRUE,"match (e:Event)-[:doi_tuong_tham_gia|doi_tuong_tan_cong]-(a) where a.name = ""quân Đồng Minh""
+match (e)-[:doi_tuong_bi_tan_cong]-(b) where b.name = ""quân Đức""
+match (e)-[:(dien_ra_o|thuoc)*]-(c) where c.name = ""Mặt trận phía Tây""
+match (e)-[:dien_ra_vao|thoi_gian_bat_dau]-(d)
+return d",single - single,,,,,,2,
+123,"Ở Mặt trận Thái Bình Dương, năm 1944, liên quân Mĩ - Anh đã tấn công vào đâu?","Mặt trận Thái Bình Dương | năm 1944 | liên quân Mĩ - Anh
+dia_diem | thoi_gian | quan_doi",12,53,HungTX,TRUE,"match (e:Event)-[:(dien_ra_o|thuoc)*]-(a) where a.name = ""Mặt trận Thái Bình Dương""
+match (e)-[:dien_ra_vao|thoi_gian_bat_dau]-(b) where b.name = ""năm 1944""
+match (e)-[:doi_tuong_tham_gia|doi_tuong_tan_cong]-(c) where c.name = ""liên quân Mĩ - Anh""
+match (e)-[:doi_tuong_bi_tan_cong]-(d)
+return d",single - single,,,,,,2,
+124,"Cuối thập niên 20, Chính phủ Ta-na-ca thi hành chính sách gì?","Cuối thập niên 20 | Chính phủ Ta-na-ca
+thoi_gian | to_chuc",11,50,QuanPV,TRUE,"match (e:Event)-[:dien_ra_vao|thoi_gian_bat_dau|thoi_gian_ket_thuc]-(a) where a.name = ""Cuối thập niên 20""
+match (e)-[:doi_tuong_ban_hanh]-(b) where b.name = ""Chính phủ Ta-na-ca""
+match (e)-[:ban_hanh]-(c)
+return c",single - single,,,,,,2,
+125,Vua Phổ Nghi lên ngôi ở Mãn Châu Quốc vào năm nào?,"Vua Phổ Nghi | Mãn Châu Quốc
+nhan_vat | dia_diem",11,50,QuanPV,TRUE,"match (e:Event)-[:doi_tuong_dam_nhiem]-(a) where a.name = ""Vua Phổ Nghi""
+match (e)-[:(dien_ra_o|thuoc)*]-(b) where b.name = ""Mãn Châu Quốc""
+match (e)-[:dien_ra_vao|thoi_gian_bat_dau|thoi_gian_ket_thuc]-(c)
+return c",single - single,,,,,,1,
+126,Ai đã đưa Phổ Nghi lên ngôi vua ở Mãn Châu Quốc?,"Phổ Nghi | Mãn Châu Quốc
+nhan_vat | dia_diem",11,50,QuanPV,TRUE,"match (e:Event)-[:doi_tuong_dam_nhiem]-(a) where a.name = ""Phổ Nghi""
+match (e)-[:(dien_ra_o|thuoc)*]-(b) where b.name = ""Mãn Châu Quốc""
+match (e)-[:doi_tuong_bo_nhiem]-(c)
+return c",single - single,,,,,,1,
+127,Phong trào Ngũ tứ diễn ra ở đâu?,"Phong trào Ngũ tứ
+tran_chien",11,51,QuanPV,TRUE,"match (e:Event)-[:ten_goi]-(a) where a.name = ""Phong trào Ngũ tứ""
+match (e)-[:(dien_ra_o|thuoc)*]-(b)
+return b",single - single,,,,,,11,
+128,Phong trào Ngũ tứ diễn ra vào thời gian nào?,"Phong trào Ngũ tứ
+tran_chien",11,51,QuanPV,TRUE,"match (e:Event)-[:ten_goi]-(a) where a.name = ""Phong trào Ngũ tứ""
+match (e)-[:dien_ra_vao|thoi_gian_bat_dau|thoi_gian_ket_thuc]-(b)
+return b",single - single,,,,,,15,
+129,Ý nghĩa của Phong trào Ngũ tứ là gì?,"Phong trào Ngũ tứ
+tran_chien",11,51,QuanPV,TRUE,"match (e:Event)-[:ten_goi]-(a) where a.name = ""Phong trào Ngũ tứ""
+match (e)-[:y_nghia]-(b)
+return b",single - single,,,,,,12,
+130,Kết quả của Phong trào Ngũ tứ là gì?,"Phong trào Ngũ tứ
+tran_chien",11,51,QuanPV,TRUE,"match (e:Event)-[:ten_goi]-(a) where a.name = ""Phong trào Ngũ tứ""
+match (e)-[:Result|ket_qua]->(e1)
+match path=(e1)-[:NextEvent*0..]->()
+with nodes(path) as l
+match path=(x)-[*0..1]-(y:Entity) where x in l
+return path",multi - multi,,,,,,5,
+131,Ai đã tham gia cuộc biểu tình tại Quảng trường Thiên An Môn?,"Quảng trường Thiên An Môn
+dia_diem",11,51,QuanPV,TRUE,"match (e:Event)-[:(dien_ra_o|thuoc)*]-(a) where a.name = ""Quảng trường Thiên An Môn""
+match (e)-[:doi_tuong_tham_gia|doi_tuong_tan_cong]-(b)
+return b",single - single,,,,,,1,
+132,Mục tiêu của cuộc biểu tình tại Quảng trường Thiên An Môn?,"Quảng trường Thiên An Môn
+dia_diem",11,51,QuanPV,TRUE,"match (e:Event)-[:(dien_ra_o|thuoc)*]-(a) where a.name = ""Quảng trường Thiên An Môn""
+match (e)-[:muc_tieu]-(b)
+return b",single - single,,,,,,1,
+133,Kết quả của cuộc biểu tình tại Quảng trường Thiên An Môn?,"Quảng trường Thiên An Môn
+dia_diem",11,51,QuanPV,TRUE,"match (e:Event)-[:(dien_ra_o|thuoc)*]-(a) where a.name = ""Quảng trường Thiên An Môn""
+match (e)-[:Result|ket_qua]->(e1)
+match path=(e1)-[:NextEvent*0..]->()
+with nodes(path) as l
+match path=(x)-[*0..1]-(y:Entity) where x in l
+return path",multi - multi,,,,,,1,
+134,Đảng Cộng sản Trung Quốc ra đời trong bối cảnh nào?,"Đảng Cộng sản Trung Quốc
+to_chuc",11,51,QuanPV,TRUE,"match (e:ThanhLap)-[:doi_tuong_duoc_thanh_lap]-(a) where a.name = ""Đảng Cộng sản Trung Quốc""
+match (e)-[:Causal|nguyen_nhan|boi_canh]->(e1)
+match path=(e1)-[:(Causal|NextEvent)*0..]-(b) where (b)<-[:Causal*0..]-() and (b)-[:NextEvent*0..]->()
+with nodes(path) as l
+match path=(x)-[*0..1]-(y:Entity) where x in l
+return path",single - single,,,,,,1,
+135,Đảng Cộng sản Trung Quốc ra đời vào thời gian nào?,"Đảng Cộng sản Trung Quốc
+to_chuc",11,51,QuanPV,TRUE,"match (e:ThanhLap)-[:doi_tuong_duoc_thanh_lap]-(a) where a.name = ""Đảng Cộng sản Trung Quốc""
+match (e)-[:dien_ra_vao|thoi_gian_bat_dau|thoi_gian_ket_thuc]-(b)
+return b",single - single,,,,,,24,
+136,Việc thành lập Đảng Cộng sản Trung Quốc có ý nghĩa gì?,"Đảng Cộng sản Trung Quốc
+to_chuc",11,51,QuanPV,TRUE,"match (e:ThanhLap)-[:doi_tuong_duoc_thanh_lap]-(a) where a.name = ""Đảng Cộng sản Trung Quốc""
+match (e)-[:y_nghia]-(b)
+return b",single - single,,,,,,3,
+137,Tổ chức nào đã lãnh đạo trong Chiến tranh Bắc phạt?,"Chiến tranh Bắc phạt
+tran_chien",11,51,QuanPV,TRUE,"match (e:Event)-[:ten_goi]-(a) where a.name = ""Chiến tranh Bắc phạt""
+match (e)-[:doi_tuong_lanh_dao]-(b)
+return b",single - single,,,,,,9,
+138,Chiến tranh Bắc phạt bắt đầu vào năm nào?,"Chiến tranh Bắc phạt
+tran_chien",11,51,QuanPV,TRUE,"match (e:Event)-[:ten_goi]-(a) where a.name = ""Chiến tranh Bắc phạt""
+match (e)-[:dien_ra_vao|thoi_gian_bat_dau]-(b)
+return b",single - single,,,,,,8,
+139,Chiến tranh Bắc phạt kết thúc vào năm nào?,"Chiến tranh Bắc phạt
+tran_chien",11,51,QuanPV,TRUE,"match (e:Event)-[:ten_goi]-(a) where a.name = ""Chiến tranh Bắc phạt""
+match (e)-[:dien_ra_vao|thoi_gian_ket_thuc]-(b)
+return b",single - single,,,,,,5,
+140,Cuộc Nội chiến Quốc - Cộng diễn ra ở đâu?,"Cuộc Nội chiến Quốc - Cộng
+tran_chien",11,51,QuanPV,TRUE,"match (e:Event)-[:ten_goi]-(a) where a.name = ""Cuộc Nội chiến Quốc - Cộng""
+match (e)-[:(dien_ra_o|thuoc)*]-(b)
+return b",single - single,,,,,,11,
+141,Cuộc Nội chiến Quốc - Cộng bắt đầu khi nào?,"Cuộc Nội chiến Quốc - Cộng
+tran_chien",11,51,QuanPV,TRUE,"match (e:Event)-[:ten_goi]-(a) where a.name = ""Cuộc Nội chiến Quốc - Cộng""
+match (e)-[:dien_ra_vao|thoi_gian_bat_dau]-(b)
+return b",single - single,,,,,,8,
+142,Cuộc Nội chiến Quốc - Cộng kết thúc khi nào?,"Cuộc Nội chiến Quốc - Cộng
+tran_chien",11,51,QuanPV,TRUE,"match (e:Event)-[:ten_goi]-(a) where a.name = ""Cuộc Nội chiến Quốc - Cộng""
+match (e)-[:dien_ra_vao|thoi_gian_ket_thuc]-(b)
+return b",single - single,,,,,,5,
+143,Hội nghị Tuân Nghĩa diễn ra ở đâu?,"Hội nghị Tuân Nghĩa
+cuoc_hop",11,51,QuanPV,TRUE,"match (e:DienRaCuocHop)-[:ten_goi]-(a) where a.name = ""Hội nghị Tuân Nghĩa""
+match (e)-[:(dien_ra_o|thuoc)*]-(b)
+return b",single - single,,,,,,11,
+144,Hội nghị Tuân Nghĩa diễn ra vào thời gian nào?,"Hội nghị Tuân Nghĩa
+cuoc_hop",11,51,QuanPV,TRUE,"match (e:DienRaCuocHop)-[:ten_goi]-(a) where a.name = ""Hội nghị Tuân Nghĩa""
+match (e)-[:dien_ra_vao|thoi_gian_bat_dau|thoi_gian_ket_thuc]-(b)
+return b",single - single,,,,,,15,
+145,Kết quả của Hội nghị Tuân Nghĩa là gì?,"Hội nghị Tuân Nghĩa
+cuoc_hop",11,51,QuanPV,TRUE,"match (e:DienRaCuocHop)-[:ten_goi]-(a) where a.name = ""Hội nghị Tuân Nghĩa""
+match (e)-[:Result|ket_qua]->(e1)
+match path=(e1)-[:NextEvent*0..]->()
+with nodes(path) as l
+match path=(x)-[*0..1]-(y:Entity) where x in l
+return path",multi - multi,,,,,,5,
+146,Ai đã lãnh đạo phong trào đấu tranh chống thực dân Anh ở Ấn Độ?,"thực dân Anh | Ấn Độ
+to_chuc | dia_diem",11,51,QuanPV,TRUE,"match (e:Event)-[:doi_tuong_bi_tan_cong]-(a) where a.name = ""thực dân Anh""
+match (e)-[:(dien_ra_o|thuoc)*]-(b) where b.name = ""Ấn Độ""
+match (e)-[:doi_tuong_lanh_dao]-(c)
+return c",single - single,,,,,,2,
+147,Đảng Cộng sản Ấn Độ được thành lập vào năm nào?,"Đảng Cộng sản Ấn Độ
+to_chuc",11,51,QuanPV,TRUE,"match (e:ThanhLap)-[:doi_tuong_duoc_thanh_lap]-(a) where a.name = ""Đảng Cộng sản Ấn Độ""
+match (e)-[:dien_ra_vao|thoi_gian_bat_dau|thoi_gian_ket_thuc]-(b)
+return b",single - single,,,,,,24,
+148,Đảng Cộng sản In-đô-nê-xi-a được thành lập vào năm nào?,"Đảng Cộng sản In-đô-nê-xi-a
+to_chuc",11,52,QuanPV,TRUE,"match (e:ThanhLap)-[:doi_tuong_duoc_thanh_lap]-(a) where a.name = ""Đảng Cộng sản In-đô-nê-xi-a""
+match (e)-[:dien_ra_vao|thoi_gian_bat_dau|thoi_gian_ket_thuc]-(b)
+return b",single - single,,,,,,24,
+149,Những nước nào thành lập Đảng Cộng sản vào năm 1930,"Đảng Cộng sản | năm 1930
+to_chuc | thoi_gian",11,52,QuanPV,TRUE,"match (e:ThanhLap)-[:doi_tuong_duoc_thanh_lap]-(a) where a.name = ""Đảng Cộng sản""
+match (e)-[:dien_ra_vao|thoi_gian_bat_dau|thoi_gian_ket_thuc]-(b) where b.name = ""năm 1930""
+match (e)-[:(dien_ra_o|thuoc)*]-(c)
+return c",single - single,,,,,,3,
+150,Tổng thống đầu tiên của nước Cộng hòa In-đô-nê-xi-a là ai?,"Tổng thống đầu tiên của nước Cộng hòa In-đô-nê-xi-a
+chuc_vu",11,52,QuanPV,FALSE,"match (e:Event)-[:vai_tro]-(a) where a.name = ""Tổng thống đầu tiên của nước Cộng hòa In-đô-nê-xi-a""
+match (e)-[:doi_tuong_dam_nhiem]-(b)
+return b",single - single,,,,,,,
+151,Hội đồng nhân dân In-đô-nê-xi-a được thành lập vào thời gian nào?,"Hội đồng nhân dân In-đô-nê-xi-a
+to_chuc",11,52,QuanPV,TRUE,"match (e:ThanhLap)-[:doi_tuong_duoc_thanh_lap]-(a) where a.name = ""Hội đồng nhân dân In-đô-nê-xi-a""
+match (e)-[:dien_ra_vao|thoi_gian_bat_dau|thoi_gian_ket_thuc]-(b)
+return b",single - single,,,,,,24,
+152,Mục đích thành lập Hội đồng nhân dân In-đô-nê-xi-a là gì?,"Hội đồng nhân dân In-đô-nê-xi-a
+to_chuc",11,52,QuanPV,TRUE,"match (e:ThanhLap)-[:doi_tuong_duoc_thanh_lap]-(a) where a.name = ""Hội đồng nhân dân In-đô-nê-xi-a""
+match (e)-[:muc_tieu]-(b)
+return b",single - single,,,,,,2,
+153,Ai đã thành lập Liên minh chính trị In-đô-nê-xi-a?,"Liên minh chính trị In-đô-nê-xi-a
+to_chuc",11,52,QuanPV,TRUE,"match (e:ThanhLap)-[:doi_tuong_duoc_thanh_lap]-(a) where a.name = ""Liên minh chính trị In-đô-nê-xi-a""
+match (e)-[:thanh_lap_boi]-(b)
+return b",single - single,,,,,,14,
+154,Liên minh chính trị In-đô-nê-xi-a được thành lập vào năm nào?,"Liên minh chính trị In-đô-nê-xi-a
+to_chuc",11,52,QuanPV,TRUE,"match (e:ThanhLap)-[:doi_tuong_duoc_thanh_lap]-(a) where a.name = ""Liên minh chính trị In-đô-nê-xi-a""
+match (e)-[:dien_ra_vao|thoi_gian_bat_dau|thoi_gian_ket_thuc]-(b)
+return b",single - single,,,,,,24,
+155,Bắc Bình vương Nguyễn Huệ lên ngôi Hoàng đế vào năm nào?,"Bắc Bình vương Nguyễn Huệ | Hoàng đế
+nhan_vat | chuc_vu",10,21,QuanPV,FALSE,"match (e:Event)-[:ten_goi]-(a) where a.name = ""cách mạng tư sản Anh""
+match (e)-[:dien_ra_vao|thoi_gian_bat_dau|thoi_gian_ket_thuc]-(b) where b.name = ""đầu thế kỉ XVI""
+match path = (e)-[:(NextEvent|SubEvent)*]-()
+with nodes(e) in path as l
+match path = (x)-[*0..1]-(y:Entity) where x in l
+return path",single - single,,,,,,,
+156,Trình bày diễn biến của Cách mạng tư sản Anh đầu thế kỉ XVII,"Cách mạng tư sản Anh | đầu thế kỉ XVII
+tran_chien | thoi_gian",10,29,NgocLD,TRUE,"match (e:Event)-[:ten_goi]-(a) where a.name = ""Cách mạng tư sản Anh"" 
+match (e)-[:dien_ra_vao|thoi_gian_bat_dau|thoi_gian_ket_thuc]-(b) where b.name = ""đầu thế kỉ XVII"" 
+match (e)-[:SubEvent|mo_ta]->(e1)
+match path=(e1)-[:(NextEvent|Causal|Result|SubEvent)*]-()
+with nodes(path) as l
+match path = (x)-[*0..1]-(y:Entity) where x in l
+return path",multi - multi,,,,,,4,
+157,Nguyên nhân của cuộc cách mạng tư sản ở Anh đầu thế kỉ XVII là gì?,"cuộc cách mạng tư sản ở Anh | đầu thế kỉ XVII
+tran_chien | thoi_gian",10,29,NgocLD,TRUE,"match (e:Event)-[:ten_goi]-(a) where a.name = ""cuộc cách mạng tư sản ở Anh""
+match (e)-[:dien_ra_vao|thoi_gian_bat_dau|thoi_gian_ket_thuc]-(b) where b.name = ""đầu thế kỉ XVII""
+match (e)-[:Causal|nguyen_nhan|boi_canh]->(e1)
+match path=(e1)-[:(Causal|NextEvent)*0..]-(b) where (b)<-[:Causal*0..]-() and (b)-[:NextEvent*0..]->()
+with nodes(path) as l
+match path=(x)-[*0..1]-(y:Entity) where x in l
+return path",multi - multi,,,,,,4,
+158,cách mạng tư sản Anh đầu thế kỉ XVII đã đem lại kết quả gì?,"cách mạng tư sản Anh | đầu thế kỉ XVII
+tran_chien | thoi_gian",10,29,NgocLD,TRUE,"match (e:Event)-[:ten_goi]-(a) where a.name = ""cách mạng tư sản Anh""
+match (e)-[:dien_ra_vao|thoi_gian_bat_dau|thoi_gian_ket_thuc]-(b) where b.name = ""đầu thế kỉ XVII""
+match (e)-[:Result|ket_qua]->(e1)
+match path=(e1)-[:NextEvent*0..]->()
+with nodes(path) as l
+match path=(x)-[*0..1]-(y:Entity) where x in l
+return path",multi - multi,,,,,,2,
+159,trình bày diễn biến chính của Cách mạng Hà Lan vào thế kỉ XVI,"Cách mạng Hà Lan | thế kỉ XVI
+tran_chien | thoi_gian",10,29,NgocLD,TRUE,"match (e:Event)-[:ten_goi]-(a) where a.name = ""Cách mạng Hà Lan""
+match (e)-[:dien_ra_vao|thoi_gian_bat_dau|thoi_gian_ket_thuc]-(b) where b.name = ""thế kỉ XVI""
+match (e)-[:SubEvent|mo_ta]->(e1)
+match path=(e1)-[:(NextEvent|Causal|Result|SubEvent)*]-()
+with nodes(path) as l
+match path = (x)-[*0..1]-(y:Entity) where x in l
+return path",multi - multi,,,,,,4,
+160,Trận Rạch Gầm - Xoài Mút do ai lãnh đạo?,"Trận Rạch Gầm - Xoài Mút
+tran_chien",10,21,QuanPV,TRUE,"match (e:Event)-[:ten_goi]-(a) where a.name = ""Trận Rạch Gầm - Xoài Mút""
+match (e)-[:doi_tuong_lanh_dao]-(b)
+return b",single - single,,,,,,9,
+161,hãy nêu ý nghĩa của cách mạng tư sản Hà Lan (thế kỉ XVI),"cách mạng tư sản Hà Lan | thế kỉ XVI
+tran_chien | thoi_gian",10,29,NgocLD,TRUE,"match (e:Event)-[:ten_goi]-(a) where a.name = ""cách mạng tư sản Hà Lan""
+match (e)-[:dien_ra_vao|thoi_gian_bat_dau|thoi_gian_ket_thuc]-(b) where b.name = ""thế kỉ XVI""
+match (e)-[:y_nghia]-(c)
+return c",single - single,,,,,,5,
+162,"nguyên nhân, bối cảnh của cuộc cách mạng tư sản Hà Lan vào thế kỉ XVI là gì?","cuộc cách mạng tư sản Hà Lan | thế kỉ XVI
+tran_chien | thoi_gian",10,29,NgocLD,TRUE,"match (e:Event)-[:ten_goi]-(a) where a.name = ""cuộc cách mạng tư sản Hà Lan""
+match (e)-[:dien_ra_vao|thoi_gian_bat_dau|thoi_gian_ket_thuc]-(b) where b.name = ""thế kỉ XVI""
+match (e)-[:Causal|nguyen_nhan|boi_canh]->(e1)
+match path=(e1)-[:(Causal|NextEvent)*0..]-(b) where (b)<-[:Causal*0..]-() and (b)-[:NextEvent*0..]->()
+with nodes(path) as l
+match path=(x)-[*0..1]-(y:Entity) where x in l
+return path",multi - multi,,,,,,4,
+163,Trận Rạch Gầm - Xoài Mút bắt đầu vào thời gian nào?,"Trận Rạch Gầm - Xoài Mút
+tran_chien",10,21,QuanPV,TRUE,"match (e:Event)-[:ten_goi]-(a) where a.name = ""Trận Rạch Gầm - Xoài Mút""
+match (e)-[:dien_ra_vao|thoi_gian_bat_dau]-(b)
+return b",single - single,,,,,,8,
+164,Nước Mĩ được thành lập trong hoàn cảnh nào?,"Nước Mĩ
+dia_diem",10,30,NgocLD,TRUE,"match (e:ThanhLap)-[:doi_tuong_duoc_thanh_lap]-(a) where a.name = ""Nước Mĩ""
+match (e)-[:Causal|nguyen_nhan|boi_canh]->(e1)
+match path=(e1)-[:(Causal|NextEvent)*0..]-(b) where (b)<-[:Causal*0..]-() and (b)-[:NextEvent*0..]->()
+with nodes(path) as l
+match path=(x)-[*0..1]-(y:Entity) where x in l
+return path",multi - multi,,,,,,2,
+165,Hiệp định đình chiến giữa Pháp và Đức có nội dung gì?,"Hiệp định đình chiến | Pháp | Đức
+hiep_dinh | dia_diem | dia_diem",11,53,LongLPH,TRUE,"match (e:KiKet)-[:ten_goi]-(a) where a.name = ""Hiệp định đình chiến""
+match (e)-[:doi_tuong_tham_gia|doi_tuong_tan_cong]-(b) where b.name = ""Pháp""
+match (e)-[:doi_tuong_tham_gia|doi_tuong_tan_cong]-(c) where c.name = ""Đức""
+match (e)-[:mo_ta]-(d)
+return d",single - single,,,,,,2,
+166,Trận Ngọc Hồi - Đống Đa bắt đầu vào thời gian nào?,"Trận Ngọc Hồi - Đống Đa
+tran_chien",11,21,QuanPV,TRUE,"match (e:Event)-[:ten_goi]-(a) where a.name = ""Trận Ngọc Hồi - Đống Đa""
+match (e)-[:dien_ra_vao|thoi_gian_bat_dau]-(b)
+return b",single - single,,,,,,8,
+167,sự kiện gì đã dẫn đến sự ra đời của Hợp chủng quốc Mĩ ngày 4-7-1776,"Hợp chủng quốc Mĩ | ngày 4-7-1776
+to_chuc | thoi_gian",10,30,NgocLD,TRUE,"match (e:Event)-[:NextEvent|Result|Causal]-(e1) where (e)-[:NextEvent|Result]->(e1) or (e)<-[:Causal]-(e1)
+match (e1)-[:doi_tuong_duoc_thanh_lap]-(a) where a.name=""Hợp chủng quốc Mĩ""
+match (e1)-[:dien_ra_vao|thoi_gian_bat_dau|thoi_gian_ket_thuc]-(b) where b.name=""ngày 4-7-1776""
+match path=(e)-[*0..1]-(y:Entity)
+return path",multi - multi,,,,,,1,
+168,Trận Ngọc Hồi - Đống Đa kết thúc vào thời gian nào?,"Trận Ngọc Hồi - Đống Đa
+tran_chien",10,21,QuanPV,TRUE,"match (e:Event)-[:ten_goi]-(a) where a.name = ""Trận Ngọc Hồi - Đống Đa""
+match (e)-[:dien_ra_vao|thoi_gian_ket_thuc]-(b)
+return b",single - single,,,,,,5,
+169,Trận Ngọc Hồi - Đống Đa do ai lãnh đạo?,"Trận Ngọc Hồi - Đống Đa
+tran_chien",10,21,QuanPV,TRUE,"match (e:Event)-[:ten_goi]-(a) where a.name = ""Trận Ngọc Hồi - Đống Đa"" 
+match (e)-[:doi_tuong_lanh_dao]-(b)
+return b",single - single,,,,,,9,
+170,Cuộc khởi nghĩa của Phan Bá Vành diễn ra ở đâu?,"Phan Bá Vành
+nhan_vat",10,24,QuanPV,TRUE,"match (e:Event)-[:doi_tuong_lanh_dao]-(a) where a.name = ""Phan Bá Vành""
+match (e)-[:(dien_ra_o|thuoc)*]-(b)
+return b",single - single,,,,,,4,
+171,Nguyễn Nhạc lên ngôi Hoàng đế vào năm nào?,"Nguyễn Nhạc | Hoàng đế
+nhan_vat | chuc_vu",11,21,QuanPV,TRUE,"match (e:Event)-[:doi_tuong_dam_nhiem]-(a) where a.name = ""Nguyễn Nhạc""
+match (e)-[:vai_tro]-(b) where b.name = ""Hoàng đế""
+match (e)-[:dien_ra_vao|thoi_gian_bat_dau|thoi_gian_ket_thuc]-(c)
+return c",single - single,,,,,,1,
+172,trình bày diễn biến chính cuộc Chiến tranh giành độc lập của 13 thuộc địa Anh ở Bắc Mĩ,"cuộc Chiến tranh giành độc lập của 13 thuộc địa Anh | Bắc Mĩ
+tran_chien | dia_diem",10,30,NgocLD,TRUE,"match (e:Event)-[:ten_goi]-(a) where a.name = ""cuộc Chiến tranh giành độc lập của 13 thuộc địa Anh""
+match (e)-[:(dien_ra_o|thuoc)*]-(b) where b.name = ""Bắc Mĩ""
+match (e)-[:SubEvent|mo_ta]->(e1)
+match path=(e1)-[:(NextEvent|Causal|Result|SubEvent)*]-()
+with nodes(path) as l
+match path = (x)-[*0..1]-(y:Entity) where x in l
+return path",multi - multi,,,,,,1,
+173,Nêu kết quả của Chiến tranh giành độc lập của 13 thuộc địa Anh ở Bắc Mĩ,"Chiến tranh giành độc lập của 13 thuộc địa Anh | Bắc Mĩ
+tran_chien | dia_diem",10,30,NgocLD,TRUE,"match (e:Event)-[:ten_goi]-(a) where a.name = ""Chiến tranh giành độc lập của 13 thuộc địa Anh""
+match (e)-[:(dien_ra_o|thuoc)*]-(b) where b.name = ""Bắc Mĩ""
+match (e)-[:Result|ket_qua]->(e1)
+match path=(e1)-[:NextEvent*0..]->()
+with nodes(path) as l
+match path=(x)-[*0..1]-(y:Entity) where x in l
+return path",multi - multi,,,,,,1,
+173-1,Nêu ý nghĩa của Chiến tranh giành độc lập của 13 thuộc địa Anh ở Bắc Mĩ,"Chiến tranh giành độc lập của 13 thuộc địa Anh | Bắc Mĩ
+tran_chien | dia_diem",,,,TRUE,"match (e:Event)-[:ten_goi]-(a) where a.name = ""Chiến tranh giành độc lập của 13 thuộc địa Anh ""
+match (e)-[:(dien_ra_o|thuoc)*]-(b) where b.name = ""Bắc Mĩ""
+match (e)-[:y_nghia]-(c)
+return c",single - single,,,,,,2,
+174,Cuộc khởi nghĩa của Phan Bá Vành bắt đầu vào năm nào?,"Phan Bá Vành 
+nhan_vat",10,24,QuanPV,TRUE,"match (e:Event)-[:doi_tuong_lanh_dao]-(a) where a.name = ""Phan Bá Vành""
+match (e)-[:dien_ra_vao|thoi_gian_bat_dau]-(b)
+return b",single - single,,,,,,2,
+175,Trình bày quá trình thống nhất I-ta-li-a vào giữa thế kỉ XIX,"I-ta-li-a | giữa thế kỉ XIX
+dia_diem | thoi_gian",10,,NgocLD,FALSE,"match (e:Event)-[:doi_tuong_duoc_thong_nhat]-(a) where a.name = ""I-ta-li-a""
+match (e)-[:dien_ra_vao|thoi_gian_bat_dau|thoi_gian_ket_thuc]-(b) where b.name = ""thế kỉ XIX""
+match (e)-[:SubEvent|mo_ta]->(e1)
+match path=(e1)-[:(NextEvent|Causal|Result|SubEvent)*]-()
+with nodes(path) as l
+match path = (x)-[*0..1]-(y:Entity) where x in l
+return path",single - multi,,,,,,,
+176,Cuộc khởi nghĩa của Phan Bá Vành kết thúc vào năm nào?,"Phan Bá Vành
+nhan_vat",10,24,QuanPV,TRUE,"match (e:Event)-[:doi_tuong_lanh_dao]-(a) where a.name = ""Phan Bá Vành""
+match (e)-[:dien_ra_vao|thoi_gian_ket_thuc]-(b)
+return b",single - single,,,,,,2,
+177,Các nước nào mở Mặt trận thứ hai ở Tây Âu?,"Mặt trận thứ hai | Tây Âu
+tran_chien | dia_diem",11,53,LongLPH,TRUE,"match (e:Event)-[:ten_goi]-(a) where a.name = ""Mặt trận thứ hai""
+match (e)-[:(dien_ra_o|thuoc)*]-(b) where b.name = ""Tây Âu""
+match (e)-[:doi_tuong_tham_gia|doi_tuong_tan_cong]-(c)
+return c",single - single,,,,,,1,
+178,Cuộc khởi nghĩa của Cao Bá Quát diễn ra ở đâu?,"Cao Bá Quát
+nhan_vat",10,24,QuanPV,TRUE,"match (e:Event)-[:doi_tuong_lanh_dao]-(a) where a.name = ""Cao Bá Quát""
+match (e)-[:(dien_ra_o|thuoc)*]-(b)
+return b",single - single,,,,,,4,
+179,Cuộc khởi nghĩa của Cao Bá Quát diễn ra vào năm nào?,"Cao Bá Quát
+nhan_vat",10,24,QuanPV,TRUE,"match (e:Event)-[:doi_tuong_lanh_dao]-(a) where a.name = ""Cao Bá Quát""
+match (e)-[:dien_ra_vao|thoi_gian_bat_dau|thoi_gian_ket_thuc]-(b)
+return b",single - single,,,,,,1,
+180,Nguyên nhân dẫn đến Chiến tranh thế giới thứ nhất vào 1914-1918?,"Chiến tranh thế giới thứ nhất | 1914 | 1918
+tran_chien | thoi_gian | thoi_gian",10,32,NgocLD,TRUE,"match (e:Event)-[:ten_goi]-(a) where a.name=""Chiến tranh thế giới thứ nhất""
+match (e)-[:dien_ra_vao|thoi_gian_bat_dau]-(b) where b.name=""1914""
+match (e)-[:dien_ra_vao|thoi_gian_ket_thuc]-(c) where b.name=""1918""
+match (e)-[:Causal|nguyen_nhan|boi_canh]->(e1)
+match path=(e1)-[:(Causal|NextEvent)*0..]-(d) where (d)<-[:Causal*0..]-() and (d)-[:NextEvent*0..]->()
+with nodes(path) as l
+match path=(x)-[*0..1]-(y:Entity) where x in l
+return path",multi - multi,,,,,,2,
+181,Cuộc khởi nghĩa của Lê Văn Khôi diễn ra ở đâu?,"Lê Văn Khôi
+nhan_vat",10,24,QuanPV,TRUE,"match (e:Event)-[:doi_tuong_lanh_dao]-(a) where a.name = ""Lê Văn Khôi""
+match (e)-[:(dien_ra_o|thuoc)*]-(b)
+return b",single - single,,,,,,4,
+182,Kết quả cuộc nội chiến Mĩ vào giữa thế kỉ XIX là gì?,"cuộc nội chiến Mĩ | giữa thế kỉ XIX
+tran_chien | thoi_gian",10,32,NgocLD,TRUE,"match (e:Event)-[:ten_goi]-(a) where a.name = ""cuộc nội chiến Mĩ""
+match (e)-[:dien_ra_vao|thoi_gian_bat_dau|thoi_gian_ket_thuc]-(b) where b.name = ""giữa thế kỉ XIX""
+match (e)-[:Result|ket_qua]->(e1)
+match path=(e1)-[:NextEvent*0..]->()
+with nodes(path) as l
+match path=(x)-[*0..1]-(y:Entity) where x in l
+return path",multi - multi,,,,,,2,
+183,Mĩ ném bom vào thành phố Hi-rô-si-ma vào thời gian nào?,"Mĩ | thành phố Hi-rô-si-ma
+to_chuc | dia_diem",11,53,LongLPH,TRUE,"match (e:NemBom)-[:doi_tuong_tham_gia|doi_tuong_tan_cong]-(a) where a.name = ""Mĩ""
+match (e)-[:doi_tuong_bi_tan_cong]-(b) where a.name = ""thành phố Hi-rô-si-ma""
+match (e)-[:dien_ra_vao|thoi_gian_bat_dau|thoi_gian_ket_thuc]-(c)
+return c",single - single,,,,,,1,
+184,Cuộc khởi nghĩa của Nông Văn Vân diễn ra ở đâu?,"Nông Văn Vân
+nhan_vat",10,24,QuanPV,TRUE,"match (e:Event)-[:doi_tuong_lanh_dao]-(a) where a.name = ""Nông Văn Vân""
+match (e)-[:(dien_ra_o|thuoc)*]-(b)
+return b",single - single,,,,,,4,
+185,Cuộc khởi nghĩa của Nông Văn Vân bắt đầu vào thời điểm nào?,"Nông Văn Vân
+nhan_vat",10,24,QuanPV,TRUE,"match (e:Event)-[:doi_tuong_lanh_dao]-(a) where a.name = ""Nông Văn Vân""
+match (e)-[:dien_ra_vao|thoi_gian_bat_dau]-(b)
+return b",single - single,,,,,,2,
+186,Cuộc khởi nghĩa của Nông Văn Vân kết thúc vào thời điểm nào?,"Nông Văn Vân
+nhan_vat",10,24,QuanPV,TRUE,"match (e:Event)-[:doi_tuong_lanh_dao]-(a) where a.name = ""Nông Văn Vân""
+match (e)-[:dien_ra_vao|thoi_gian_ket_thuc]-(b)
+return b",single - single,,,,,,2,
+187,Trình bày diễn biến của cuộc đấu tranh thống nhất nước Đức vào giữa thế kỉ XIX,"cuộc đấu tranh thống nhất nước Đức | giữa thế kỉ XIX
+to_chuc | thoi_gian",10,33,NgocLD,TRUE,"match (e:Event)-[:ten_goi]-(a) where b.name = ""cuộc đấu tranh thống nhất nước Đức""
+match (e)-[:dien_ra_vao|thoi_gian_bat_dau|thoi_gian_ket_thuc]-(b) where a.name = ""giữa thế kỉ XIX""
+match (e)-[:SubEvent|mo_ta]->(e1)
+match path=(e1)-[:(NextEvent|Causal|Result|SubEvent)*]-()
+with nodes(path) as l
+match path = (x)-[*0..1]-(y:Entity) where x in l
+return path",multi - multi,,,,,,3,
+188,Kết quả của trận En A-la-men là gì?,"trận En A-la-men
+tran_chien",11,53,HungTX,TRUE,"match (e:Event)-[:ten_goi]-(a) where a.name = ""trận En A-la-men"" 
+match (e)-[:Result|ket_qua]->(e1)
+match path=(e1)-[:NextEvent*0..]->()
+with nodes(path) as l
+match path=(x)-[*0..1]-(y:Entity) where x in l
+return path",single - multi,,,,,,1,
+189,trận En A-la-men là trận chiến giữa các bên nào?,"trận En A-la-men
+tran_chien",11,53,HungTX,TRUE,"match (e:Event)-[:ten_goi]-(a) where a.name = ""trận En A-la-men"" 
+match (e)-[:doi_tuong_tham_gia|doi_tuong_tan_cong]-(b) 
+return b",single - single,,,,,,6,
+190,Hiệp ước Nhâm Tuất giữa Triều đình Huế và Pháp được kí vào thời gian nào?,"Hiệp ước Nhâm Tuất | Triều đình Huế | Pháp
+hiep_dinh | to_chuc | to_chuc",11,54,LongLPH,TRUE,"match (e:KiKet)-[:ten_goi]-(a) where a.nam = ""Hiệp ước Nhâm Tuất""
+match (e)-[:doi_tuong_tham_gia|doi_tuong_tan_cong]-(b) where b.nam = ""Triều đình Huế""
+match (e)-[:doi_tuong_tham_gia|doi_tuong_tan_cong]-(c) where c.nam = ""Pháp""
+match (e)-[:dien_ra_vao|thoi_gian_bat_dau|thoi_gian_ket_thuc]-(d)
+return d",single - single,,,,,,3,
+191,Ý nghĩa của Hiệp ước Xô - Đức,"Hiệp ước Xô - Đức
+hiep_dinh",11,53,HungTX,TRUE,"match (e:KiKet)-[:ten_goi]-(a) where a.name = ""Hiệp ước Xô - Đức""
+match (e)-[:y_nghia]-(b)
+return b",single - single,,,,,,12,
+192,Hiệp định đình chiến được kí kết giữa Nước Pháp và Đức vào ngày 22 - 6 - 1940 có nội dung gì?,"Hiệp định đình chiến | Pháp | Đức | ngày 22 - 6 - 1940
+hiep_dinh | to_chuc | to_chuc | thoi_gian",11,53,HungTX,TRUE,"match (e:KiKet)-[:ten_goi]-(a) where a.name = ""Hiệp định đình chiến""
+match (e)-[:doi_tuong_tham_gia|doi_tuong_tan_cong]-(b) where b.name = ""Pháp""
+match (e)-[:doi_tuong_tham_gia|doi_tuong_tan_cong]-(c) where c.name = ""Đức""
+match (e)-[:dien_ra_vao|thoi_gian_bat_dau|thoi_gian_ket_thuc]-(d) where d.name = ""ngày 22 - 6 - 1940""
+match (e)-[:mo_ta]-(f)
+return f",single - single,,,,,,1,
+193,"Đức, I-ta-li-a và Nhật Bản kí kết Hiệp ước Tam cường ở đâu?","Đức | I-ta-li-a | Nhật Bản | Hiệp ước Tam cường
+to_chuc | to_chuc | to_chuc | hiep_dinh",11,53,HungTX,TRUE,"match (e:KiKet)-[:doi_tuong_tham_gia|doi_tuong_tan_cong]-(a) where a.name = ""Đức""
+match (e)-[:doi_tuong_tham_gia|doi_tuong_tan_cong]-(b) where a.name = ""I-ta-li-a""
+match (e)-[:doi_tuong_tham_gia|doi_tuong_tan_cong]-(c) where a.name = ""Nhật Bản""
+match (e)-[:ten_goi]-(d) where d.name = ""Hiệp ước Tam cường""
+match (e)-[:(dien_ra_o|thuoc)*]-(f)
+return f",single - single,,,,,,1,
+194,Hiệp ước Tam cường có sự tham gia của các quốc gia nào?,"Hiệp ước Tam cường
+hiep_dinh",11,53,HungTX,TRUE,"match (e:KiKet)-[:ten_goi]-(a) where a.name = ""Hiệp ước Tam cường""
+match (e)-[:doi_tuong_tham_gia|doi_tuong_tan_cong]-(b)
+return b",single - single,,,,,,6,
+195,Hiệp ước Tam cường được kí kết vào thời gian nào?,"Hiệp ước Tam cường
+hiep_dinh",11,53,HungTX,TRUE,"match (e:KiKet)-[:ten_goi]-(a) where a.name = ""Hiệp ước Tam cường""
+match (e)-[:dien_ra_vao|thoi_gian_bat_dau|thoi_gian_ket_thuc]-(b)
+return b",single - single,,,,,,15,
+196,"Ở Mặt trận Bắc Phi, quân đội I-ta-li-a đã tấn công địa điểm nào vào tháng 9 - 1940?","Mặt trận Bắc Phi | quân đội I-ta-li-a | tháng 9 - 1940
+tran_chien | quan_doi | thoi_gian",11,53,HungTX,TRUE,"match (e:Event)-[:(dien_ra_o|thuoc)*]-(a) where a.name = ""Mặt trận Bắc Phi""
+match (e)-[:doi_tuong_tham_gia|doi_tuong_tan_cong]-(b) where b.name = ""quân đội I-ta-li-a""
+match (e)-[:dien_ra_vao|thoi_gian_bat_dau|thoi_gian_ket_thuc]-(c) where c.name = ""tháng 9 - 1940""
+match (e)-[:doi_tuong_bi_tan_cong]-(d)
+return d",single - single,,,,,,2,
+197,Cuộc khởi nghĩa Lam Sơn chống lại đội quân nào?,"Cuộc khởi nghĩa Lam Sơn
+tran_chien",10,25,QuanPV,TRUE,"match (e:Event)-[:ten_goi]-(a) where a.name = ""Cuộc khởi nghĩa Lam Sơn""
+match (e)-[:doi_tuong_bi_tan_cong]-(b)
+return b",single - single,,,,,,2,
+198,"Vào Tháng 10 - 1942, liên quân Anh - Mĩ và liên quân Đức - I-ta-li-a tiến hành trận En A-la-men tại đâu?","Tháng 10 - 1942  | liên quân Anh - Mĩ | liên quân Đức - I-ta-li-a | trận En A-la-men
+thoi_gian | quan_doi | quan_doi | tran_chien",11,53,HungTX,TRUE,"match (e:Event)-[:dien_ra_vao|thoi_gian_bat_dau|thoi_gian_ket_thuc]-(a) where a.name = ""Tháng 10 - 1942""
+match (e)-[:doi_tuong_tham_gia|doi_tuong_tan_cong]-(b) where b.name = ""liên quân Anh - Mĩ""
+match (e)-[:doi_tuong_bi_tan_cong]-(c) where c.name = ""liên quân Đức - I-ta-li-a""
+match (e)-[:ten_goi]-(d) where d.name = ""trận En A-la-men"" 
+match (e)-[:(dien_ra_o|thuoc)*]-(f) 
+return f
+",single - single,,,,,,1,
+199,Các cường quốc nào đóng vai trò lãnh đạo Khối Đồng minh chống phát xít?,"Khối Đồng minh chống phát xít
+to_chuc",11,53,HungTX,TRUE,"match (e:Event)-[:ten_goi]-(a) where a.name = ""Khối Đồng minh chống phát xít"" 
+match (e)-[:doi_tuong_lanh_dao]-(b) 
+return b",single - single,,,,,,9,
+200,"Vào 24 - 6 - 1867, thực dân Pháp đã đánh chiếm những tỉnh thành nào?","24 - 6 - 1867 | thực dân Pháp 
+thoi_gian | dia-diem
+",11,54,LongLPH,TRUE,"match (e:Event)-[:dien_ra_vao|thoi_gian_bat_dau|thoi_gian_ket_thuc]-(a) where a.name = ""24 - 6 - 1867""
+match (e)-[:doi_tuong_xam_chiem|doi_tuong_chiem|doi_tuong_chiem]-(b) where b.name = ""thực dân Pháp""
+match (e)-[:doi_tuong_bi_chiem]-(c)
+return c",single - single,,,,,,2,
+201,Ý nghĩa của cuộc cách mạng tư sản Anh?,"cuộc cách mạng tư sản Anh
+tran_chien",10,27,QuanPV,TRUE,"match (e:Event)-[:ten_goi]-(a) where a.name = ""cuộc cách mạng tư sản Anh""
+match (e)-[:y_nghia]-(b)
+return b",single - single,,,,,,12,
+202,Quân Pháp đánh chiếm địa điểm nào vào ngày 23 - 11 - 1873?,"Quân Pháp | ngày 23 - 11 - 1873
+quan_doi | thoi_gian",11,55,LongLPH,TRUE,"match (e:Event)-[:doi_tuong_xam_chiem|doi_tuong_chiem|doi_tuong_chiem]-(a) where a.name = ""Quân Pháp""
+match (e)-[:dien_ra_vao]-(b) where b.name = ""ngày 23 - 11 - 1873""
+match (e)-[:doi_tuong_bi_chiem]-(c)
+return c",single - single,,,,,,6,
+203,Mục tiêu của cuộc Cách mạng Hà Lan?,"cuộc Cách mạng Hà Lan
+tran_chien",10,27,QuanPV,TRUE,"match (e:Event)-[:ten_goi]-(a) where a.name = ""cuộc Cách mạng Hà Lan""
+match (e)-[:muc_tieu]-(b)
+return b",single - single,,,,,,3,
+204,Vương triều Tây Ban Nha bị lật đổ vào thời gian nào?,"Vương triều Tây Ban Nha
+to_chuc",10,27,QuanPV,TRUE,"match (e:Event)-[:doi_tuong_bi_lat_do]-(a) where a.name = ""Vương triều Tây Ban Nha""
+match (e)-[:dien_ra_vao|thoi_gian_bat_dau|thoi_gian_ket_thuc]-(b)
+return b",single - single,,,,,,1,
+205,Cuộc cách mạng tư sản Anh diễn ra vào thời gian nào?,"Cuộc cách mạng tư sản Anh
+tran_chien",10,27,QuanPV,TRUE,"match (e:Event)-[:ten_goi]-(a) where a.name = ""Cuộc cách mạng tư sản Anh""
+match (e)-[:dien_ra_vao|thoi_gian_bat_dau|thoi_gian_ket_thuc]-(b)
+return b",single - single,,,,,,15,
+206,Ý nghĩa của cuộc Cách mạng Hà Lan?,"cuộc Cách mạng Hà Lan
+tran_chien",10,27,QuanPV,TRUE,"match (e:Event)-[:ten_goi]-(a) where a.name = ""cuộc Cách mạng Hà Lan""
+match (e)-[:y_nghia]-(b)
+return b",single - single,,,,,,12,
+207,Vua Tự Đức mất vào thời gian nào?,"Vua Tự Đức
+nhan_vat",10,55,LongLPH,TRUE,"match (e:Event)-[:doi_tuong_mat]-(a) where a.name = ""Vua Tự Đức""
+match (e)-[:dien_ra_vao|thoi_gian_bat_dau|thoi_gian_ket_thuc]-(b)
+return b",single - single,,,,,,1,
+208,Vua Phi-líp II bị phế truất vào thời gian nào?,"Vua Phi-líp II
+nhan_vat",10,27,QuanPV,TRUE,"match (e:Event)-[:doi_tuong_bi_phe_truat]-(a) where a.name = ""Vua Phi-líp II""
+match (e)-[:dien_ra_vao|thoi_gian_bat_dau|thoi_gian_ket_thuc]-(b)
+return b",single - single,,,,,,1,
+209,"Sáng 18 - 8 - 1883, hàm đội của Pháp tấn công Thuận An dưới sự chỉ huy của ai?","Sáng 18 - 8 - 1883 | Pháp | Thuận An
+thoi_gian | dia_diem | dia_diem",10,55,LongLPH,TRUE,"match (e:Event)-[:dien_ra_vao|thoi_gian_bat_dau]-(a) where a.name = ""Sáng 18 - 8 - 1883""
+match (e)-[:doi_tuong_tham_gia|doi_tuong_tan_cong]-(b) where b.name = ""Pháp""
+match (e)-[:doi_tuong_bi_tan_cong]-(c) where c.name = ""Thuận An""
+match (e)-[:doi_tuong_lanh_dao]-(d)
+return d",single - single,,,,,,1,
+210,Cuộc khởi nghĩa Lam Sơn bắt đầu vào thời gian nào?,"Cuộc khởi nghĩa Lam Sơn
+tran_chien",10,25,QuanPV,TRUE,"match (e:Event)-[:ten_goi]-(a) where a.name = ""Cuộc khởi nghĩa Lam Sơn""
+match (e)-[:dien_ra_vao|thoi_gian_bat_dau]-(b)
+return b",single - single,,,,,,8,
+0,Kể tên toàn bộ các nước đã tham gia vào chiến tranh thế giới thứ 2,"Chiến tranh thế giới thứ hai
+tran_chien",11,,LongLPH,FALSE,"match (e:Event)-[:ten_goi]-(a) where a.name = ""Chiến tranh thế giới thứ hai""
+match path = (e)-[:(NextEvent|SubEvent|Causal|Result)*]-()
+match (x)--(y:DiaDiem) where x in nodes(path) 
+return y",single - multi,,,,,,,
+32,"Đại hội Xô viết toàn Nga lần Thứ hai, khai mạc đêm 25/10/1917 đã
+","Đại hội Xô viết toàn Nga lần Thứ hai | đêm 25/10/1917
+cuoc_hop | thoi_gian",,,QuanPV,TRUE,"match (e:DienRaCuocHop)-[:ten_goi]-(a) where a.name = ""Đại hội Xô viết toàn Nga lần Thứ hai""
+match (e)-[:dien_ra_vao|thoi_gian_bat_dau|thoi_gian_ket_thuc]-(b) where b.name = ""đêm 25/10/1917""
+match (e)-[:Result|ket_qua]->(e1)
+match path=(e1)-[:NextEvent*0..]->()
+with nodes(path) as l
+match path=(x)-[*0..1]-(y:Entity) where x in l
+return path",single - multi,,,,,,2,
+40,NGUYÊN NHÂN DIỄN RA CHIẾN TRANH THẾ GIỚI THỨ NHẤT,"CHIẾN TRANH THẾ GIỚI THỨ NHẤT
+tran_chien",,,QuanPV,TRUE,"match (e:Event)-[:ten_goi]-(a) where a.name = ""CHIẾN TRANH THẾ GIỚI THỨ NHẤT""
+match (e)-[:Causal|nguyen_nhan|boi_canh]->(e1)
+match path=(e1)-[:(Causal|NextEvent)*0..]-(b) where (b)<-[:Causal*0..]-() and (b)-[:NextEvent*0..]->()
+with nodes(path) as l
+match path=(x)-[*0..1]-(y:Entity) where x in l
+return path",multi - multi,,,,,,6,
+61,"tại sao đến năm 1942,  Khối Đồng minh chống phát xít mới hình thành","năm 1942 | Khối Đồng minh chống phát xít
+thoi_gian | to_chuc",,,LongLPH,TRUE,"match (e:ThanhLap)-[:dien_ra_vao|thoi_gian_bat_dau|thoi_gian_ket_thuc]-(a) where a.name = ""năm 1942""
+match (e)-[:doi_tuong_duoc_thanh_lap]-(b) where b.name = ""Khối Đồng minh chống phát xít""
+match (e)-[:Causal|nguyen_nhan|boi_canh]->(e1)
+match path=(e1)-[:(Causal|NextEvent)*0..]-(b) where (b)<-[:Causal*0..]-() and (b)-[:NextEvent*0..]->()
+with nodes(path) as l
+match path=(x)-[*0..1]-(y:Entity) where x in l
+return path",multi - multi,,,,,,2,
+62,Tổng khởi nghĩa giành chính quyền tháng Tám năm 1945 ở Việt Nam bùng nổ trong bối cảnh lịch sử nào?,"Tổng khởi nghĩa giành chính quyền tháng Tám | năm 1945 | Việt Nam
+tran_chien | thoi_gian | dia_diem",,,HungTX,TRUE,"match (e:Event)-[:ten_goi]-(a) where a.name = ""Tổng khởi nghĩa giành chính quyền tháng Tám""
+match (e)-[:dien_ra_vao|thoi_gian_bat_dau|thoi_gian_ket_thuc]-(b) where b.name = ""năm 1945""
+match (e)-[:(dien_ra_o|thuoc)*]-(c) where c.name = ""Việt Nam""
+match (e)-[:Causal|nguyen_nhan|boi_canh]->(e1)
+match path=(e1)-[:(Causal|NextEvent)*0..]-(b) where (b)<-[:Causal*0..]-() and (b)-[:NextEvent*0..]->()
+with nodes(path) as l
+match path=(x)-[*0..1]-(y:Entity) where x in l
+return path",multi - multi,,,,,,3,
+68,Ý nghĩa của trận chiến trên sông Bạch Đằng năm 938 do Ngô Quyền lãnh đạo ,"trận chiến trên sông Bạch Đằng | năm 938 | Ngô Quyền
+tran_chien | thoi_gian | nhan_vat",,,,TRUE,"match (e:Event)-[:ten_goi]-(a) where a.name = ""trận chiến trên sông Bạch Đằng""
+match (e)-[:dien_ra_vao|thoi_gian_bat_dau|thoi_gian_ket_thuc]-(b) where b.name = ""năm 938""
+match (e)-[:doi_tuong_lanh_dao]-(c) where c.name = ""Ngô Quyền""
+match (e)-[:y_nghia]-(d) 
+return d",single - single,,,,,,1,
+74,Trình bày về Hội nghị Ianta,"Hội nghị Ianta
+cuoc_hop",,,LongLPH,TRUE,"match (e:DienRaCuocHop)-[:ten_goi]-(a) where a.name = ""Hội nghị Ianta""
+match (e)-[:SubEvent|mo_ta]->(e1)
+match path=(e1)-[:(NextEvent|Causal|Result|SubEvent)*]-()
+with nodes(path) as l
+match path = (x)-[*0..1]-(y:Entity) where x in l
+return path",multi - multi,,,,,,8,
+84,ý nghĩa Cách mạng tháng Hai Nga,"Cách mạng tháng Hai Nga
+tran_chien",,,QuanPV,TRUE,"match (e:Event)-[:ten_goi]-(a) where a.name = ""Cách mạng tháng Hai Nga""
+match (e)-[:y_nghia]-(b)
+return b",single - single,,,,,,12,
+97,"Ở Nga, Chính quyền Xô viết do Lê-nin đứng đầu được thành lập vào năm nào?","Nga | Chính quyền Xô viết | Lê-nin
+dia_diem | to_chuc | nhan_vat",,,QuanPV,TRUE,"match (e:ThanhLap)-[:(dien_ra_o|thuoc)*]-(a) where a.name = ""Nga""
+match (e)-[:thanh_lap_boi]-(b) where b.name = ""Lê-nin""
+match (e)-[:doi_tuong_duoc_thanh_lap]-(c) where c.name = ""Chính quyền Xô viết""
+match (e)-[:dien_ra_vao|thoi_gian_bat_dau|thoi_gian_ket_thuc]-(d)
+return d",single - single,,,,,,1,
+107,"Sau cuộc chiến tranh Mỹ - Tây Ban Nha (1898), Phi-lip-pin trở thành thuộc địa của quốc gia nào?","cuộc chiến tranh Mỹ - Tây Ban Nha (1898) | Phi-lip-pin
+thoi_gian | dia_diem",,,QuanPV,FALSE,"match (e:Event)-[:dien_ra_vao|thoi_gian_bat_dau|thoi_gian_ket_thuc]-(a) where a.name = ""cuộc chiến tranh Mỹ - Tây Ban Nha (1898)""
+match (e)-[:doi_tuong_bi_chiem]-(b) where b.name = ""Phi-lip-pin""
+match (e)-[:doi_tuong_xam_chiem|doi_tuong_chiem]-(c)
+return c",single - single,,,,,,6,
+136,Nguyễn Ái Quốc thành lập Hội Việt Nam Cách mạng Thanh niên nhằm tổ chức và lãnh đạo quần chúng đoàn kết chống,"Nguyễn Ái Quốc | Hội Việt Nam Cách mạng Thanh niên
+nhan_vat | to_chuc",,,QuanPV,TRUE,"match (e:ThanhLap)-[:thanh_lap_boi]-(a) where a.name = ""Nguyễn Ái Quốc""
+match (e)-[:doi_tuong_duoc_thanh_lap]-(a) where a.name = ""Hội Việt Nam Cách mạng Thanh niên""
+match (e)-[:muc_tieu]-(b)
+return b",single - single,,,,,,1,
+156,sự kiện nào đánh dấu Chiến tranh thế giới thứ hai kết thúc,"Chiến tranh thế giới thứ hai
+tran_chien",,,LongLPH,TRUE,"match (e:Event)-[:NextEvent|Result|Causal]-(e1) where (e)-[:NextEvent|Result]->(e1) or (e)<-[:Causal]-(e1)
+match (e1)-[:doi_tuong_ket_thuc]-(a) where a.name=""Chiến tranh thế giới thứ hai""
+match path=(e)-[*0..1]-(y:Entity)
+return path",multi - multi,,,,,,1,
+201,Năm 542-543 diễn ra sự kiện gì?,"Năm 542 | 543
+thoi_gian | thoi_gian",,,NgocLD,TRUE,"match (e:Event)-[:dien_ra_vao|thoi_gian_bat_dau]-(a) where a.name = ""Năm 542""
+match (e)-[:dien_ra_vao|thoi_gian_ket_thuc]-(b) where b.name = ""543""
+match path = (e)-[*0..1]-(y:Entity)
+return path",single - multi,,,,,,1,
+205,Ý nghĩa của sự ra đời liên bang cộng hoà xã hội chủ nghĩa xô viết,"liên bang cộng hoà xã hội chủ nghĩa xô viết
+to_chuc",,,QuanPV,TRUE,"match (e:ThanhLap)-[:doi_tuong_duoc_thanh_lap]-(a) where a.name = ""liên bang cộng hoà xã hội chủ nghĩa xô viết""
+match (e)-[:y_nghia]-(b)
+return b",single - single,,,,,,3,
+265,"Sau thắng lợi của Cách mạng tháng Mười Nga, nhiệm vụ hàng đầu của Chính quyền Xô viết là","Cách mạng tháng Mười Nga | Chính quyền Xô viết
+tran_chien | to_chuc",,,QuanPV,FALSE,"match (e:Event)-[:dien_ra_vao|thoi_gian_bat_dau|thoi_gian_ket_thuc]-(a) where a.name = ""Cách mạng tháng Mười Nga""
+match (e:Event)-[:doi_tuong_duoc_thanh_lap]-(b) where b.name=""Chính quyền Xô viết""
+match (e:Event)-[:muc_tieu]-(c)
+return c",single - single,,,,,,1,
+307,Sự ra đời của chính quyền Xô viết ở Nga gắn liền với sự kiện nào?,"chính quyền Xô viết | Nga
+to_chuc | dia_diem",,,QuanPV,TRUE,"match (e:Event)-[:NextEvent|Result|Causal]-(e1) where (e)-[:NextEvent|Result]->(e1) or (e)<-[:Causal]-(e1)
+match (e1)-[:doi_tuong_duoc_thanh_lap]-(a) where a.name = ""chính quyền Xô viết""
+match (e1)-[:(dien_ra_o|thuoc)*]-(b) where b.name = ""Nga""
+match path=(e)-[*0..1]-(y:Entity)
+return path",multi - multi,,,,,,1,
+327,Ai là người đứng đầu Cách mạng Nga năm 1917?,"Cách mạng Nga | năm 1917
+tran_chien | thoi_gian",,,QuanPV,TRUE,"match (e:Event)-[:ten_goi]-(a) where a.name = ""Cách mạng Nga""
+match (e)-[:dien_ra_vao|thoi_gian_bat_dau|thoi_gian_ket_thuc]-(b) where b.name = ""năm 1917""
+match (e)-[:doi_tuong_lanh_dao]-(c)
+return c",single - single,,,,,,3,
+331,kết quả của Chiến tranh thế giới thứ nhất,"Chiến tranh thế giới thứ nhất
+tran_chien",,,QuanPV,TRUE,"match (e:Event)-[:ten_goi]-(a) where a.name =  ""Chiến tranh thế giới thứ nhất"" 
+match (e)-[:Result|ket_qua]->(e1)
+match path=(e1)-[:NextEvent*0..]->()
+with nodes(path) as l
+match path=(x)-[*0..1]-(y:Entity) where x in l
+return path",multi - multi,,,,,,5,
+339,Hội nghị Ianta (2/1945) đã họp ở đâu?,"Hội nghị Ianta | 2/1945
+cuoc_hop | thoi_gian",,,LongLPH,TRUE,"match (e:DienRaCuocHop)-[:ten_goi]-(a) where a.name = ""Hội nghị Ianta""
+match (e)-[:dien_ra_vao|thoi_gian_bat_dau|thoi_gian_ket_thuc]-(b) where b.name = ""2/1945""
+match (e)-[:(dien_ra_o|thuoc)*]-(c)
+return c",single - single,,,,,,11,
+356,Trình bày những nét chính về quá trình thực dân phương tây xâm lược các nước Đông Nam Á?,"thực dân phương tây | các nước Đông Nam Á
+to_chuc | dia_diem",,,QuanPV,TRUE,"match (e:Event)-[:doi_tuong_tham_gia|doi_tuong_tan_cong]-(a) where a.name=""thực dân phương tây""
+match (e)-[:(dien_ra_o|thuoc)*]-(b) where b.name=""các nước Đông Nam Á""
+match (e)-[:SubEvent|mo_ta]->(e1)
+match path=(e1)-[:(NextEvent|Causal|Result|SubEvent)*]-()
+with nodes(path) as l
+match path = (x)-[*0..1]-(y:Entity) where x in l
+return path",multi - multi,,,,,,1,
+359,Diễn biến phong trào nông dân Yên Thế,"phong trào nông dân Yên Thế
+tran_chien",,,NgocLD,TRUE,"match (e:Event)-[:ten_goi]-(a) where a.name = ""phong trào nông dân Yên Thế""
+match (e)-[:SubEvent|mo_ta]->(e1)
+match path=(e1)-[:(NextEvent|Causal|Result|SubEvent)*]-()
+with nodes(path) as l
+match path = (x)-[*0..1]-(y:Entity) where x in l
+return path",multi - multi,,,,,,8,
+360,Hãy nêu hoàn cảnh của hội nghị thành lập Đảng,"Đảng
+cuoc_hop",,,HungTX,TRUE,"match (e:DienRaCuocHop)-[:NextEvent|Result|Causal]-(e1) where (e)-[:NextEvent|Result]->(e1) or (e)<-[:Causal]-(e1)
+match (e1)-[:doi_tuong_duoc_thanh_lap]-(a) where a.name=""Đảng""
+match (e)-[:Causal|nguyen_nhan|boi_canh]->(e1)
+match path=(e1)-[:(Causal|NextEvent)*0..]-(b) where (b)<-[:Causal*0..]-() and (b)-[:NextEvent*0..]->()
+with nodes(path) as l
+match path=(x)-[*0..1]-(y:Entity) where x in l
+return path",multi - multi,,,,,,1,
+360-1,Hãy nêu nội dung của hội nghị thành lập Đảng,"Đảng
+cuoc_hop",,,,TRUE,"match (e:DienRaCuocHop)-[:NextEvent|Result|Causal]-(e1) where (e)-[:NextEvent|Result]->(e1) or (e)<-[:Causal]-(e1)
+match (e1)-[:doi_tuong_duoc_thanh_lap]-(a) where a.name=""Đảng""
+match (e)-[:mo_ta]-(b)
+return b",multi - single,,,,,,1,
+360-2,Hãy nêu ý nghĩa của hội nghị thành lập Đảng,"Đảng
+cuoc_hop",,,,TRUE,"match (e:DienRaCuocHop)-[:NextEvent|Result|Causal]-(e1) where (e)-[:NextEvent|Result]->(e1) or (e)<-[:Causal]-(e1)
+match (e1)-[:doi_tuong_duoc_thanh_lap]-(a) where a.name=""Đảng""
+match (e)-[:y_nghia]-(b)
+return b",multi - single,,,,,,1,
+386,"Ngày 6-3-1946, Hiệp định Sơ bộ được kí kết giữa đại diện Chính phủ Việt Nam Dân chủ Cộng hòa với đại diện Chính phủ Pháp diễn ra trong bối cảnh nào? ","Ngày 6-3-1946 | Hiệp định Sơ bộ | Chính phủ Việt Nam Dân chủ Cộng hòa | Chính phủ Pháp
+thoi_gian | hiep_dinh | to_chuc | to_chuc",,,HungTX,TRUE,"match (e:KiKet)-[:dien_ra_vao|thoi_gian_bat_dau|thoi_gian_ket_thuc]-(a) where a.name=""Ngày 6-3-1946""
+match (e)-[:ten_goi]-(b) where b.name=""Hiệp định Sơ bộ""
+match (e)-(:doi_tuong_tham_gia)-(c) where c.name=""Chính phủ Việt Nam Dân chủ Cộng hòa""
+match (e)-(:doi_tuong_tham_gia)-(d) where d.name=""Chính phủ Pháp""
+match (e)-[:Causal|nguyen_nhan|boi_canh]->(e1)
+match path=(e1)-[:(Causal|NextEvent)*0..]-(b) where (b)<-[:Causal*0..]-() and (b)-[:NextEvent*0..]->()
+with nodes(path) as l
+match path=(x)-[*0..1]-(y:Entity) where x in l
+return path",multi - multi,,,,,,4,
+402,ý nghĩa lịch sử của cuộc tiến công chiến lược Đông - Xuân 1953 - 1954.,"cuộc tiến công chiến lược Đông - Xuân 1953 - 1954
+tran_chien",,,HungTX,TRUE,"match (e:Event)-[:ten_goi]-(a) where a.name = ""cuộc tiến công chiến lược Đông - Xuân 1953 - 1954""
+match (e)-[:y_nghia]-(b)
+return b",single - single,,,,,,12,
+412,tóm tắt cuộc chiến ở Xiêm,"Xiêm
+dia_diem",,,QuanPV,TRUE,"match (e:Event)-[:(dien_ra_o|thuoc)*]-(a) where a.name=""Xiêm""
+match (e)-[:SubEvent|mo_ta]->(e1)
+match path=(e1)-[:(NextEvent|Causal|Result|SubEvent)*]-()
+with nodes(path) as l
+match path = (x)-[*0..1]-(y:Entity) where x in l
+return path",multi - multi,,,,,,1,
+419,"Vì sao năm 1917 ở Nga đã diễn ra hai cuộc cách mạng?
+
+","1917 | Nga | hai cuộc cách mạng
+thoi_gian | dia_diem | tran_chien",,,QuanPV,FALSE,"match (e:Event)-[:ten_goi]-(a) where a.name = ""Cách mạng tháng Mười""
+match (e)-[:Causal|nguyen_nhan|boi_canh]->(e1)
+match path=(e1)-[:(Causal|NextEvent)*0..]-(b) where (b)<-[:Causal*0..]-() and (b)-[:NextEvent*0..]->()
+with nodes(path) as l
+match path=(x)-[*0..1]-(y:Entity) where x in l
+return path",,,,,,,,
+419-1,Vì sao năm 1917 ở Nga diễn ra cuộc cách mạng tháng Mười?,"năm 1917 | Nga | cuộc cách mạng tháng Mười
+thoi_gian | dia_diem | tran_chien",,,,TRUE,"match (e:Event)-[:dien_ra_vao|thoi_gian_bat_dau|thoi_gian_ket_thuc]-(a) where a.name = ""năm 1917""
+match (e)-[:(dien_ra_o|thuoc)*]-(b) where b.name = ""Nga""
+match (e)-[:ten_goi]-(c) where c.name = ""cuộc cách mạng tháng Mười"" 
+match (e)-[:Causal|nguyen_nhan|boi_canh]->(e1) 
+match path=(e1)-[:(Causal|NextEvent)*0..]-(b) where (b)<-[:Causal*0..]-() and (b)-[:NextEvent*0..]->() 
+with nodes(path) as l 
+match path=(x)-[*0..1]-(y:Entity) where x in l 
+return path",multi - multi,,,,,,3,
+436,Ý nghĩa của cuộc khởi nghĩa Lam Sơn?,"cuộc khởi nghĩa Lam Sơn
+tran_chien",,,NgocLD,TRUE,"match (e:Event)-[:ten_goi]-(a) where a.name = ""cuộc khởi nghĩa Lam Sơn""
+match (e)-[:y_nghia]-(b) 
+return b",single - single,,,,,,12,
+443,Bác hồ sinh năm bao nhiêu,"Bác hồ
+nhan_vat",,,,FALSE,"match (a)-[r]-(b) where a.name = ""Bác hồ"" and type(r) = ""sinh_vao"" return b",,,,,,,,
+450,Khởi nghĩa Lam Sơn diễn ra vào thời gian nào? ,"Khởi nghĩa Lam Sơn 
+tran_chien",,,NgocLD,TRUE,"match (e:Event)-[:ten_goi]-(a) where a.name = ""Khởi nghĩa Lam Sơn""
+match (e)-[:dien_ra_vao|thoi_gian_bat_dau|thoi_gian_ket_thuc]-(b) 
+return b",single - single,,,,,,15,
+460,Sự kiện nổi bật nhất năm 1889 ở Nhật Bản là,"năm 1889 | Nhật Bản
+thoi_gian | dia_diem",,,QuanPV,TRUE,"match (e:Event)-[:dien_ra_vao|thoi_gian_bat_dau|thoi_gian_ket_thuc]-(a) where a.name = ""năm 1889""
+match (e)-[:(dien_ra_o|thuoc)*]-(b) where b.name = ""Nhật Bản""
+match path = (e)-[*0..1]-(y:Entity)
+return path",single - multi,,,,,,3,
+461,Ai là người đại diện phái chủ chiến chủ trương cùng nhân dân ta tiếp tục chiến đấu chống Pháp?,"phái chủ chiến | Pháp
+to_chuc | to_chuc",,,LongLPH,TRUE,"match (e:Event)-[:doi_tuong_tham_gia|doi_tuong_tan_cong]-(a) where a.name = ""phái chủ chiến""
+match (e)-[:doi_tuong_bi_tan_cong]-(b) where b.name = ""Pháp""
+match (e)-[:doi_tuong_lanh_dao]-(c)
+return c",single - single,,,,,,1,
+464,Trận đánh mở đầu chiến dịch Biên giới thu - đông năm 1950 của quân dân Việt Nam diễn ra ở,"chiến dịch Biên giới thu - đông | năm 1950 | Việt Nam
+tran_chien | thoi_gian | dia_diem",,,HungTX,TRUE,"match (e:Event)-[:ten_goi]-(a) where a.name =  ""chiến dịch Biên giới thu - đông""
+match (e)-[:dien_ra_vao|thoi_gian_bat_dau|thoi_gian_ket_thuc]-(b) where b.name=""năm 1950""
+match (e)-[:(dien_ra_o|thuoc)*]-(c) where c.name = ""Việt Nam""
+match (e)-[:SubEvent]-(e1:TranChien|ChienDich) where not (e1)<-[:NextEvent]-() and not (e1)-[:Causal]->()
+match (e1)-[:(dien_ra_o|thuoc)*]-(d) 
+return d",multi - single,,,,,,1,
+484,Các nước sáng lập ASEAN,"ASEAN
+to_chuc",,,LongLPH,TRUE,"match (e:ThanhLap)-[:doi_tuong_duoc_thanh_lap]-(a) where a.name = ""ASEAN""
+match (e)-[:thanh_lap_boi]-(b)
+return b",single - single,,,,,,14,
+508,Cuộc cách mạng Tân Hợi (1911) đã lật đổ triều đại phong kiến nào ở Trung Quốc?,"Cuộc cách mạng Tân Hợi | 1911 | Trung Quốc
+tran_chien | thoi_gian | dia_diem ",,,QuanPV,TRUE,"match (e:Event)-[:ten_goi]-(a) where a.name = ""Cuộc cách mạng Tân Hợi""
+match (e)-[:dien_ra_vao|thoi_gian_bat_dau|thoi_gian_ket_thuc]-(b) where b.name = ""1911""
+match (e)-[:(dien_ra_o|thuoc)*]-(c) where c.name = ""Trung Quốc""
+match (e)-[:Result|ket_qua]->(e1)
+match path=(e1)-[:NextEvent*0..]->()
+with nodes(path) as l
+match path=(x)-[*0..1]-(y:Entity) where x in l
+return path",multi - multi,,,,,,2,
+519,Nội dung nào sau đây phản ánh đúng ý nghĩa của Cách mạng Tân Hợi (1911) ở Trung Quốc?,"Cách mạng Tân Hợi | 1911 | Trung Quốc
+tran_chien | thoi_gian | dia_diem",,,QuanPV,TRUE,"match (e:Event)-[:ten_goi]-(a) where a.name = ""Cách mạng Tân Hợi""
+match (e)-[:dien_ra_vao|thoi_gian_bat_dau|thoi_gian_ket_thuc]-(b) where b.name = ""1911""
+match (e)-[:(dien_ra_o|thuoc)*]-(c) where c.name = ""Trung Quốc""
+match (e)-[:y_nghia]-(d)
+return d",single - single,,,,,,2,
+548,Quốc gia duy nhất ở Đông Nam Á không bị biến thành thuộc địa vào cuối thế kỷ XIX là ?,"Đông Nam Á | cuối thế kỷ XIX
+dia_diem | thoi_gian",,,QuanPV,FALSE,"match (e:Event)-[:(dien_ra_o|thuoc)*]-(a) where a.name = ""Đông Nam Á""
+match (e)-[:dien_ra_vao|thoi_gian_bat_dau|thoi_gian_ket_thuc]-(b) where b.name = ""thế kỉ XIX""
+match (e)-[:mo_ta]-(c)
+return c",single - single,,,,,,,
+551,"Đến giữa thế kỉ XIX, Indonesia trở thành thuộc địa của nước nào ?","giữa thế kỉ XIX | Indonesia
+thoi_gian | dia_diem",,,QuanPV,TRUE,"match (e:Event)-[:dien_ra_vao|thoi_gian_bat_dau|thoi_gian_ket_thuc]-(a) where a.name = ""giữa thế kỉ XIX""
+match (e)-[:doi_tuong_bi_chiem]-(b) where b.name = ""Indonesia""
+match (e)-[:doi_tuong_xam_chiem|doi_tuong_chiem]-(c)
+return c",single - single,,,,,,6,
+553,"Đến cuối thế kỉ XIX, Việt Nam, Lào, Campuchia là thuộc địa của nước nào ?","cuối thế kỉ XIX | Việt Nam | Lào | Campuchia
+thoi_gian | dia_diem | dia_diem | dia_diem",,,QuanPV,TRUE,"match (e:Event)-[:dien_ra_vao|thoi_gian_bat_dau|thoi_gian_ket_thuc]-(a) where a.name = ""cuối thế kỉ XIX""
+match (e)-[:doi_tuong_bi_chiem]-(b) where b.name = ""Việt Nam""
+match (e)-[:doi_tuong_bi_chiem]-(c) where c.name = ""Lào""
+match (e)-[:doi_tuong_bi_chiem]-(d) where d.name = ""Campuchia""
+match (e)-[:doi_tuong_xam_chiem|doi_tuong_chiem]-(f)
+return f",single - single,,,,,,6,
+555,Khởi nghĩa Pu-côm-bô (1866-1867) là biểu tượng của sự đoàn kết chiến đấu giữa nhân dân 2 nước,"Khởi nghĩa Pu-côm-bô | 1866 | 1867
+tran_chien | thoi_gian | thoi_gian",,,QuanPV,TRUE,"match (e:Event)-[:ten_goi]-(a) where a.name = ""Khởi nghĩa Pu-côm-bô""
+match (e)-[:dien_ra_vao|thoi_gian_bat_dau]-(b) where b.name = ""1866""
+match (e)-[:dien_ra_vao|thoi_gian_ket_thuc]-(c) where c.name = ""1867""
+match (e)-[:doi_tuong_tham_gia|doi_tuong_tan_cong]-(d)
+return d",single - single,,,,,,1,
+556,Quốc gia nào tuyên bố độc lập sớm nhất ở Đông Nam Á sau Chiến tranh thế giới thứ hai (1945) ?,"Đông Nam Á | Chiến tranh thế giới thứ hai (1945)
+dia_diem | thoi_gian",,,LongLPH,FALSE,"
+match (e:TuyenBoDocLap)-[:doi_tuong_tuyen_bo]-(a:QuocGia)
+match (a)-[:(thuoc)*]-(b) where b.name=""Đông Nam Á""
+match (e)-[:dien_ra_vao|thoi_gian_bat_dau|thoi_gian_ket_thuc]-(c) where c.name = ""Chiến tranh thế giới thứ hai (1945)""
+return a",single - single,,,,,,2,
+557,"Năm 1945, ba nước ở Đông Nam Á lần lượt tuyên bố độc lập là ?","Năm 1945 | Đông Nam Á
+thoi_gian | dia_diem",,,LongLPH,FALSE,"match (e:TuyenBoDocLap)-[:dien_ra_vao|thoi_gian_bat_dau|thoi_gian_ket_thuc]-(a) where a.name = ""Năm 1945""
+match (e)-[:doi_tuong_tuyen_bo]-
+match (b)-[:(thuoc)*]-(b) where b.name=""Đông Nam Á""
+return b",single - single,,,,,,2,
+575,Thắng lợi nào sau đây dẫn đến sự ra đời của Nhà nước xã hội chủ nghĩa đầu tiên trên thế giới?,"Nhà nước xã hội chủ nghĩa đầu tiên trên thế giới
+to_chuc",,,QuanPV,TRUE,"match (e:Event)-[:NextEvent|Result|Causal]-(e1) where (e)-[:NextEvent|Result]->(e1) or (e)<-[:Causal]-(e1)
+match (e1)-[:doi_tuong_duoc_thanh_lap]-(a) where a.name = ""Nhà nước xã hội chủ nghĩa đầu tiên trên thế giới""
+match (e)-[:ten_goi]-(b)
+return b",multi - single,,,,,,1,
+594,"Khi mới thành lập, Liên bang Cộng hòa xã hội chủ nghĩa Xô viết gồm 4 nước Cộng hòa là
+","Liên bang Cộng hòa xã hội chủ nghĩa Xô viết
+to_chuc",,,QuanPV,TRUE,"match (e:ThanhLap)-[:doi_tuong_duoc_thanh_lap]-(a) where a.name = ""Liên bang Cộng hòa xã hội chủ nghĩa Xô viết""
+match (e)-[:thanh_lap_boi]-(b)
+return b",single - single,,,,,,14,
+661,Khởi nghĩa của Hai Bà Trưng diễn ra năm nào ở đâu,"Hai Bà Trưng
+nhan_vat",,,NgocLD,TRUE,"match (e:Event)-[:doi_tuong_lanh_dao]-(a) where a.name = ""Hai Bà Trưng""
+match (e)-[:dien_ra_vao|thoi_gian_bat_dau|thoi_gian_ket_thuc]-(b)
+return b",single - single,,,,,,1,
+672,Hãy nêu diễn biến phong trào Bãi Sậy,"phong trào Bãi Sậy
+tran_chien",,,NgocLD,TRUE,"match (e:Event)-[:ten_goi]-(a) where a.name = ""phong trào Bãi Sậy"" 
+match (e)-[:SubEvent|mo_ta]->(e1)
+match path=(e1)-[:(NextEvent|Causal|Result|SubEvent)*]-()
+with nodes(path) as l
+match path = (x)-[*0..1]-(y:Entity) where x in l
+return path",multi - multi,,,,,,8,
+687,Phong trào Mặt trận Nhân dân chống phát xít và nguy cơ chiến tranh diễn ra như thế nào?,"Phong trào Mặt trận Nhân dân chống phát xít và nguy cơ chiến tranh
+tran_chien",,,QuanPV,TRUE,"match (e:Event)-[:ten_goi]-(a) where a.name=""Phong trào Mặt trận Nhân dân chống phát xít và nguy cơ chiến tranh""
+match (e)-[:SubEvent|mo_ta]->(e1)
+match path=(e1)-[:(NextEvent|Causal|Result|SubEvent)*]-()
+with nodes(path) as l
+match path = (x)-[*0..1]-(y:Entity) where x in l
+return path",multi - multi,,,,,,8,
+688,Nhà Hồ ra đời năm nào?,"Nhà Hồ
+to_chuc",,,NgocLD,TRUE,"match (e:ThanhLap)-[:doi_tuong_duoc_thanh_lap]-(a) where a.name = ""Nhà Hồ""
+match (e)-[:dien_ra_vao|thoi_gian_bat_dau|thoi_gian_ket_thuc]-(b)
+return b",single - single,,,,,,24,
+688-1,Ai là người thành lập nhà Hồ,"nhà Hồ
+to_chuc",,,,TRUE,"match (e:ThanhLap)-[:doi_tuong_duoc_thanh_lap]-(a) where a.name = ""nhà Hồ""
+match (e)-[:thanh_lap_boi]-(b)
+return b",single - single,,,,,,14,
+700,Phong trào cách mạng 1930 - 1931 ở Việt Nam diễn ra trong bối cảnh như nào ạ!!.Em cảm ơn,"Phong trào cách mạng 1930 - 1931 | Việt Nam
+tran_chien | dia_diem",,,HungTX,TRUE,"match (e:Event)-[:ten_goi]-(a) where a.name = ""Phong trào cách mạng 1930 - 1931""
+match (e)-[dien_ra_o]-(b) where b.name = ""Việt Nam""
+match (e)-[:Causal|nguyen_nhan|boi_canh]->(e1)
+match path=(e1)-[:(Causal|NextEvent)*0..]-(b) where (b)<-[:Causal*0..]-() and (b)-[:NextEvent*0..]->()
+with nodes(path) as l
+match path=(x)-[*0..1]-(y:Entity) where x in l
+return path",multi - multi,,,,,,6,
+704,Bối cảnh ra đời của 3 tổ chức cộng sản 1929,"tổ chức cộng sản | 1929
+to_chuc | thoi_gian",,,,TRUE,"match (e:ThanhLap)-[:doi_tuong_duoc_thanh_lap]-(a) where a.name=""tổ chức cộng sản""
+match (e)-[:dien_ra_vao|thoi_gian_bat_dau|thoi_gian_ket_thuc]-(b) where b.name  = ""1929""
+match (e)-[:Causal|nguyen_nhan|boi_canh]->(e1)
+match path=(e1)-[:(Causal|NextEvent)*0..]-(c) where (c)<-[:Causal*0..]-() and (c)-[:NextEvent*0..]->()
+with nodes(path) as l
+match path=(x)-[*0..1]-(y:Entity) where x in l
+return path",multi - multi,,,,,,2,
+724,Ai là thủ phạm trong vụ ám sát thái tử Đế Quốc Áo - Hung dẫn đến cuộc thế chiến thứ nhất ?,"thái tử Đế Quốc Áo - Hung |  cuộc thế chiến thứ nhất
+nhan_vat | tran_chien",,,QuanPV,TRUE,"match (e:Giet)-[:doi_tuong_bi_giet]-(a) where a.name = ""thái tử Đế Quốc Áo - Hung""
+match (e)-[:NextEvent|Result|Causal]-(e1) where (e)-[:NextEvent|Result]->(e1) or (e)<-[:Causal]-(e1)
+match (e1)-[:ten_goi]-(b) where b.name=""cuộc thế chiến thứ nhất""
+match (e)-[:doi_tuong_thuc_hien]-(c)
+return c",multi - single,,,,,,1,
+774,"Sau khi được thành lập, chính quyền Xô viết ở Nga đã ban hành","chính quyền Xô viết | Nga
+to_chuc | dia_diem",,,QuanPV,TRUE,"match (e:ThanhLap)-[:NextEvent|Result|Causal]-(e1) where (e)-[:NextEvent|Result]->(e1) or (e)<-[:Causal]-(e1)
+match (e1)-[:doi_tuong_ban_hanh]-(a) where a.name=""chính quyền Xô viết""
+match (e1)-[:(dien_ra_o|thuoc)*]-(b) where b.name=""Nga""
+match (e1)-[:ban_hanh]-(c)
+return c",multi - single,,,,,,1,
+877,"Nước Cộng hòa Nhân dân Trung Hoa được thành lập vào thời gian nào? 
+","Nước Cộng hòa Nhân dân Trung Hoa
+dia_diem",,,QuanPV,TRUE,"match (e:ThanhLap)-[:doi_tuong_duoc_thanh_lap]-(a) where a.name = ""Nước Cộng hòa Nhân dân Trung Hoa""
+match (e)-[:dien_ra_vao|thoi_gian_bat_dau|thoi_gian_ket_thuc]-(b)
+return b",single - single,,,,,,24,
+884,Nhóm năm nước sáng lập ASEAN gồm những quốc gia nào?,"ASEAN
+to_chuc",,,LongLPH,TRUE,"match (e:ThanhLap)-[:doi_tuong_duoc_thanh_lap]-(a) where a.name = ""ASEAN""
+match (e)-[:thanh_lap_boi]-(b)
+return b",single - single,,,,,,14,
+885,Hiệp hội các quôc gia Đông Nam Á thành lập vào thời gian nào?,"Hiệp hội các quôc gia Đông Nam Á
+to_chuc",,,LongLPH,TRUE,"match (e:ThanhLap)-[:doi_tuong_duoc_thanh_lap]-(a) where a.name = ""Hiệp hội các quôc gia Đông Nam Á""
+match (e)-[:dien_ra_vao|thoi_gian_bat_dau|thoi_gian_ket_thuc]-(b)
+return b",single - single,,,,,,24,
+897,Hội nghị thành lập ASEAN diễn ra ở đâu?,"ASEAN
+to_chuc",,,,TRUE,"match (e:DienRaCuocHop)-[:NextEvent|Result|Causal]-(e1) where (e)-[:NextEvent|Result]->(e1) or (e)<-[:Causal]-(e1)
+match (e1)-[:doi_tuong_duoc_thanh_lap]-(a) where a.name=""ASEAN""
+match (e)-[:(dien_ra_o|thuoc)*]-(b)
+return b",single - single,,,,,,7,
+898,"Ngày 23 – 8 – 1945, nhân dân Lào đã nổi dậy khởi nghĩa giành chính quyền từ trong tay của ","Ngày 23 – 8 – 1945 | Lào
+thoi_gian | dia_diem",,,LongLPH,TRUE,"match (e:Event)-[:dien_ra_vao|thoi_gian_bat_dau|thoi_gian_ket_thuc]-(a) where a.name = ""Ngày 23 – 8 – 1945"" 
+match (e)-[:(dien_ra_o|thuoc)*]-(b) where b.name = ""Lào"" 
+match (e)-[:doi_tuong_bi_tan_cong]-(c) 
+return c",single - single,,,,,,1,
+899,"Đại hội lần thứ XIII của Đảng Cộng sản Trung Quốc họp vào thời gian nào? 
+","Đại hội lần thứ XIII | Đảng Cộng sản Trung Quốc
+cuoc_hop | to_chuc",,,LongLPH,TRUE,"match (e:DienRaCuocHop)-[:ten_goi]-(a) where a.name = ""Đại hội lần thứ XIII""
+match (e)-[:doi_tuong_chu_tri]-(b) where b.name = ""Đảng Cộng sản Trung Quốc""
+match (e)-[:dien_ra_vao|thoi_gian_bat_dau|thoi_gian_ket_thuc]-(c)
+return c",single - single,,,,,,1,
+912,"Sự kiện nào dưới đây diễn ra trên đất nước Cuba ngày 1/1/1959? 
+","Cuba | ngày 1/1/1959
+dia_diem | thoi_gian",,,LongLPH,TRUE,"match (e:Event)-[:(dien_ra_o|thuoc)*]-(a) where a.name = ""Cuba""
+match (e)-[:dien_ra_vao|thoi_gian_bat_dau|thoi_gian_ket_thuc]-(b) where b.name = ""ngày 1/1/1959""
+match path = (e)-[*0..1]-(y:Entity)
+return path",single - multi,,,,,,3,
+916,"Sau Chiến tranh thế giới thứ hai, cuộc đấu tranh giành độc lập của nhân dân Ấn Độ diễn ra mạnh mẽ dưới sự lãnh đạo của ai?","Chiến tranh thế giới thứ hai | Ấn Độ
+tran_chien | dia_diem",,,LongLPH,FALSE,"match (e:Event)-[:dien_ra_vao|thoi_gian_bat_dau|thoi_gian_ket_thuc]-(a) where a.name=""Chiến tranh thế giới thứ hai""
+match (e)-[:(dien_ra_o|thuoc)*]-(b) where b.name=""Ấn Độ""
+match (e)-[:doi_tuong_lanh_dao]-(c)
+return c",single - single,,,,,,1,
+984,Nhà nước Cộng hòa Liên bang Đức được hình thành như thế nào?,"Nhà nước Cộng hòa Liên bang Đức
+to_chuc",,,LongLPH,TRUE,"match (e:Event)-[:NextEvent|Result|Causal]-(e1) where (e)-[:NextEvent|Result]->(e1) or (e)<-[:Causal]-(e1)
+match (e1)-[:doi_tuong_duoc_thanh_lap]-(a) where a.name=""Nhà nước Cộng hòa Liên bang Đức""
+match path=(e)-[*0..1]-(y:Entity)
+return path",multi - multi,,,,,,2,
+984-1,Cộng hòa dân chủ Đức được hình thành như thế nào?,"Cộng hòa dân chủ Đức
+to_chuc",,,LongLPH,TRUE,"match (e:Event)-[:NextEvent|Result|Causal]-(e1) where (e)-[:NextEvent|Result]->(e1) or (e)<-[:Causal]-(e1)
+match (e1)-[:doi_tuong_duoc_thanh_lap]-(a) where a.name=""Cộng hòa dân chủ Đức""
+match path=(e)-[*0..1]-(y:Entity)
+return path",multi - multi,,,,,,2,
+988,Những quyết định của Hội nghị Ianta (2/1945) có ảnh hưởng như thế nào đến tình hình thế giới sau Chiến tranh thế giới thứ hai?,"Hội nghị Ianta | 2/1945 | Chiến tranh thế giới thứ hai
+cuoc_hop | thoi_gian | thoi_gian",,,LongLPH,FALSE,"match (a)-[:ten_goi]-(e:Event:DienRaCuocHop)-[:y_nghia]-(b)
+where toLower(a.name) = ""hội nghị ianta""
+return b
+",,,,,,,,
+992,Cách mạng tháng Mười Nga diễn ra ở đâu,"Cách mạng tháng Mười Nga
+tran_chien",,,QuanPV,TRUE,"match (e:Event)-[:ten_goi]-(a) where a.name = ""Cách mạng tháng Mười Nga""
+match (e)-[:(dien_ra_o|thuoc)*]-(b)
+return b",single - single,,,,,,11,
+1100,"Kế hoạch 5 năm lần thứ nhất của Trung Quốc tiến hành trong khoảng thời gian nào?
+","Kế hoạch 5 năm lần thứ nhất | Trung Quốc
+chinh_sach | dia_diem",,,HungTX,TRUE,"match (e:Event)-[:ten_goi]-(a) where a.name = ""Kế hoạch 5 năm lần thứ nhất""
+match (e)-[:doi_tuong_thuc_hien]-(b) where b.name = ""Trung Quốc""
+match (e)-[:dien_ra_vao|thoi_gian_bat_dau|thoi_gian_ket_thuc]-(c) 
+return c",single - single,,,,,,1,
+1102,Hãy nêu những quyết định quan trọng của hội nghị Ianta?,"hội nghị Ianta
+cuoc_hop",,,LongLPH,TRUE,"match (e:DienRaCuocHop)-[:ten_goi]-(a) where a.name = ""hội nghị Ianta""
+match (e)-[:mo_ta]-(b)
+return b",single - single,,,,,,1,
+1104,Hội nghị Ianta (1945) có sự tham gia của các nước nào?,"Hội nghị Ianta | 1945
+cuoc_hop | thoi_gian",,,LongLPH,TRUE,"match (e:DienRaCuocHop)-[:ten_goi]-(a) where a.name = ""Hội nghị Ianta""
+match (e)-[:dien_ra_vao|thoi_gian_bat_dau|thoi_gian_ket_thuc]-(b) where b.name = ""1945""
+match (e)-[:doi_tuong_tham_gia|doi_tuong_tan_cong]-(c)
+return c",single - single,,,,,,1,
+1105,Diễn biến chiến dịch biên giới thu đông năm 1950,"chiến dịch biên giới thu đông | năm 1950
+tran_chien | thoi_gian",,,HungTX,TRUE,"match (e:Event)-[:ten_goi]-(a) where a.name=""chiến dịch biên giới thu đông""
+match (e)-[:dien_ra_vao|thoi_gian_bat_dau|thoi_gian_ket_thuc]-(b) where b.name=""năm 1950""
+match (e)-[:SubEvent|mo_ta]->(e1)
+match path=(e1)-[:(NextEvent|Causal|Result|SubEvent)*]-()
+with nodes(path) as l
+match path = (x)-[*0..1]-(y:Entity) where x in l
+return path",multi - multi,,,,,,4,
+1160,Ý nghĩa thắng lợi của chiến dịch lịch sử Điện Biên Phủ năm 1954 là gì?,"chiến dịch lịch sử Điện Biên Phủ | năm 1954
+tran_chien | thoi_gian",,,HungTX,TRUE,"match (e:Event)-[:ten_goi]-(a) where a.name=""chiến dịch lịch sử Điện Biên Phủ""
+match (e)-[:dien_ra_vao|thoi_gian_bat_dau|thoi_gian_ket_thuc]-(b) where b.name=""năm 1954""
+match (e)-[:y_nghia]-(c) 
+return c",single - single,,,,,,5,
+1164,"Chiến thắng nào của quân dân ta ở Miền Nam trong cuộc kháng chiến chống Mĩ (1954 - 1975) buộc Mĩ tuyên bố """"Mĩ hóa"""" trở lại cuộc chiến tranh xâm lược Việt Nam?","Miền Nam | cuộc kháng chiến chống Mĩ | 1954 | 1975 | Mĩ | ""Mĩ hóa"" trở lại cuộc chiến tranh xâm lược Việt Nam",,,HungTX,FALSE,"match (e:Event)-[:(dien_ra_o|thuoc)*]-[a] where a.name=""Miền Nam""
+match (e)-[:SubEvent]-(e1)
+match (e1)-[:ten_goi]-(b) where b.name=""cuộc kháng chiến chống Mĩ""
+match (e1)-[:dien_ra_vao|thoi_gian_bat_dau]-(c) where c.name=""1954""
+match (e1)-[:dien_ra_vao|thoi_gian_ket_thuc]-(d) where c.name=""1975""
+match (e2:Event)-[:doi_tuong_tuyen_bo]-(f) where f.name=""Mĩ ""
+match (e2)-[:noi_dung_tuyen_bo]-(f) where f.name =  """"""Mĩ hóa"""" trở lại cuộc chiến tranh xâm lược Việt Nam""
+match (e)-[:ten_goi]-(g)
+return g
+",,,,,,,,
+1171,Phân tích sự kiện 14-7-1789 ở pháp,"14-7-1789 | pháp
+thoi_gian | dia_diem",,,QuanPV,TRUE,"match (e:Event)-[:dien_ra_vao|thoi_gian_bat_dau|thoi_gian_ket_thuc]-(a) where a.name =   ""14-7-1789""
+match (e)-[:(dien_ra_o|thuoc)*]-(b) where b.name = ""pháp""
+match (e)-[:SubEvent|mo_ta]->(e1)
+match path=(e1)-[:(NextEvent|Causal|Result|SubEvent)*]-()
+with nodes(path) as l
+match path = (x)-[*0..1]-(y:Entity) where x in l
+return path",multi - multi,,,,,,3,
+1202,Chiến tranh thế giới thứ nhất bắt đầu vào năm nào?,"Chiến tranh thế giới thứ nhất
+tran_chien",,,QuanPV,TRUE,"match (e:Event)-[:ten_goi]-(a) where a.name = ""Chiến tranh thế giới thứ nhất""
+match (e)-[:dien_ra_vao|thoi_gian_bat_dau]-(b)
+return b",single - single,,,,,,8,
+1210,Chiến dịch nào sau đây mở đầu cuộc Tổng tiến công và nổi dậy mùa Xuân năm 1975?,"cuộc Tổng tiến công và nổi dậy mùa Xuân | năm 1975
+tran_chien | thoi_gian",,,HungTX,TRUE,"match (e:Event)-[:ten_goi]-(a)  where a.name = ""cuộc Tổng tiến công và nổi dậy mùa Xuân""
+match (e)-[dien_ra_vao|thoi_gian_bat_dau|thoi_gian_ket_thuc]-(b) where b.name = ""năm 1975""
+match (e)-[:SubEvent]-(e1:TranChien|ChienDich) where not (e1)<-[:NextEvent]-() and not (e1)-[:Causal]->()
+match path=(e1)-[*0..1]-(y:Entity)
+return path",multi - multi,,,,,,1,
+1218,"Chính đảng nào sau đây đã lãnh đạo Cách mạng tháng Mười Nga (1917) ?
+","Cách mạng tháng Mười Nga | 1917
+tran_chien | thoi_gian",,,QuanPV,TRUE,"match (e:Event)-[:ten_goi]-(a) where a.name = ""Cách mạng tháng Mười Nga""
+match (e)-[:dien_ra_vao|thoi_gian_bat_dau|thoi_gian_ket_thuc]-(b) where b.name = ""1917""
+match (e)-[:doi_tuong_lanh_dao]-(c)
+return c",single - single,,,,,,3,
+1276,"Sau Cách mạng tháng Mười Nga năm 1917, người đứng đầu Chính quyền Xô viết là
+","Cách mạng tháng Mười Nga | 1917 | Chính quyền Xô viết
+tran_chien | thoi_gian | to_chuc",,,QuanPV,FALSE,"match (e:Event)-[:doi_tuong_duoc_thanh_lap]-(a) where a.name = ""Chính quyền Xô viết""
+match (e)-[:thanh_lap_boi]-(b)
+return b",single - single,"Cypher Query | Entity: Cách mạng tháng Mười Nga
+Cypher Query | Entity: 1917
+",,,,,,
+1317,Trình bày nguyên nhân của Cách mạng Tân Hợi ở Trung Quốc (1911). ,"Cách mạng Tân Hợi | Trung Quốc | 1911
+tran_chien | dia_diem | thoi_gian",,,QuanPV,TRUE,"match (e:Event)-[:ten_goi]-(a) where a.name = ""Cách mạng Tân Hợi""
+match (e)-[:(dien_ra_o|thuoc)*]-(b) where b.name = ""Trung Quốc""
+match (e)-[:dien_ra_vao|thoi_gian_bat_dau|thoi_gian_ket_thuc]-(c) where c.name = ""1911""
+match (e)-[:Causal|nguyen_nhan|boi_canh]->(e1)
+match path=(e1)-[:(Causal|NextEvent)*0..]-(b) where (b)<-[:Causal*0..]-() and (b)-[:NextEvent*0..]->()
+with nodes(path) as l
+match path=(x)-[*0..1]-(y:Entity) where x in l
+return path",multi - multi,,,,,,3,
+1317,Trình bày diễn biến của Cách mạng Tân Hợi ở Trung Quốc (1911). ,"Cách mạng Tân Hợi | Trung Quốc | 1911
+tran_chien | dia_diem | thoi_gian",,,QuanPV,TRUE,"match (e:Event)-[:ten_goi]-(a) where a.name = ""Cách mạng Tân Hợi""
+match (e)-[:(dien_ra_o|thuoc)*]-(b) where b.name = ""Trung Quốc""
+match (e)-[:dien_ra_vao|thoi_gian_bat_dau|thoi_gian_ket_thuc]-(c) where c.name = ""1911""
+match (e)-[:SubEvent|mo_ta]->(e1)
+match path=(e1)-[:(NextEvent|Causal|Result|SubEvent)*]-()
+with nodes(path) as l
+match path = (x)-[*0..1]-(y:Entity) where x in l
+return path",multi - multi,,,,,,1,
+1317,Trình bày kết quả của Cách mạng Tân Hợi ở Trung Quốc (1911). ,"Cách mạng Tân Hợi | Trung Quốc | 1911
+tran_chien | dia_diem | thoi_gian",,,QuanPV,TRUE,"match (e:Event)-[:ten_goi]-(a) where a.name =  ""Cách mạng Tân Hợi""
+match (e)-[:(dien_ra_o|thuoc)*]-(b) where b.name =  ""Trung Quốc""
+match (e)-[:dien_ra_vao|thoi_gian_bat_dau|thoi_gian_ket_thuc]-(c) where c.name = ""1911""
+match (e)-[:Result|ket_qua]->(e1)
+match path=(e1)-[:NextEvent*0..]->()
+with nodes(path) as l 
+match path=(x)-[*0..1]-(y:Entity) where x in l
+return path",multi - multi,,,,,,2,
+1317,Trình bày ý nghĩa của Cách mạng Tân Hợi ở Trung Quốc (1911).,"Cách mạng Tân Hợi | Trung Quốc | 1911
+tran_chien | dia_diem | thoi_gian",,,QuanPV,TRUE,"match (e:Event)-[:ten_goi]-(a) where a.name =  ""Cách mạng Tân Hợi""
+match (e)-[:(dien_ra_o|thuoc)*]-(b) where b.name =  ""Trung Quốc""
+match (e)-[:dien_ra_vao|thoi_gian_bat_dau|thoi_gian_ket_thuc]-(c) where c.name = ""1911""
+match (e)-[:y_nghia]-(d)
+return d",single - single,,,,,,2,
+519,ý nghĩa của Cách mạng Tân Hợi  ở Trung Quốc?,"Cách mạng Tân Hợi | Trung Quốc
+tran_chien | dia_diem",,,QuanPV,TRUE,"match (e:Event)-[:ten_goi]-(a) where a.name = ""Cách mạng Tân Hợi""
+match (e)-[:(dien_ra_o|thuoc)*]-(b) where b.name = ""Trung Quốc""
+match (e)-[:y_nghia]-(c)
+return c",single - single,,,,,,2,
+1324,phân tích ý nghĩa của chiến dịch Huế Đà Nẵng,"chiến dịch Huế Đà Nẵng
+tran_chien",,,HungTX,TRUE,"match (e:Event)-[:ten_goi]-(a) where a.name = ""chiến dịch Huế Đà Nẵng""
+match (e)-[:y_nghia]-(b)
+return b",single - single,,,,,,12,
+1338,"Tháng 12-1975, nhà nước nào được thành lập và đi lên xây dựng chủ nghĩa xã hội?","12 - 1975
+thoi_gian",,,LongLPH,FALSE,"match (e:ThanhLap)-[:dien_ra_vao|thoi_gian_bat_dau|thoi_gian_ket_thuc]-(a) where a.name = ""12 - 1975""
+match (e)-[:doi_tuong_duoc_thanh_lap]-(b)
+return b",single - single,,,,,,,
+1338-1,"Tháng 12-1975, nhà nước nào được thành lập?","Tháng 12-1975
+thoi_gian",,,LongLPH,TRUE,"match (e:ThanhLap)-[:dien_ra_vao|thoi_gian_bat_dau|thoi_gian_ket_thuc]-(a) where a.name = ""Tháng 12-1975""
+match (e)-[:doi_tuong_duoc_thanh_lap]-(b)
+return b",single - single,,,,,,24,
+1342,"Tháng 1-1959, ở khu vực Mĩ La-tinh diễn ra sự kiện nào sau đây?","Tháng 1-1959 | Mĩ La-tinh
+thoi_gian | dia_diem",,,LongLPH,TRUE,"match (e:Event)-[:dien_ra_vao|thoi_gian_bat_dau|thoi_gian_ket_thuc]-(a) where a.name = ""Tháng 1-1959""
+match (e)-[:(dien_ra_o|thuoc)*]-(b) where b.name=""khu vực Mĩ La-tinh""
+match path=(e)-[*0..1]-(y:Entity)
+return path",single - multi,,,,,,3,
+1398,Cuộc cách mạng tháng 8 do ai lãnh đạo,"Cuộc cách mạng tháng 8
+tran_chien",,,HungTX,TRUE,"match (e:Event)-[:ten_goi]-(a) where a.name = ""Cuộc cách mạng tháng 8""
+match (e)-[:doi_tuong_lanh_dao]-(b)
+return b",single - single,,,,,,9,
+1402,"Đại hội Xô viết toàn Nga lần thứ hai khai mạc tại Điện Xmô-nui (25-10- 1917) đã thông qua quyết định nào sau đây?
+","Đại hội Xô viết toàn Nga lần thứ hai |  Điện Xmô-nui | 25-10- 1917
+cuoc_hop | dia_diem | thoi_gian",,,QuanPV,FALSE,"match (e:Event)-[:dien_ra_vao|thoi_gian_bat_dau|thoi_gian_ket_thuc]-(a) where a.name = ""25 - 10 - 1917""
+match (e)-[:(dien_ra_o|thuoc)*]-(b) where b.name = ""Điện Xmô-nưi""
+match (e)-[:Result|ket_qua]->(e1)
+match path=(e1)-[:NextEvent*0..]->()
+with nodes(path) as l
+match path=(x)-[*0..1]-(y:Entity) where x in l
+return path",single - multi,,,,,,,
+1402-1,Đại hội Xô viết toàn Nga lần thứ hai khai mạc tại Điện Xmô-nui (25-10- 1917) đã có kết quả gì?,"Đại hội Xô viết toàn Nga lần thứ hai |  Điện Xmô-nui | 25-10- 1917
+cuoc_hop | dia_diem | thoi_gian",,,QuanPV,TRUE,"match (e:DienRaCuocHop)-[:ten_goi]-(a) where a.name = ""Đại hội Xô viết toàn Nga lần thứ hai""
+match (e)-[:(dien_ra_o|thuoc)*]-(b) where b.name = ""Điện Xmô-nui""
+match (e)-[:dien_ra_vao|thoi_gian_bat_dau|thoi_gian_ket_thuc]-(c) where c.name = ""25-10- 1917""
+match (e)-[:Result|ket_qua]->(e1)
+match path=(e1)-[:NextEvent*0..]->()
+with nodes(path) as l
+match path=(x)-[*0..1]-(y:Entity) where x in l
+return path",multi - multi,,,,,,1,
+1403,Cách mạng tháng Mười Nga năm 1917 đã đem lại ý nghĩa gì?,"Cách mạng tháng Mười Nga | năm 1917
+tran_chien | thoi_gian",,,QuanPV,TRUE,"match (e:Event)-[:ten_goi]-(a) where a.name = ""Cách mạng tháng Mười Nga""
+match (e)-[:dien_ra_vao|thoi_gian_bat_dau|thoi_gian_ket_thuc]-(b) where b.name = ""năm 1917""
+match (e)-[:y_nghia]-(c)
+return c",single - single,,,,,,1,
+1429,"Theo Hiến pháp năm 1889, chế độ nào dưới đây được thiết lập ở Nhật Bản?
+","Hiến pháp | năm 1889 | Nhật Bản
+hiep_dinh | thoi_gian | dia_diem",,,QuanPV,FALSE,"match (e:Event)-[:ban_hanh]-(a) where a.name = ""Hiến pháp""
+match (e)-[:dien_ra_vao|thoi_gian_bat_dau|thoi_gian_ket_thuc]-(b) where b.name = ""năm 1889""
+match (e)-[:(dien_ra_o|thuoc)*]-(c) where c.name = ""Nhật Bản""
+match (e)-[:y_nghia]-(d)
+return d",single - single,,,,,,1,
+1448,Vì sao phải thành lập liên bang cộng hòa xã hội chủ nghĩa xô viết,"liên bang cộng hòa xã hội chủ nghĩa xô viết
+to_chuc",,,QuanPV,TRUE,"match (e:ThanhLap)-[:doi_tuong_duoc_thanh_lap]-(a) where a.name = ""liên bang cộng hòa xã hội chủ nghĩa xô viết""
+match (e)-[:Causal|nguyen_nhan|boi_canh]->(e1)
+match path=(e1)-[:(Causal|NextEvent)*0..]-(b) where (b)<-[:Causal*0..]-() and (b)-[:NextEvent*0..]->()
+with nodes(path) as l
+match path=(x)-[*0..1]-(y:Entity) where x in l
+return path",multi - multi,,,,,,1,
+1450,những nước đầu tiên gia nhập Liên bang cộng hòa xã hội chủ nghĩa xô viết,"Liên bang cộng hòa xã hội chủ nghĩa xô viết
+to_chuc",,,QuanPV,FALSE,"match (e:Event)-[:doi_tuong_duoc_thanh_lap]-(a) where a.name = ""Liên bang cộng hòa xã hội chủ nghĩa xô viết""
+match (e)-[:thanh_lap_boi]-(b)
+return b",single - single,,,,,,3,
+1459,Đâu không phải là ý nghĩa của Cách mạng tháng Mười Nga 1917?,"Cách mạng tháng Mười Nga 1917
+tran_chien",,,QuanPV,TRUE,"match (e:Event)-[:ten_goi]-(a) where a.name = ""Cách mạng tháng Mười Nga 1917""
+match (e)-[:y_nghia]-(b)
+return b",single - single,,,,,,12,
+1462,"Theo quyết định của Hội nghị Ianta (2/1945), khu vực nào dưới đây thuộc phạm vi ảnh hưởng của Liên Xô?","Hội nghị Ianta | 2/1945 | Liên Xô
+cuoc_hop | thoi_gian | dia_diem",,,LongLPH,FALSE,"match (e:DienRaCuocHop)-[:ten_goi]-(a) where a.name = ""Hội nghị Ianta""
+match (e)-(dien_ra_vao)-(b) where b.name = ""2/1945""
+match (e)-[:mo_ta]-(c) where c.name =  ""Liên Xô""
+return c",single - single,,,,,,,
+1470,4 hiệp ước nước ta kí,"nước ta
+dia_diem",,,HungTX,TRUE,"match (e:KiKet)-[:doi_tuong_tham_gia|doi_tuong_tan_cong]-(a) where a.name = ""nước ta""
+match path=(e)-[*0..1]-(y:Entity)
+return path",single - multi,,,,,,1,
+1482,Tháng 8/1961 Mĩ thành lập tổ chức “Liên minh vì tiến bộ” để làm gì?,"Tháng 8/1961 | Mĩ | Liên minh vì tiến bộ
+thoi_gian | dia_diem | to_chuc",,,HungTX,TRUE,"match (e:ThanhLap)-[:dien_ra_vao|thoi_gian_bat_dau|thoi_gian_ket_thuc]-(a) where a.name = ""Tháng 8/1961""
+match (e)-[:thanh_lap_boi]-(b) where b.name = ""Mĩ""
+match (e)-[:doi_tuong_duoc_thanh_lap]-(c) where c.name = ""Liên minh vì tiến bộ""
+match (e)-[:muc_tieu]-(d) 
+return d",single - single,,,,,,1,
+1488,Một trong những nội dung quan trọng của Hội nghị Ianta là gì,"Hội nghị Ianta
+cuoc_hop",,,LongLPH,TRUE,"match (e:DienRaCuocHop)-[:ten_goi]-(a) where a.name = ""Hội nghị Ianta""
+match (e)-[:mo_ta]-(b)
+return b",single - single,,,,,,3,
+1525,Chiến tranh thế giới thứ nhất (1914 – 1918) đã để lại hậu quả gì?,"Chiến tranh thế giới thứ nhất | 1914 | 1918
+tran_chien | thoi_gian | thoi_gian",,,QuanPV,TRUE,"match (e:Event)-[:ten_goi]-(a) where a.name = ""Chiến tranh thế giới thứ nhất""
+match (e)-[:dien_ra_vao|thoi_gian_bat_dau]-(b) where b.name = ""1914""
+match (e)-[:dien_ra_vao|thoi_gian_ket_thuc]-(c) where b.name = ""1918""
+match (e)-[:Result|ket_qua]->(e1)
+match path=(e1)-[:NextEvent*0..]->()
+with nodes(path) as l
+match path=(x)-[*0..1]-(y:Entity) where x in l
+return path",multi - multi,,,,,,5,
+1531,chiến tranh thế giới thứ hai diễn ra vào ngày nào,"chiến tranh thế giới thứ hai
+tran_chien",,,LongLPH,TRUE,"match (e:Event)-[:ten_goi]-(a) where a.name = ""chiến tranh thế giới thứ hai""
+match (e)-[:dien_ra_vao|thoi_gian_bat_dau|thoi_gian_ket_thuc]-(b)
+return b",single - single,,,,,,15,
+1588,"Liên bang Cộng hoà xã hội chủ nghĩa Xô viết được thành lập vào thời gian nào?
+","Liên bang Cộng hoà xã hội chủ nghĩa Xô viết
+to_chuc",,,QuanPV,TRUE,"match (e:ThanhLap)-[:doi_tuong_duoc_thanh_lap]-(a) where a.name = ""Liên bang Cộng hoà xã hội chủ nghĩa Xô viết""
+match (e)-[:dien_ra_vao|thoi_gian_bat_dau|thoi_gian_ket_thuc]-(b)
+return b",single - single,,,,,,24,
+1592,Cộng hòa Dân chủ Đức ra đời vào năm nào?,"Cộng hòa Dân chủ Đức
+to_chuc",,,LongLPH,TRUE,"match (e:ThanhLap)-[:doi_tuong_duoc_thanh_lap]-(a) where a.name = ""Cộng hòa Dân chủ Đức""
+match (e)-[:dien_ra_vao|thoi_gian_bat_dau|thoi_gian_ket_thuc]-(b)
+return b",single - single,,,,,,24,
+1641,Lãnh đạo phong trào Cần Vương ở giai đoạn 2 (1888-1896) là,"phong trào Cần Vương ở giai đoạn 2 | 1888 | 1896
+tran_chien | thoi_gian | thoi_gian",,,LongLPH,TRUE,"match (e:Event)-[:ten_goi]-(a) where a.name=""phong trào Cần Vương ở giai đoạn 2""
+match (e)-[:dien_ra_vao|thoi_gian_bat_dau]-(b) where b.name = ""1888""
+match (e)-[:dien_ra_vao|thoi_gian_ket_thuc]-(c) where c.name = ""1896""
+match (e)-[:doi_tuong_lanh_dao]-(d)
+return d",single - single,,,,,,1,
+1643,"Đầu năm 1929 tổ chức Hội Việt Nam cách mạng Thanh niên phân hóa thành hai tổ chức cộng sản đó là
+","1929 |  Hội Việt Nam cách mạng Thanh niên
+thoi_gian | to_chuc",,,HungTX,FALSE,"match (e:ThanhLap)-[:dien_ra_vao|thoi_gian_bat_dau|thoi_gian_ket_thuc]-(a) where a.name = ""1929""
+match (e)-[:thanh_lap_boi]-(b) where b.name=""Hội Việt Nam cách mạng Thanh niên""
+match (e)-[:doi_tuong_duoc_thanh_lap]-(c)
+return c",single - multi,,,,,,,
+1649,"Nội dung nào sau đây không phải là quyết định quan trọng của Hội nghị Ianta ( 2-1945)?
+","Hội nghị Ianta ( 2-1945)
+cuoc_hop | thoi_gian",,,LongLPH,FALSE,"match (e:Event)-[:ten_goi]-(a) where a.name = ""Hội nghị Ianta ( 2-1945)""
+match (e)-[:mo_ta]-(c)
+return c",single - single,,,,,,,
+1673,"Hiến chương Liên hợp quốc được thông qua tại Hội nghị nào ?
+","Hiến chương Liên hợp quốc
+chinh_sach",,,LongLPH,TRUE,"match (e:DienRaCuocHop)-[:NextEvent|Result|Causal]-(e1) where (e)-[:NextEvent|Result]->(e1) or (e)<-[:Causal]-(e1)
+match (e1)-[:ban_hanh]-(a) where a.name=""Hiến chương Liên hợp quốc""
+match (e)-[:ten_goi]-(b)
+return b",multi - single,,,,,,1,
+1679,làm rõ ý nghĩa của Cách mạng tháng Mười Nga năm 1917 đối với phong trào giải phóng dân tộc trên thế giới và cách mạng Việt Nam,"Cách mạng tháng Mười Nga | 1917 | phong trào giải phóng dân tộc trên thế giới | cách mạng Việt Nam
+tran_chien | thoi_gian | tran_chien | tran_chien",,,QuanPV,FALSE,"match (e:Event)-[:ten_goi]-(a) where a.name = ""Cách mạng tháng Mười Nga""
+match (e)-[:y_nghia]-(b)
+return b",,"Cypher Query | Entity: 1917
+Cypher Query | Entity: phong trào giải phóng dân tộc trên thế giới
+Cypher Query | Entity: cách mạng Việt Nam
+",,,,,,
+1782,thế chiến thế giới thứ 2 diễn ra vào ngày tháng năm nào,"thế chiến thế giới thứ 2
+tran_chien",,,LongLPH,TRUE,"match (e:Event)-[:ten_goi]-(a) where a.name = ""thế chiến thế giới thứ 2"" 
+match (e)-[:dien_ra_vao|thoi_gian_bat_dau|thoi_gian_ket_thuc]-(b)
+return b",single - single,,,,,,15,
+1786,CÁCH MẠNG THÁNG Hai NGA,"CÁCH MẠNG THÁNG Hai NGA
+tran_chien",,,QuanPV,TRUE,"match (e:Event)-[:ten_goi]-(a) where a.name = ""CÁCH MẠNG THÁNG Hai NGA""
+match (e)-[:SubEvent|mo_ta]->(e1)
+match path=(e1)-[:(NextEvent|Causal|Result|SubEvent)*]-()
+with nodes(path) as l
+match path = (x)-[*0..1]-(y:Entity) where x in l
+return path",multi - multi,,,,,,8,
+1790,"Nguyên thủ những nước nào sau đây tham dự Hội nghị Ianta (2/1945)?
+","Hội nghị Ianta | 2/1945
+cuoc_hop | thoi_gian",,,LongLPH,TRUE,"match (e:DienRaCuocHop)-[:ten_goi]-(a) where a.name = ""Hội nghị Ianta""
+match (e)-[:dien_ra_vao|thoi_gian_bat_dau|thoi_gian_ket_thuc]-(b) where b.name = ""2/1945""
+match (e)-[:doi_tuong_tham_gia|doi_tuong_tan_cong]-(c)
+return c",single - single,,,,,,3,
+1792,"Đại hội Xô viết toàn Nga lần Thứ hai, khai mạc đêm 25/10/1917 đã","Đại hội Xô viết toàn Nga lần Thứ hai | đêm 25/10/1917
+cuoc_hop | thoi_gian",,,QuanPV,TRUE,"match (e:DienRaCuocHop)-[:ten_goi]-(a) where a.name = ""Đại hội Xô viết toàn Nga lần Thứ hai""
+match (e)-[:dien_ra_vao|thoi_gian_bat_dau|thoi_gian_ket_thuc]-(b) where b.name = ""đêm 25/10/1917""
+match (e)-[:Result|ket_qua]->(e1)
+match path=(e1)-[:NextEvent*0..]->()
+with nodes(path) as l
+match path=(x)-[*0..1]-(y:Entity) where x in l
+return path",multi - multi,,,,,,2,
+1805,BỐI CẢNH LỊCH SỬ CỦA CÁCH MẠNG THÁNG Hai NGA,"CÁCH MẠNG THÁNG Hai NGA
+tran_chien",,,QuanPV,TRUE,"match (e:Event)-[:ten_goi]-(a) where a.name = ""CÁCH MẠNG THÁNG Hai NGA""
+match (e)-[:Causal|nguyen_nhan|boi_canh]->(e1)
+match path=(e1)-[:(Causal|NextEvent)*0..]-(b) where (b)<-[:Causal*0..]-() and (b)-[:NextEvent*0..]->()
+with nodes(path) as l
+match path=(x)-[*0..1]-(y:Entity) where x in l
+return path",multi - multi,,,,,,6,
+1892,"Năm 1920, quốc gia nào sau đây ở khu vực Đông Nam Á thành lập Đảng Cộng sản? ","Năm 1920 | Đông Nam Á | Đảng Cộng sản
+thoi_gian | dia_diem | to_chuc",,,QuanPV,FALSE,"match (e:ThanhLap)-[:dien_ra_vao|thoi_gian_bat_dau|thoi_gian_ket_thuc]-(a) where a.name=""Năm 1920""
+match (e)-[:(dien_ra_o|thuoc)*]-(b) where b.name=""Đông Nam Á""
+match (e)-[:doi_tuong_duoc_thanh_lap]-(c) where c.name=""Đảng Cộng sản""
+return b",single - single,,,,,,1,
+1893,"Năm 1945, quốc gia nào sau đây ở khu vực Đông Nam Á tuyên bố độc lập sớm nhất?
+","1945 |  Đông Nam Á
+thoi_gian | dia_diem",,,LongLPH,FALSE,"match (a)-[:dien_ra_vao|thoi_gian_bat_dau|thoi_gian_ket_thuc]-(e:TuyenBoDocLap)-[:doi_tuong_tuyen_bo]-(b)
+where a.name = ""1945""
+return b",,,,,,,,
+1895,"Từ thế kỉ XVI đến thế kỉ XIX, nhân dân In-đô-nê-xi-a nổi dậy đấu tranh chống lại ách cai trị của thực dân nào sau đây?","thế kỉ XVI | thế kỉ XIX | In-đô-nê-xi-a
+thoi_gian | thoi_gian | dia_diem",,,QuanPV,TRUE,"match (e:Event)-[:dien_ra_vao|thoi_gian_bat_dau]-(a) where a.name = ""thế kỉ XVI""
+match (e)-[:dien_ra_vao|thoi_gian_ket_thuc]-(b) where b.name = ""thế kỉ XIX""
+match (e)-[:(dien_ra_o|thuoc)*]-(c) where c.name = ""In-đô-nê-xi-a""
+match (e)-[:doi_tuong_bi_tan_cong]-(c)
+return c",single - single,,,,,,1,
+1896,"Trong những năm cuối thế kỉ XIX - đầu thế kỉ XX, nhân dân Lào nổi dậy đấu tranh chống lại ách cai trị của thực dân nào?","những năm cuối thế kỉ XIX | đầu thế kỉ XX | Lào
+thoi_gian | thoi_gian | dia_diem",,,QuanPV,TRUE,"match (e:Event)-[:dien_ra_vao|thoi_gian_bat_dau]-(a) where a.name = ""những năm cuối thế kỉ XIX""
+match (e)-[:dien_ra_vao|thoi_gian_ket_thuc]-(b) where b.name = ""đầu thế kỉ XX""
+match (e)-[:doi_tuong_tham_gia|doi_tuong_tan_cong]-(c) where c.name = ""Lào""
+match (e)-[:doi_tuong_bi_tan_cong]-(d)
+return d",single - single,,,,,,5,
+1897,"Trong những năm cuối thế kỉ XIX - đầu thế kỉ XX, nhân dân Cam-pu-chia nổi dậy đấu tranh chống lại ách cai trị của thực dân ","những năm cuối thế kỉ XIX | đầu thế kỉ XX | Cam-pu-chia
+thoi_gian | thoi_gian | dia_diem",,,QuanPV,TRUE,"match (e:Event)-[:dien_ra_vao|thoi_gian_bat_dau]-(a) where a.name = ""những năm cuối thế kỉ XIX""
+match (e)-[:dien_ra_vao|thoi_gian_ket_thuc]-(b) where b.name = ""đầu thế kỉ XX""
+match (e)-[:doi_tuong_tham_gia|doi_tuong_tan_cong]-(c) where c.name = ""Cam-pu-chia""
+match (e)-[:doi_tuong_bi_tan_cong]-(d)
+return d",single - single,,,,,,5,
+1949,"Hội nghị Ianta (1945) có sự tham gia của các nước nào?
+","Hội nghị Ianta | 1945
+cuoc_hop | thoi_gian",,,NgocLD,TRUE,"match (e:DienRaCuocHop)-[:ten_goi]-(a) where a.name = ""Hội nghị Ianta""
+match (e)-[:dien_ra_vao|thoi_gian_bat_dau|thoi_gian_ket_thuc]-(b) where b.name = ""1945""
+match (e)-[:doi_tuong_tham_gia|doi_tuong_tan_cong]-(c)
+return c",single - single,,,,,,3,
+1954,Diễn biến cuộc kháng chiến chống quân Tống do Lý Thường Kiệt chỉ huy,"quân Tống | Lý Thường Kiệt
+quan_doi| nhan_vat",,,NgocLD,TRUE,"match (e:Event)-[:doi_tuong_bi_tan_cong]-(a) where a.name=""quân Tống""
+match (e)-[:doi_tuong_lanh_dao]-(b) where b.name=""Lý Thường Kiệt""
+match (e)-[:SubEvent|mo_ta]->(e1)
+match path=(e1)-[:(NextEvent|Causal|Result|SubEvent)*]-()
+with nodes(path) as l
+match path = (x)-[*0..1]-(y:Entity) where x in l
+return path",multi - multi,,,,,,1,
+2002,"Cuối thế kỉ XVI, Phi-líp-pin chính thức bị thực dân nào xâm lược và thông tri?","Cuối thế kỉ XVI | Phi-líp-pin
+thoi_gian | dia_diem",,,QuanPV,TRUE,"match (e:Event)-[:dien_ra_vao|thoi_gian_bat_dau|thoi_gian_ket_thuc]-(a) where a.name = ""Cuối thế kỉ XVI""
+match (e)-[:doi_tuong_bi_chiem]-(b) where b.name = ""Phi-líp-pin""
+match (e)-[:doi_tuong_xam_chiem|doi_tuong_chiem]-(c)
+return c",single - single,,,,,,6,
+2003,"Cuối thế kỉ XVI, thực dân Hà Lan tiến hành xâm lược quốc gia nào sau
+
+day?","Cuối thế kỉ XVI | thực dân Hà Lan
+thoi_gian | to_chuc",,,QuanPV,TRUE,"match (e:Event)-[:dien_ra_vao|thoi_gian_bat_dau|thoi_gian_ket_thuc]-(a) where a.name = ""Cuối thế kỉ XVI""
+match (e)-[:doi_tuong_tham_gia|doi_tuong_tan_cong]-(b) where b.name = ""thực dân Hà Lan""
+match (e)-[:doi_tuong_bi_tan_cong]-(c)
+return c",single - single,,,,,,5,
+2006,"Trải qua hơn 60 năm (1824-1885), thực dân Anh chiếm được","1824 | 1885 | thực dân Anh
+thoi_gian | thoi_gian | to_chuc",,,QuanPV,TRUE,"match (e:Event)-[:dien_ra_vao|thoi_gian_bat_dau]-(a) where a.name = ""1824""
+match (e)-[:dien_ra_vao|thoi_gian_ket_thuc]-(b) where b.name = ""1885"" 
+match (e)-[:doi_tuong_xam_chiem|doi_tuong_chiem|doi_tuong_chiem]-(c) where c.name = ""thực dân Anh""
+match (e)-[:doi_tuong_bi_chiem]-(d)
+return d",single - single,,,,,,1,
+2069,Cuộc khởi nghĩa Hương Khê do ai lãnh đạo?,"Cuộc khởi nghĩa Hương Khê
+tran_chien",,,LongLPH,TRUE,"match (e:Event)-[:ten_goi]-(a) where a.name = ""Cuộc khởi nghĩa Hương Khê""
+match (e)-[:doi_tuong_lanh_dao]-(b) 
+return b",single - single,,,,,,1,
+2126,Nêu quá trình hình thành của chính quyền xô viết,"chính quyền xô viết
+to_chuc",,,QuanPV,TRUE,"match (e:Event)-[:NextEvent|Result|Causal]-(e1) where (e)-[:NextEvent|Result]->(e1) or (e)<-[:Causal]-(e1)
+match (e1)-[:doi_tuong_duoc_thanh_lap]-(a) where a.name=""chính quyền xô viết""
+match path=(e)-[*0..1]-(y:Entity)
+return path",multi - multi,,,,,,2,
+2169,Một trong những quyết định của Hội nghị Ianta (2/1945) là gì,"Hội nghị Ianta | 2/1945
+cuoc_hop | thoi_gian",,,,TRUE,"match (e:DienRaCuocHop)-[:ten_goi]-(a) where a.name = ""Hội nghị Ianta""
+match (e)-[:dien_ra_vao|thoi_gian_bat_dau|thoi_gian_ket_thuc]-(b) where b.name = ""2/1945""
+match (e)-[:mo_ta]-(c)
+return c",single - single,,,,,,1,
+2174,em hãy giới thiệu về chiến thắng Ấp Bắc,"chiến thắng Ấp Bắc
+tran_chien",,,,TRUE,"match (e:Event)-[:ten_goi]-(a) where a.name = ""chiến thắng Ấp Bắc""
+match (e)-[:SubEvent|mo_ta]->(e1)
+match path=(e1)-[:(NextEvent|Causal|Result|SubEvent)*]-()
+with nodes(path) as l
+match path = (x)-[*0..1]-(y:Entity) where x in l
+return path",multi - multi,,,,,,8,
+2184,Hội nghị Ianta (2/1945) đã họp ở đâu?,"Hội nghị Ianta | 2/1945
+cuoc_hop | thoi_gian",,,,TRUE,"match (e:DienRaCuocHop)-[:ten_goi]-(a) where a.name = ""Hội nghị Ianta""
+match (e)-[:dien_ra_vao|thoi_gian_bat_dau|thoi_gian_ket_thuc]-(b) where b.name = ""2/1945""
+match (e)-[:(dien_ra_o|thuoc)*]-(c)
+return c",single - single,,,,,,1,
+2278,Trình bày quá trình hình thành liên bang cộng hòa xã hội chủ nghĩa Xô Viết,"liên bang cộng hòa xã hội chủ nghĩa Xô Viết
+to_chuc",,,QuanPV,TRUE,"match (e:Event)-[:NextEvent|Result|Causal]-(e1) where (e)-[:NextEvent|Result]->(e1) or (e)<-[:Causal]-(e1)
+match (e1)-[:doi_tuong_duoc_thanh_lap]-(a) where a.name=""liên bang cộng hòa xã hội chủ nghĩa Xô Viết""
+match path=(e)-[*0..1]-(y:Entity)
+return path",multi - multi,,,,,,2,
+2294,DIỄN BIẾN CHIẾN TRANH THẾ GIỚI THỨ NHẤT,"CHIẾN TRANH THẾ GIỚI THỨ NHẤT
+tran_chien",,,QuanPV,TRUE,"match (e:Event)-[:ten_goi]-(a) where a.name = ""CHIẾN TRANH THẾ GIỚI THỨ NHẤT""
+match (e)-[:SubEvent|mo_ta]->(e1)
+match path=(e1)-[:(NextEvent|Causal|Result|SubEvent)*]-()
+with nodes(path) as l
+match path = (x)-[*0..1]-(y:Entity) where x in l
+return path",multi - multi,,,,,,8,
+2524,Đông Dương Cộng sản Đảng được thành lập (6/1929) đã,"Đông Dương Cộng sản Đảng | 6/1929
+to_chuc | thoi_gian",,,,TRUE,"match (e:ThanhLap)-[:doi_tuong_duoc_thanh_lap]-(a) where a.name = ""Đông Dương Cộng sản Đảng""
+match (e)-[:dien_ra_vao|thoi_gian_bat_dau|thoi_gian_ket_thuc]-(b) where b.name = ""6/1929""
+match (e)-[:y_nghia]-(c)
+return c",single - single,,,,,,1,
+2551,Chiến thắng Vạn Tường (1963) đã mở ra cao trào,"Chiến thắng Vạn Tường | 1963
+tran_chien | thoi_gian",,,,TRUE,"match (e:Event)-[:ten_goi]-(a) where a.name = ""Chiến thắng Vạn Tường""
+match (e)-[:dien_ra_vao|thoi_gian_bat_dau|thoi_gian_ket_thuc]-(b) where b.name = ""1963""
+match (e)-[:y_nghia]-(c)
+return c",single - single,,,,,,5,
+2584,Thời gian diễn ra phong trào xô viết nghệ tĩnh,"phong trào xô viết nghệ tĩnh
+tran_chien",,,,TRUE,"match (e:Event)-[:ten_goi]-(a) where a.name = ""phong trào xô viết nghệ tĩnh""
+match (e)-[:dien_ra_vao|thoi_gian_bat_dau|thoi_gian_ket_thuc]-(b)
+return b",single - single,,,,,,15,
+2651,Người đứng đầu trong phái chủ chiến của triều đình Huế là ai?,"phái chủ chiến | triều đình Huế
+to_chuc | to_chuc",,,QuanPV,FALSE,"match (e:Event)-[:doi_tuong_khoi_xuong]-(a) where a.name = ""phái chủ chiến""
+match (e)-[:doi_tuong_lanh_dao]-(b)
+return b",,,,,,,,
+2675,Một trong bốn nước Cộng hòa Xô viết khi mới thành lập (1922),"Cộng hòa Xô viết | 1922
+to_chuc | thoi_gian",,,QuanPV,FALSE,"match (e:ThanhLap)-[:doi_tuong_duoc_thanh_lap]-(a) where a.name = ""Cộng hòa Xô viết""
+match (e)-[:dien_ra_vao|thoi_gian_bat_dau|thoi_gian_ket_thuc]-(b) where b.name = ""1922""
+match (e)-[:thanh_lap_boi]-(c)
+return c",single - single,,,,,,,
+2729,Nguyên cớ trực tiếp nào dẫn tới bùng nổ Chiến tranh thế giới thứ nhất (1914 – 1918)?,"Chiến tranh thế giới thứ nhất | 1914 | 1918
+tran_chien | thoi_gian | thoi_gian",,,QuanPV,TRUE,"match (e:Event)-[:ten_goi]-(a) where a.name=""Chiến tranh thế giới thứ nhất""
+match (e)-[:dien_ra_vao|thoi_gian_bat_dau|-(b) where b.name = ""1914""
+match (e)-[:dien_ra_vao|thoi_gian_ket_thuc]-(c) where c.name = ""1918""
+match (e)-[:Causal|nguyen_nhan|boi_canh]->(e1)
+match path=(e1)-[:(Causal|NextEvent)*0..]-(d) where (d)<-[:Causal*0..]-() and (d)-[:NextEvent*0..]->()
+with nodes(path) as l
+match path=(x)-[*0..1]-(y:Entity) where x in l
+return path",multi - multi,,,,,,2,
+2732,Điểm nổi bật của tình hình Mĩ Latinh ở đầu thế kỉ XX là :,"Mĩ Latinh | đầu thế kỉ XX
+thoi_gian | dia_diem",,,QuanPV,FALSE,"match (e:Event)-[:(dien_ra_o|thuoc)*]-(a) where a.name = ""Mĩ Latinh""
+match (e)-[:dien_ra_vao|thoi_gian_bat_dau|thoi_gian_ket_thuc]-(b) where b.name = ""đầu thế kỉ XIX""
+match (e)-[:Result|ket_qua]->(e1)
+match path=(e1)-[:NextEvent*0..]->()
+with nodes(path) as l
+match path=(x)-[*0..1]-(y:Entity) where x in l
+return path",single - single,,,,,,,
+2735,"Từ những thập niên đầu của thế kỉ XX, các nước Mĩ Latinh rơi vào vòng lệ thuộc của quốc gia nào?","những thập niên đầu của thế kỉ XX | Mĩ Latinh
+thoi_gian | dia_diem",,,QuanPV,TRUE,"match (e:Event)-[:dien_ra_vao|thoi_gian_bat_dau|thoi_gian_ket_thuc]-(a) where a.name = ""những thập niên đầu của thế kỉ XX""
+match (e)-[:doi_tuong_bi_chiem]-(b) where b.name = ""Mĩ Latinh""
+match (e)-[:doi_tuong_xam_chiem|doi_tuong_chiem]-(c)
+return c",single - single,,,,,,6,
+2743,"Hội nghị cấp cao của ba cường quốc Liên Xô, Mĩ, Anh từ ngày 4 đến ngày 11-2-1945 được tổ chức tại đâu?","Liên Xô | Mĩ | Anh | ngày 4 | ngày 11-2-1945
+dia_diem | dia_diem | dia_diem | thoi_gian | thoi_gian",,,LongLPH,TRUE,"match (e:DienRaCuocHop)-[:doi_tuong_tham_gia|doi_tuong_tan_cong]-(a) where a.name = ""Liên Xô""
+match (e)-[:doi_tuong_tham_gia|doi_tuong_tan_cong]-(b) where a.name = ""Mĩ""
+match (e)-[:doi_tuong_tham_gia|doi_tuong_tan_cong]-(c) where c.name = ""Anh""
+match (e)-[:dien_ra_vao|thoi_gian_bat_dau]-(d) where d.name = ""ngày 4""
+match (e)-[:dien_ra_vao|thoi_gian_ket_thuc]-(f) where f.name = ""ngày 11-2-1945""
+match (e)-[:(dien_ra_o|thuoc)*]-(g)
+return g",single - single,,,,,,1,
+2750,"Để khôi phục kinh tế sau chiến tranh, 3-1921 Lê-nin và Đảng Bônsêvích đã thực hiện chính sách nào?","3-1921 | Lê-nin | Đảng Bônsêvích
+thoi_gian | nhan_vat | to_chuc",,,QuanPV,TRUE,"match (e:Event)-[:dien_ra_vao|thoi_gian_bat_dau|thoi_gian_ket_thuc]-(a) where a.name = ""3-1921""
+match (e)-[:doi_tuong_thuc_hien]-(b) where b.name = ""Lê-nin""
+match (e)-[:doi_tuong_thuc_hien]-(c) where c.name = ""Đảng Bônsêvích""
+match (e)-[:ten_goi]-(d)
+return d",single - single,,,,,,1,
+2785,Cuộc khởi nghĩa nào nổi bật trong phong trào đấu tranh của nhân dân ln-đô-nê-xi-a chống thực dân Hà Lan,"ln-đô-nê-xi-a | thực dân Hà Lan
+dia_diem | dia_diem",,,,TRUE,"match (e:Event)-[:(dien_ra_o|thuoc)*]-(a) where a.name = ""ln-đô-nê-xi-a""
+match (e)-[:doi_tuong_bi_tan_cong]-(b) where b.name = ""thực dân Hà Lan""
+match (e)-[:doi_tuong_lanh_dao]-(c)
+return c",single - single,,,,,,2,
+2818,Năm 1400 ở nước ta triều đại nào được ra đời?,"Năm 1400
+thoi_gian",,,NgocLD,TRUE,"match (e:ThanhLap)-[:dien_ra_vao|thoi_gian_bat_dau|thoi_gian_ket_thuc]-(a) where a.name = ""Năm 1400""
+match (e)-[:doi_tuong_duoc_thanh_lap]-(b)
+return b",single - single,,,,,,24,
+2875,Hình thức đấu tranh chủ yếu trong Cách mạng tháng Hai năm 1917 ở nước Nga là,"Cách mạng tháng Hai | 1917 | Nga
+tran_chien | thoi_gian | dia_diem",,,QuanPV,FALSE,"match (e:Event)-[:ten_goi]-(a) where a.name = ""Cách mạng tháng Hai Nga""
+match (e)-[:dien_ra_vao|thoi_gian_bat_dau|thoi_gian_ket_thuc]-(b) where b.name = ""1917""
+match (e)-[:(dien_ra_o|thuoc)*]-(c) where c.name = ""Nga""
+match (e)-[:mo_ta]-(d)
+return d",single - single,,,,,,,
+2880,NEP bao gồm những chính sách gì,"NEP
+chinh_sach",,,QuanPV,TRUE,"match (e:Event)-[:ten_goi]-(a) where a.name = ""NEP""
+match (e)-[:mo_ta]-(b)
+return b",single - single,,,,,,3,
+4511,Hiệp hội các quốc gia Đông Nam Á được thành lập vào,"Hiệp hội các quốc gia Đông Nam Á
+to_chuc
+",,,LongLPH,TRUE,"match (e:ThanhLap)-[:doi_tuong_duoc_thanh_lap]-(a) where a.name = ""Hiệp hội các quốc gia Đông Nam Á""
+match (e)-[:dien_ra_vao|thoi_gian_bat_dau|thoi_gian_ket_thuc]-(b)
+return b",single - single,,,,,,24,
+4784,"Bằng sức mạnh của đồng đô la và “cây gậy”, Mỹ đã biến khu vực nào thành “sân sau” của mình?","đồng đô la | cây gậy | Mỹ
+chinh_sach | chinh_sach | dia_diem",,,QuanPV,FALSE,"match (e:Event)-[:doi_tuong_ban_hanh]-(a) where a.name = ""Mỹ""
+match (e)-[:ban_hanh]-(b) where b.name = ""cây gậy""
+match (e)-[:ban_hanh]-(c) where c.name = ""đồng đô la""
+match (e:Event)-[:NextEvent|Result|Causal]-(e1) where (e)-[:NextEvent|Result]->(e1) or (e)<-[:Causal]-(e1)
+match (e1)-[:doi_tuong_bi_chiem]-(d)
+return d",multi - single,,,,,,,

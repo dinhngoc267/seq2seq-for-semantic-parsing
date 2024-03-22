@@ -7,7 +7,7 @@ from src.utils import tokenize_sequence, compact_query, create_vocab
 from typing import Optional
 
 
-class CopyNetParserDataset(Dataset):
+class SeqSeqAttnParserDataset(Dataset):
     def __init__(self,
                  data_path: str,
                  device: torch.device,
@@ -109,20 +109,6 @@ class CopyNetParserDataset(Dataset):
                     self.max_output_length - len(output_ids))
 
         output_sequences = ' '.join(output_tokens).lower()
-
-        labels = copy.deepcopy(output_ids)
-        occurrence = {}
-
-        for idx, token in enumerate(output_tokens):
-            if token in input_tokens:
-                if token not in occurrence:
-                    pos_in_input = [i for i, x in enumerate(input_tokens) if x == token]
-                    occurrence[token] = [0, pos_in_input]
-                else:
-                    if occurrence[token][0] + 1 < len(occurrence[token][1]):
-                        occurrence[token][0] += 1
-                labels[idx] = self.vocab_size + occurrence[token][1][occurrence[token][0]]
-
         input_tokens = ' '.join(input_tokens)
 
         return dict(
@@ -131,6 +117,5 @@ class CopyNetParserDataset(Dataset):
             output_text=output_text,
             input_ids=torch.tensor(input_ids),
             output_ids=torch.tensor(output_ids),
-            output_sequences=output_sequences,
-            labels=torch.tensor(labels)
+            output_sequences=output_sequences
         )

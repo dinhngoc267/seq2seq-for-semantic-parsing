@@ -1,6 +1,7 @@
 import torchmetrics
 import torch
 
+
 class AccuracyMetric(torchmetrics.Metric):
     def __init__(self):
         super().__init__()
@@ -14,7 +15,6 @@ class AccuracyMetric(torchmetrics.Metric):
         for idx in range(len(targets)):
             if targets[idx] == preds[idx]:
                 self.correct += 1
-
 
         self.total += len(targets)
 
